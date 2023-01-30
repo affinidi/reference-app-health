@@ -1,6 +1,22 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-}
+const path = require("path");
 
-module.exports = nextConfig
+const nextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: "/",
+        destination: "/home",
+      },
+    ];
+  },
+  reactStrictMode: false,
+  sassOptions: {
+    includePaths: [path.join(__dirname, "styles")],
+  },
+  compiler: {
+    styledComponents: true,
+  },
+};
+
+module.exports = nextConfig;
