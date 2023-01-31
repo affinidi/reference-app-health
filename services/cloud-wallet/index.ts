@@ -3,7 +3,7 @@ import {
   getItemFromSessionStorage,
 } from 'hooks/useSessionStorage'
 
-import { apiKeyHash, cloudWalletApiUrl } from '../../pages/env'
+import { apiKeyHash, cloudWalletApiUrl } from 'pages/env'
 import {
   Api as CloudWalletApi,
   ConfirmSignInInput,
