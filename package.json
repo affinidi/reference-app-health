@@ -13,6 +13,8 @@
     "@fontsource/montserrat": "^4.5.14",
     "@fontsource/nunito-sans": "^4.5.10",
     "@next/font": "13.1.6",
+    "@zxing/browser": "^0.1.1",
+    "@zxing/library": "^0.19.2",
     "axios": "^1.2.6",
     "eslint": "8.33.0",
     "eslint-config-next": "13.1.6",

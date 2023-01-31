@@ -51,5 +51,6 @@ export const ROUTES = {
   home: "/",
   verifier: {
     scan: "/verifier/scan",
+    result: "/verifier/result",
   },
 };
