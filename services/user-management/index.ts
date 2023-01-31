@@ -1,4 +1,4 @@
-import { userManagementApiUrl } from '../../pages/env'
+import { userManagementApiUrl } from 'pages/env'
 import {
   Api,
   AuthConfirmationInput as AuthConfirmationInputBase,

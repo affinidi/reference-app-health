@@ -1,4 +1,4 @@
-import { apiKeyHash, verifierApiUrl } from '../../pages/env'
+import { apiKeyHash, verifierApiUrl } from 'pages/env'
 import { Api as VerifierApi, W3CCredential } from './verifier.api'
 
 class VerifierService {

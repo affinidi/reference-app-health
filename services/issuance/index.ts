@@ -1,4 +1,4 @@
-import { issuanceApiUrl } from '../../pages/env'
+import { issuanceApiUrl } from 'pages/env'
 import {
   Api as IssuanceAPI,
   CreateIssuanceInput,
