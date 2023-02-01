@@ -31,9 +31,9 @@ export const Home: FC = () => {
             }}
           >
             <S.Details>
-              <S.Heading variant="h6">Collect tickets</S.Heading>
+              <S.Heading variant="h6">Collect medical records</S.Heading>
               <S.Para variant="p1">
-                Collect your tickets or view tickets stored in your wallet
+                Collect your medical records or view them stored in your wallet
               </S.Para>
             </S.Details>
             <S.Icon>
@@ -52,9 +52,9 @@ export const Home: FC = () => {
             }}
           >
             <S.Details>
-              <S.Heading variant="h6">Verify tickets</S.Heading>
+              <S.Heading variant="h6">Verify medical records</S.Heading>
               <S.Para variant="p1">
-                Verify tickets with a QR code scanner
+                Verify medical records with a QR code scanner
               </S.Para>
             </S.Details>
             <S.Icon>
@@ -73,9 +73,9 @@ export const Home: FC = () => {
             }}
           >
             <S.Details>
-              <S.Heading variant="h6">Issue ticket</S.Heading>
+              <S.Heading variant="h6">Issue medical records</S.Heading>
               <S.Para variant="p1">
-                Issue tickets to your customers easily
+                Issue medical records to your patients easily
               </S.Para>
             </S.Details>
             <S.Icon>
