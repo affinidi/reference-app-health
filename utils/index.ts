@@ -50,6 +50,13 @@ export const JSON_SCHEMA_URL =
 export const ROUTES = {
   home: "/",
   verifier: {
+    welcome: "/verifier/",
     scan: "/verifier/scan",
+  },
+  holder: {
+    home: "/holder/",
+  },
+  issuer: {
+    crednetial_form: "/issuer/credential-form",
   },
 };
