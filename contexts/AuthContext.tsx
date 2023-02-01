@@ -1,13 +1,13 @@
-import { createContext, FC, ReactNode } from 'react'
+import { createContext, FC, ReactNode } from "react";
 
-import { useAuthentication } from '../hooks/useAuthentication'
+import { useAuthentication } from "hooks/useAuthentication";
 
-export const AuthContext = createContext({} as ReturnType<typeof useAuthentication>)
-type Props = {
-  children: ReactNode
-}
-export const AuthProvider: FC<Props> = ({ children }) => {
-  const auth = useAuthentication()
+export const AuthContext = createContext(
+  {} as ReturnType<typeof useAuthentication>
+);
 
-  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>
-}
+export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
+  const auth = useAuthentication();
+
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
+};

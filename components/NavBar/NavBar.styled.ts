@@ -57,6 +57,7 @@ export const ButtonContainer = styled.div`
   cursor: pointer;
   margin-bottom: ${pxToRem(24)};
 `;
+
 export const Logo = styled.div`
   cursor: pointer;
   width: ${pxToRem(100)};
@@ -66,6 +67,7 @@ export const Logo = styled.div`
     height: ${pxToRem(32)};
   }
 `;
+
 export const Icon = styled.div`
   cursor: pointer;
   width: ${pxToRem(24)};

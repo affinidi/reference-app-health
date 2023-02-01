@@ -6,3 +6,6 @@ export { default as IssuerFlowIcon } from "./issuerFlowIcon";
 export { default as HealthiLogoIcon } from "./healthiLogoIcon";
 export { default as IconOpen } from "./iconOpen";
 export { default as IconClose } from "./iconClose";
+export { default as ValidCredential } from "./validCredential";
+export { default as InvalidCredential } from "./invalidCredential";
+export { default as IssuedIcon } from "./issuedIcon";

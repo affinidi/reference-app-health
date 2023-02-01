@@ -1,6 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
 import { Dispatch, SetStateAction, useState } from "react";
-import { useLocation } from "react-router-dom";
 
 import { cloudWalletService } from "services/cloud-wallet";
 import {
@@ -13,6 +12,7 @@ import {
   ConfirmSignInOutput,
   SignInInput,
 } from "services/cloud-wallet/cloud-wallet.api";
+import { useRouter } from "next/router";
 
 export type ErrorResponse = {
   name: string;
@@ -156,7 +156,7 @@ const BASIC_STATE: UserState = {
 
 export const useAuthentication = () => {
   const [authState, setAuthState] = useState<UserState>(BASIC_STATE);
-  const location = useLocation();
+  const router = useRouter();
 
   const updatePartiallyState =
     <T>(updateFunction: Dispatch<SetStateAction<T>>) =>
@@ -166,7 +166,7 @@ export const useAuthentication = () => {
   const updateAuthState = updatePartiallyState<typeof authState>(setAuthState);
 
   const authenticate = async () => {
-    if (location.pathname.includes("/issuer")) {
+    if (router.pathname.includes("/issuer")) {
       try {
         const response = await userManagementService.me();
         if (response) {

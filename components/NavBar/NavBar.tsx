@@ -1,22 +1,22 @@
 import { FC } from "react";
 
 import { Typography } from "components";
-import { useNavBar } from "./useNavBar";
-
-import { HealthiLogoIcon, IconClose, IconOpen } from "assets";
 import { ROUTES } from "utils";
+import { HealthiLogoIcon, IconClose, IconOpen } from "assets";
+
+import { useNavBar } from "./useNavBar";
 
 import * as S from "./NavBar.styled";
 
 const NavBar: FC = () => {
-  const { isMenuOpen, setIsMenuOpen, handleLogOut, navigate, isAuthorized } =
+  const { isMenuOpen, setIsMenuOpen, handleLogOut, router, isAuthorized } =
     useNavBar();
 
   return (
     <>
       <S.Container>
         <S.Logo
-          onClick={() => navigate.push(ROUTES.home)}
+          onClick={() => router.push(ROUTES.home)}
           aria-label="wallet-logo"
         >
           <HealthiLogoIcon />
@@ -48,7 +48,7 @@ const NavBar: FC = () => {
             <S.ButtonContainer
               onClick={() => {
                 setIsMenuOpen(false);
-                navigate.push(ROUTES.home);
+                router.push(ROUTES.home);
               }}
             >
               <Typography variant="b1">HOME</Typography>

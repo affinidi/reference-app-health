@@ -52,6 +52,7 @@ export const ROUTES = {
   verifier: {
     welcome: "/verifier/",
     scan: "/verifier/scan",
+    result: "/verifier/result",
   },
   holder: {
     home: "/holder/",
