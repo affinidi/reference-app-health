@@ -1,6 +1,6 @@
 import { FC, useCallback, useState } from "react";
 import { Exception, Result } from "@zxing/library";
-import { extractHashAndKeyFromVSShareUrl } from "utils";
+import { extractHashAndKeyFromVSShareUrl, ROUTES } from "utils";
 import { useScanner } from "hooks/verifier/useScanner";
 import { Typography } from "../../../../components";
 import * as S from "./QrScanner.styled";
@@ -33,6 +33,9 @@ const QrScanner: FC<QrScannerProps> = () => {
         //   replace: true,
         //   state: { hash, key },
         // });
+        localStorage.set('_hash', hash)
+        localStorage.set('_key', key)
+        router.push(ROUTES.verifier.result)
       } catch (error) {
         setScanError("The QR-Code has not been recognized.");
       }
