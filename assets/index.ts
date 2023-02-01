@@ -1,2 +1,5 @@
 export { default as BackIcon } from './backIcon'
 export { default as ScanQr } from './scanQr'
+export { default as ValidCredential } from './validCredential'
+export { default as InvalidCredential } from './invalidCredential'
+export { default as IssuedIcon } from './issuedIcon'
