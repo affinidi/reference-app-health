@@ -103,7 +103,7 @@ export const Typography = styled.p<{
         return "'Nunito Sans', sans-serif"
 
       default:
-        return "'PT Serif', sans-serif"
+        return "'Montserrat', sans-serif"
     }
   }};
 

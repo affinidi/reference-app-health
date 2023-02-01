@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import { pxToRem } from 'utils'
-import { Typography } from 'components'
+import Typography from '../Typography/Typography'
 
 export const Container = styled.div`
   padding: 0 ${pxToRem(100)};
