@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
-import { pxToRem } from "utils";
-import { Box, Typography } from "components";
+import { pxToRem } from 'utils'
+import { Box, Typography } from 'components'
 
 export const Card = styled(Box)<{ $disabled?: boolean }>`
   padding: ${pxToRem(24)};
@@ -13,13 +13,17 @@ export const Card = styled(Box)<{ $disabled?: boolean }>`
   overflow-wrap: anywhere;
   cursor: pointer;
 
+  * {
+    cursor: pointer;
+  }
+
   @media (min-width: ${pxToRem(500)}) {
     width: auto;
     padding: ${pxToRem(32)};
   }
 
   ${(props) => (props.$disabled ? `opacity: 0.5; cursor: default;` : null)}
-`;
+`
 
 export const Heading = styled(Typography)`
   margin-bottom: ${pxToRem(8)};
@@ -27,7 +31,7 @@ export const Heading = styled(Typography)`
   font-weight: bold;
   line-height: 1.4;
   letter-spacing: ${pxToRem(-0.2)};
-`;
+`
 
 export const Para = styled(Typography)`
   margin-top: ${pxToRem(16)};
@@ -35,15 +39,15 @@ export const Para = styled(Typography)`
   font-style: normal;
   line-height: 1.38;
   letter-spacing: ${pxToRem(0.2)};
-`;
+`
 
 export const Details = styled.div`
   width: 80%;
-`;
+`
 
 export const Icon = styled.div`
   @media (min-width: ${pxToRem(500)}) {
     width: ${pxToRem(48)};
     height: ${pxToRem(48)};
   }
-`;
+`

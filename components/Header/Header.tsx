@@ -1,11 +1,11 @@
 import { FC } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { BackIcon } from 'assets'
 
 import Container from '../Container/Container'
 
 import * as S from './Header.styled'
-import { useRouter } from 'next/router'
 
 export type HeaderProps = {
   title: string
@@ -14,14 +14,14 @@ export type HeaderProps = {
 }
 
 const Header: FC<HeaderProps> = ({ title, hasBackIcon, path }) => {
-  const router = useRouter()
+  const navigate = useNavigate()
 
   return (
     <Container>
       <S.Container justifyContent="flex-end">
         {hasBackIcon && (
           <S.IconWrapper
-            onClick={() => (path ? router.push(path) : hasBackIcon ? router.back() : null)}
+            onClick={() => (path ? navigate(path) : hasBackIcon ? navigate(-1) : null)}
           >
             <BackIcon />
           </S.IconWrapper>

@@ -15,11 +15,17 @@ export const IconWrapper = styled.div`
 `
 
 export const Container = styled(Box)`
-  position: relative;
   height: ${pxToRem(144)};
+
+  @media (max-width: 1024px) {
+    height: ${pxToRem(164)};
+  }
 `
 
 export const Title = styled(Typography)`
   padding-bottom: ${pxToRem(20)};
-  color: #313a55;
+
+  @media (max-width: 1024px) {
+    padding-bottom: ${pxToRem(24)};
+  }
 `
