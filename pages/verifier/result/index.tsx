@@ -4,17 +4,11 @@ import { useVerifyCredentialsMutation } from "hooks/verifier/useVerification";
 import { useRetrieveSharedCredentialQuery } from "hooks/holder/useCredentials";
 import { Result } from "./components/Result";
 import { ROUTES } from "utils";
+import { useRouter } from 'next/router';
 
 const VerifierResult: FC = () => {
-  // TODO: state
-  const location = {
-    state: { hash: localStorage.getItem("_hash") || "", key: localStorage.getItem("_key") || "" },
-  };
-
-  const { data, isLoading, error } = useRetrieveSharedCredentialQuery(
-    location.state.hash,
-    location.state.key
-  );
+  const { query: { key, hash } } = useRouter()
+  const { data, isLoading, error } = useRetrieveSharedCredentialQuery(hash as string, key as string);
 
   const {
     data: verifyCredentialData,

@@ -150,7 +150,6 @@ export const useAuthentication = () => {
   const updateAuthState = updatePartiallyState<typeof authState>(setAuthState)
 
   const authenticate = async () => {
-    // TODO: test this
     if (router.pathname.includes('/issuer')) {
       try {
         const response = await userManagementService.me()

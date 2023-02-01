@@ -27,17 +27,15 @@ const QrScanner: FC<QrScannerProps> = () => {
           return;
         }
         const { hash, key } = hashAndKey;
-        // TODO: fix routing
-        // router.push({
-        //   pathname: ROUTES.verifier.result,
-        //   replace: true,
-        //   state: { hash, key },
-        // });
-        localStorage.setItem('_hash', hash)
-        localStorage.setItem('_key', key)
-        await router.push(ROUTES.verifier.result)
+        await router.push(
+          {
+            pathname: ROUTES.verifier.result,
+            query: { key, hash },
+          },
+          ROUTES.verifier.result
+        );
       } catch (error) {
-        console.error(error)
+        console.error(error);
         setScanError("The QR-Code has not been recognized.");
       }
     },
