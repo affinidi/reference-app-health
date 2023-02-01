@@ -2,7 +2,9 @@ import { FC } from "react";
 
 import { Typography } from "components";
 import { ROUTES } from "utils";
-import { HealthiLogoIcon, IconClose, IconOpen } from "assets";
+import eventiLogoIcon from "../../assets/svg/eventi-logo-icon.svg";
+import iconClose from "../../assets/svg/icon-close.svg";
+import iconOpen from "../../assets/svg/icon-menu.svg";
 
 import { useNavBar } from "./useNavBar";
 
@@ -17,10 +19,9 @@ const NavBar: FC = () => {
       <S.Container>
         <S.Logo
           onClick={() => router.push(ROUTES.home)}
+          src={eventiLogoIcon.src}
           aria-label="wallet-logo"
-        >
-          <HealthiLogoIcon />
-        </S.Logo>
+        />
 
         {isAuthorized && (
           <div>
@@ -28,16 +29,14 @@ const NavBar: FC = () => {
               <S.Icon
                 aria-label="menu-close-icon"
                 onClick={() => setIsMenuOpen(false)}
-              >
-                <IconClose />
-              </S.Icon>
+                src={iconClose.src}
+              />
             ) : (
               <S.Icon
                 aria-label="menu-open-icon"
                 onClick={() => setIsMenuOpen(true)}
-              >
-                <IconOpen />
-              </S.Icon>
+                src={iconOpen.src}
+              />
             )}
           </div>
         )}
