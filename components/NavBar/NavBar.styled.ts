@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import { pxToRem } from 'utils'
+import styled from "styled-components";
+import { pxToRem } from "utils";
 
 export const NavBar = styled.div<{ $isMenuOpen: boolean }>`
   position: fixed;
@@ -8,12 +8,13 @@ export const NavBar = styled.div<{ $isMenuOpen: boolean }>`
   height: 100vh;
   width: 100vw;
   z-index: 50;
-  background-color: ${(props) => (props.$isMenuOpen ? `rgba(6, 15, 95, 0.5)` : `none`)};
+  background-color: ${(props) =>
+    props.$isMenuOpen ? `rgba(6, 15, 95, 0.5)` : `none`};
 
   @media (min-width: 1024px) {
     padding: ${pxToRem(108)} ${pxToRem(100)};
   }
-`
+`;
 
 export const Container = styled.div`
   padding: ${pxToRem(20)} ${pxToRem(24)};
@@ -30,7 +31,7 @@ export const Container = styled.div`
     padding: ${pxToRem(22)} ${pxToRem(100)};
     height: ${pxToRem(72)};
   }
-`
+`;
 
 export const MenuContainer = styled.div<{ $isOpen: boolean }>`
   position: fixed;
@@ -43,17 +44,20 @@ export const MenuContainer = styled.div<{ $isOpen: boolean }>`
   padding: ${pxToRem(40)} ${pxToRem(24)};
   text-align: right;
   transform: ${(props) =>
-    props.$isOpen ? `translateX(${pxToRem(0)})` : `translateX(${pxToRem(524)})`};
+    props.$isOpen
+      ? `translateX(${pxToRem(0)})`
+      : `translateX(${pxToRem(524)})`};
 
   @media (min-width: 1024px) {
     padding: ${pxToRem(108)} ${pxToRem(100)};
   }
-`
+`;
 
 export const ButtonContainer = styled.div`
   cursor: pointer;
   margin-bottom: ${pxToRem(24)};
-`
+`;
+
 export const Logo = styled.img`
   cursor: pointer;
   width: ${pxToRem(100)};
@@ -62,7 +66,8 @@ export const Logo = styled.img`
     width: ${pxToRem(139)};
     height: ${pxToRem(32)};
   }
-`
+`;
+
 export const Icon = styled.img`
   cursor: pointer;
   width: ${pxToRem(24)};
@@ -71,4 +76,4 @@ export const Icon = styled.img`
     width: ${pxToRem(32)};
     height: ${pxToRem(32)};
   }
-`
+`;

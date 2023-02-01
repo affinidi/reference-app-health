@@ -1,17 +1,18 @@
-import { FC } from 'react'
+import { FC } from "react";
 
-import { Typography } from 'components'
-import { ROUTES } from 'utils'
-import eventiLogoIcon from '../../assets/svg/eventi-logo-icon.svg'
-import iconClose from '../../assets/svg/icon-close.svg'
-import iconOpen from '../../assets/svg/icon-menu.svg'
+import { Typography } from "components";
+import { ROUTES } from "utils";
+import eventiLogoIcon from "../../assets/svg/eventi-logo-icon.svg";
+import iconClose from "../../assets/svg/icon-close.svg";
+import iconOpen from "../../assets/svg/icon-menu.svg";
 
-import { useNavBar } from './useNavBar'
+import { useNavBar } from "./useNavBar";
 
-import * as S from './NavBar.styled'
+import * as S from "./NavBar.styled";
 
 const NavBar: FC = () => {
-  const { isMenuOpen, setIsMenuOpen, handleLogOut, router, isAuthorized } = useNavBar()
+  const { isMenuOpen, setIsMenuOpen, handleLogOut, router, isAuthorized } =
+    useNavBar();
 
   return (
     <>
@@ -42,23 +43,23 @@ const NavBar: FC = () => {
       </S.Container>
       {isAuthorized && isMenuOpen && (
         <S.NavBar $isMenuOpen={isMenuOpen}>
-        <S.MenuContainer $isOpen={isMenuOpen}>
-          <S.ButtonContainer
-            onClick={() => {
-              setIsMenuOpen(false)
-              router.push(ROUTES.home)
-            }}
-          >
-            <Typography variant="b1">HOME</Typography>
-          </S.ButtonContainer>
-          <S.ButtonContainer onClick={() => handleLogOut()}>
-            <Typography variant="b1">LOG OUT</Typography>
-          </S.ButtonContainer>
-        </S.MenuContainer>
+          <S.MenuContainer $isOpen={isMenuOpen}>
+            <S.ButtonContainer
+              onClick={() => {
+                setIsMenuOpen(false);
+                router.push(ROUTES.home);
+              }}
+            >
+              <Typography variant="b1">HOME</Typography>
+            </S.ButtonContainer>
+            <S.ButtonContainer onClick={() => handleLogOut()}>
+              <Typography variant="b1">LOG OUT</Typography>
+            </S.ButtonContainer>
+          </S.MenuContainer>
         </S.NavBar>
       )}
     </>
-  )
-}
+  );
+};
 
-export default NavBar
+export default NavBar;

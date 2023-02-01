@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 import { pxToRem } from 'utils'
+import Typography from '../Typography/Typography'
 
 export const Container = styled.div`
   padding: 0 ${pxToRem(100)};
@@ -10,10 +11,10 @@ export const Container = styled.div`
   }
 `
 
-export const Title = styled.div`
-  padding: ${pxToRem(24)} ${pxToRem(100)} 0;
+export const Title = styled(Typography)`
+  padding: ${pxToRem(24)} 0 ${pxToRem(40)};
 
   @media (max-width: 1024px) {
-    padding: ${pxToRem(24)} ${pxToRem(24)} 0;
+    padding: ${pxToRem(40)} 0 ${pxToRem(24)};
   }
 `

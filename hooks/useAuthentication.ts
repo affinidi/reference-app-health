@@ -2,7 +2,11 @@ import { useMutation } from '@tanstack/react-query'
 import { Dispatch, SetStateAction, useState } from 'react'
 
 import { cloudWalletService } from 'services/cloud-wallet'
-import { userManagementService, AuthConfirmationInput, isHttpError } from 'services/user-management'
+import {
+  userManagementService,
+  AuthConfirmationInput,
+  isHttpError,
+} from 'services/user-management'
 import {
   ConfirmSignInInput,
   ConfirmSignInOutput,
@@ -50,8 +54,14 @@ export const issuerSignInOrSignUp = async ({ username }: SignInInput) => {
   }
 }
 
-export const holderConfirmSignin = ({ token, confirmationCode }: ConfirmSignInInput) => {
-  return cloudWalletService.confirmSignInPasswordless({ token, confirmationCode })
+export const holderConfirmSignin = ({
+  token,
+  confirmationCode,
+}: ConfirmSignInInput) => {
+  return cloudWalletService.confirmSignInPasswordless({
+    token,
+    confirmationCode,
+  })
 }
 
 export const issuerConfirmSigninOrSignup = ({
@@ -60,7 +70,10 @@ export const issuerConfirmSigninOrSignup = ({
   signup,
 }: AuthConfirmationInput) => {
   if (signup) {
-    return userManagementService.signupConfirmation({ token, confirmationCode })
+    return userManagementService.signupConfirmation({
+      token,
+      confirmationCode,
+    })
   }
 
   return userManagementService.signInConfirmation({ token, confirmationCode })
@@ -81,8 +94,8 @@ export const logout = async (authState: UserState) => {
 }
 
 export const useHolderSignInMutation = () => {
-  return useMutation<string, ErrorResponse, SignInInput, () => void>((data: SignInInput) =>
-    holderSignIn(data),
+  return useMutation<string, ErrorResponse, SignInInput, () => void>(
+    (data: SignInInput) => holderSignIn(data)
   )
 }
 
@@ -99,14 +112,17 @@ export const useIssuerSignInMutation = () => {
 }
 
 export const useConfirmSignInMutation = () => {
-  return useMutation<ConfirmSignInOutput, ErrorResponse, ConfirmSignInInput, () => void>(
-    (data: ConfirmSignInInput) => holderConfirmSignin(data),
-  )
+  return useMutation<
+    ConfirmSignInOutput,
+    ErrorResponse,
+    ConfirmSignInInput,
+    () => void
+  >((data: ConfirmSignInInput) => holderConfirmSignin(data))
 }
 
 export const useIssuerConfirmSignInMutation = () => {
   return useMutation<boolean, ErrorResponse, AuthConfirmationInput, () => void>(
-    (data: AuthConfirmationInput) => issuerConfirmSigninOrSignup(data),
+    (data: AuthConfirmationInput) => issuerConfirmSigninOrSignup(data)
   )
 }
 
