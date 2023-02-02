@@ -49,7 +49,7 @@ export const useHolderConfirmSignIn = () => {
     if (authState.username === '') {
       router.push(ROUTES.holder.signIn)
     }
-  }, [data, error, authState, updateAuthState, router, storage, pathTo])
+  }, [data, error, router])
 
   useEffect(() => {
     if (signInData) {

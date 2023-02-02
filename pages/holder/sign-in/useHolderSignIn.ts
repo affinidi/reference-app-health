@@ -35,7 +35,7 @@ export const useHolderSignIn = () => {
       updateAuthState({ ...authState, username: username })
       if (!error) router.push(ROUTES.holder.confirmSignIn)
     }
-  }, [data, error, storage, router, authState, updateAuthState, username])
+  }, [data, error, router, username])
 
   const disabled = !username || isLoading
 
