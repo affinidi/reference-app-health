@@ -1,11 +1,12 @@
 import { FC } from 'react'
 
-import { ConfirmSignInForm } from 'modules/shared/ConfirmSignInForm/ConfirmSignInForm'
+import { ConfirmSignInForm } from 'shared/ConfirmSignInForm/ConfirmSignInForm'
 
 import { useHolderConfirmSignIn } from './useHolderConfirmSignIn'
 
 export const HolderConfirmSignIn: FC = () => {
-  const { error, onSubmit, inputs, isButtonDisabled, handleResendCode } = useHolderConfirmSignIn()
+  const { error, onSubmit, inputs, isButtonDisabled, isLoading, handleResendCode } =
+    useHolderConfirmSignIn()
 
   return (
     <ConfirmSignInForm
@@ -13,9 +14,8 @@ export const HolderConfirmSignIn: FC = () => {
       onSubmit={onSubmit}
       inputs={inputs}
       isButtonDisabled={isButtonDisabled}
+      isLoading={isLoading}
       handleResendCode={handleResendCode}
     />
   )
 }
-
-export default HolderConfirmSignIn

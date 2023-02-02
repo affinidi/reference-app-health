@@ -1,46 +1,59 @@
-import React, { forwardRef, InputHTMLAttributes } from "react";
-import * as S from "./Input.styled";
+import React, { forwardRef, InputHTMLAttributes } from 'react'
 
-export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
-  error?: string;
-  units?: string;
-  isGroup?: boolean;
+import Box from '../Box/Box'
+
+import * as S from './Input.styled'
+
+export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
+  label?: string
+  icon?: React.ReactElement
+  hasError?: boolean
+  helpText?: string
+  onChange?: (value: string, event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, isGroup, className, units, disabled, ...props }, ref) => (
-    <S.Wrapper direction="column" gap={4} className={className}>
-      {label && (
-        <S.Label variant="p4" $disabled={disabled} $hasError={!!error}>
-          {label}
-        </S.Label>
-      )}
+  ({ onChange, hasError, helpText, label, icon, className, ...props }, ref) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (onChange) {
+        onChange(event.target.value, event)
+      }
+    }
 
-      {props.type === "range" && (
-        <S.Range alignItems="flex-end">
-          {props.value} {units}
-        </S.Range>
-      )}
+    return (
+      <Box direction="column" gap={4} className={className}>
+        {label && (
+          <S.Label variant="p4" tag="label" $hasError={hasError} $disabled={props.disabled}>
+            {label}
+          </S.Label>
+        )}
 
-      <S.Input
-        disabled={disabled}
-        $hasError={!!error}
-        ref={ref}
-        {...(props.type === "range" && {
-          style: {
-            backgroundSize: `${
-              // @ts-ignore
-              ((props.value - props.min) * 100) / (props.max - props.min)
-            }% 100%`,
-          },
-        })}
-        {...props}
-      />
+        <S.InputWrapper>
+          <S.Input
+            onChange={handleChange}
+            data-testid="input"
+            $hasError={hasError}
+            ref={ref}
+            $hasIcon={!!icon}
+            {...props}
+          />
 
-      {!isGroup && error && <S.Error variant="p3">{error}</S.Error>}
-    </S.Wrapper>
-  )
-);
+          {icon && (
+            <S.Icon $hasError={hasError} $disabled={props.disabled}>
+              {icon}
+            </S.Icon>
+          )}
+        </S.InputWrapper>
 
-export default Input;
+        {helpText && (
+          <S.HelpText variant="p3" $hasError={hasError} $disabled={props.disabled}>
+            {helpText}
+          </S.HelpText>
+        )}
+      </Box>
+    )
+  },
+)
+Input.displayName = 'Input'
+
+export default Input

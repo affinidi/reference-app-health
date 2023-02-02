@@ -23,7 +23,7 @@ export const useConfirmSignIn = (message?: string) => {
       case 'holder':
         return ROUTES.holder.home
       case 'issuer':
-        return ROUTES.issuer.credential_form
+        return ROUTES.issuer.credentialForm
       default:
         return ROUTES.home
     }
@@ -95,24 +95,21 @@ export const useConfirmSignIn = (message?: string) => {
 
   const isButtonDisabled = computedCode.length < CODE_LENGTH
 
-  const inputs = Array.from({ length: INPUT_ELEMENTS_AMOUNT }, (_, index) => {
-    return (
-      <S.VerificationField
-        onChange={() => ({})}
-        value={verifyCode[index] || ''}
-        onPaste={onPaste}
-        key={index}
-        className={index.toString()}
-        autoFocus={index === 0}
-        type="text"
-        ref={refInputs[index]}
-        error={message}
-        maxLength={1}
-        onKeyDown={onKeyDown(index)}
-        isGroup
-      />
-    )
-  })
+  const inputs = Array.from({ length: INPUT_ELEMENTS_AMOUNT }, (_, index) => (
+    <S.VerificationField
+      onChange={() => ({})}
+      value={verifyCode[index] || ''}
+      onPaste={onPaste}
+      key={index}
+      className={index.toString()}
+      autoFocus={index === 0}
+      type="text"
+      ref={refInputs[index]}
+      hasError={Boolean(message)}
+      maxLength={1}
+      onKeyDown={onKeyDown(index)}
+    />
+  ))
 
   return {
     pathTo,

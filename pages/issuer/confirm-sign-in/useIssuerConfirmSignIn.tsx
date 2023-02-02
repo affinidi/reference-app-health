@@ -2,11 +2,11 @@ import { SyntheticEvent, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 import { useSessionStorage } from 'hooks/holder/useSessionStorage'
-import { useConfirmSignIn } from 'modules/shared/ConfirmSignInForm/useConfirmSignIn'
+import { useConfirmSignIn } from 'shared/ConfirmSignInForm/useConfirmSignIn'
 import { useIssuerConfirmSignInMutation, useIssuerSignInMutation } from 'hooks/useAuthentication'
 import { useAuthContext } from 'hooks/useAuthContext'
-import { ROUTES } from 'utils'
 
+import { ROUTES } from 'utils'
 
 import queryString from 'query-string'
 
@@ -14,7 +14,7 @@ export const useIssuerConfirmSignIn = () => {
   const storage = useSessionStorage()
   const router = useRouter()
   const { authState, updateAuthState } = useAuthContext()
-  const { data, error, mutateAsync } = useIssuerConfirmSignInMutation()
+  const { data, error, mutateAsync, isLoading } = useIssuerConfirmSignInMutation()
   const { data: signInData, mutateAsync: signInMutateAsync } = useIssuerSignInMutation()
   const { pathTo, computedCode, inputs, isButtonDisabled } = useConfirmSignIn(error?.message)
 
@@ -32,7 +32,7 @@ export const useIssuerConfirmSignIn = () => {
 
   const handleResendCode = async () => {
     if (!authState.username) {
-      router.push(ROUTES.issuer.signIn)
+      router.push(ROUTES.holder.signIn)
       return
     }
     await signInMutateAsync({ username: authState.username })
@@ -58,5 +58,5 @@ export const useIssuerConfirmSignIn = () => {
     }
   }, [signInData, storage])
 
-  return { error, onSubmit, inputs, isButtonDisabled, handleResendCode }
+  return { error, onSubmit, inputs, isButtonDisabled, isLoading, handleResendCode }
 }

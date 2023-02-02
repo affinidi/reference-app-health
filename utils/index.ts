@@ -56,15 +56,15 @@ export const ROUTES = {
   },
   holder: {
     home: "/holder/",
-    sign_in: "/holder/sign-in",
-    confirm_sign_in: "/holder/confirm-sign-in",
+    signIn: "/holder/sign-in",
+    confirmSignIn: "/holder/confirm-sign-in",
     credential: "/holder/credential",
     onboard: "/holder/onboard",
-    claim_vc: "/holder/claim",
+    claimVc: "/holder/claim",
   },
   issuer: {
     signIn: "/issuer/sign-in",
-    confirm_sign_in: "/issuer/confirm-sign-in",
-    credential_form: "/issuer/credential-form",
+    confirmSignIn: "/issuer/confirm-sign-in",
+    credentialForm: "/issuer/credential-form",
   },
 };

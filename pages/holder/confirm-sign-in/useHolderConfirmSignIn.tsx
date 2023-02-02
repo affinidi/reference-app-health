@@ -2,7 +2,7 @@ import { SyntheticEvent, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 import { useSessionStorage } from 'hooks/holder/useSessionStorage'
-import { useConfirmSignIn } from 'modules/shared/ConfirmSignInForm/useConfirmSignIn'
+import { useConfirmSignIn } from 'shared/ConfirmSignInForm/useConfirmSignIn'
 import { useConfirmSignInMutation, useHolderSignInMutation } from 'hooks/useAuthentication'
 import { useAuthContext } from 'hooks/useAuthContext'
 import { ROUTES } from 'utils'
@@ -11,13 +11,13 @@ export const useHolderConfirmSignIn = () => {
   const storage = useSessionStorage()
   const router = useRouter()
   const { authState, updateAuthState } = useAuthContext()
-  const { data, error, mutateAsync } = useConfirmSignInMutation()
+  const { data, error, mutateAsync, isLoading } = useConfirmSignInMutation()
   const { data: signInData, mutateAsync: signInMutateAsync } = useHolderSignInMutation()
   const { pathTo, computedCode, inputs, isButtonDisabled } = useConfirmSignIn(error?.message)
 
   const handleResendCode = async () => {
     if (!authState.username) {
-      router.push(ROUTES.holder.sign_in)
+      router.push(ROUTES.holder.signIn)
       return
     }
     await signInMutateAsync({ username: authState.username })
@@ -25,6 +25,7 @@ export const useHolderConfirmSignIn = () => {
 
   const onSubmit = async (e?: SyntheticEvent) => {
     e?.preventDefault()
+
     await mutateAsync({
       token: storage.getItem('signUpToken') || '',
       confirmationCode: computedCode,
@@ -40,13 +41,13 @@ export const useHolderConfirmSignIn = () => {
         authorizedAsHolder: true,
       })
       if (authState.vcOfferToken) {
-        router.push(ROUTES.holder.claim_vc)
+        router.push(ROUTES.holder.claimVc)
       } else if (authState.vcHash && authState.vcKey) {
         router.push(ROUTES.holder.onboard)
       } else router.push(pathTo(authState.appFlow))
     }
     if (authState.username === '') {
-      router.push(ROUTES.holder.sign_in)
+      router.push(ROUTES.holder.signIn)
     }
   }, [data, error, authState, updateAuthState, router, storage, pathTo])
 
@@ -56,5 +57,5 @@ export const useHolderConfirmSignIn = () => {
     }
   }, [signInData, storage])
 
-  return { error, onSubmit, inputs, isButtonDisabled, handleResendCode }
+  return { error, onSubmit, inputs, isButtonDisabled, handleResendCode, isLoading }
 }

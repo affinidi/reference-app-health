@@ -1,18 +1,12 @@
 import { Dispatch, FC, FormEvent, SetStateAction } from 'react'
 
-import {
-  Button,
-  Container,
-  ContainerForm,
-  Header,
-  Input,
-  Spinner,
-  Typography,
-} from '../../../components'
+import { Container, ContainerForm, Header, Input } from 'components'
+
+import * as S from './SigninForm.styled'
 
 type SignInFormProps = {
   handleSignIn(e: FormEvent): void
-  setSignInInput(data: { username: string }): void
+  setUsername(username: string): void
   disabled: boolean
   isLoading: boolean
   error: Error | null
@@ -23,7 +17,7 @@ type SignInFormProps = {
 
 export const SignInForm: FC<SignInFormProps> = ({
   handleSignIn,
-  setSignInInput,
+  setUsername,
   disabled,
   error,
   inputError,
@@ -31,28 +25,36 @@ export const SignInForm: FC<SignInFormProps> = ({
   isLoading,
   role,
 }) => {
+  const handleChange = (value: string) => {
+    if (inputError) {
+      setInputError(null)
+    }
+
+    setUsername(value)
+  }
+
   return (
     <>
       <Header title={`Sign in as ${role}`} />
+
       <Container>
         <div className="grid lg:grid-cols-3 lg:gap-16">
           <ContainerForm className="lg:col-start-2" onSubmit={handleSignIn}>
-            <Typography variant="p1">Please enter your email address to sign in.</Typography>
+            <S.Title variant="p1">Please enter your email address to sign in.</S.Title>
+
             <Input
               id="email"
               type="email"
               label="Email address"
               placeholder="Enter your email address"
-              onChange={(e) => {
-                setInputError(null)
-                setSignInInput({ username: e.target.value })
-              }}
-              error={inputError || error?.message}
+              onChange={handleChange}
+              hasError={Boolean(inputError || error?.message)}
+              helpText={inputError || error?.message}
             />
-            <Button disabled={disabled} type="submit">
+
+            <S.ButtonWrapper fullWidth disabled={disabled} loading={isLoading} type="submit">
               send verification code
-            </Button>
-            {isLoading && <Spinner />}
+            </S.ButtonWrapper>
           </ContainerForm>
         </div>
       </Container>

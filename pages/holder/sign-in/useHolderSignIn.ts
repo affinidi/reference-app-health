@@ -1,14 +1,13 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
-import { SignInInput } from 'services/cloud-wallet/cloud-wallet.api'
 import { useSessionStorage } from 'hooks/holder/useSessionStorage'
 import { useAuthContext } from 'hooks/useAuthContext'
 import { useHolderSignInMutation } from 'hooks/useAuthentication'
 import { ROUTES } from 'utils'
 
 export const useHolderSignIn = () => {
-  const [signInInput, setSignInInput] = useState<SignInInput>({ username: '' })
+  const [username, setUsername] = useState('')
   const [inputError, setInputError] = useState<string | null>(null)
   const router = useRouter()
   const storage = useSessionStorage()
@@ -23,22 +22,22 @@ export const useHolderSignIn = () => {
   const handleSignIn = async (e: FormEvent) => {
     e.preventDefault()
     setInputError(null)
-    if (!validateEmail(signInInput.username)) {
+    if (!validateEmail(username)) {
       setInputError('This is not a valid email address.')
       return
     }
-    await mutateAsync(signInInput)
+    await mutateAsync({ username })
   }
 
   useEffect(() => {
     if (data) {
       storage.setItem('signUpToken', data)
-      updateAuthState({ ...authState, username: signInInput.username })  
-      if (!error) router.push(ROUTES.holder.confirm_sign_in)
+      updateAuthState({ ...authState, username: username })
+      if (!error) router.push(ROUTES.holder.confirmSignIn)
     }
-  }, [data, error, storage, router, authState, updateAuthState, signInInput])
+  }, [data, error, storage, router, authState, updateAuthState, username])
 
-  const disabled = !signInInput.username || isLoading
+  const disabled = !username || isLoading
 
   return {
     disabled,
@@ -46,7 +45,7 @@ export const useHolderSignIn = () => {
     isLoading,
 
     handleSignIn,
-    setSignInInput,
+    setUsername,
     inputError,
     setInputError,
   }
