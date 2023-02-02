@@ -19,3 +19,5 @@ export const HolderConfirmSignIn: FC = () => {
     />
   )
 }
+
+export default HolderConfirmSignIn

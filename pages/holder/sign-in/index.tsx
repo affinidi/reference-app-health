@@ -21,3 +21,5 @@ export const HolderSignIn: FC = () => {
     />
   )
 }
+
+export default HolderSignIn

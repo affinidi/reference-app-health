@@ -19,3 +19,5 @@ export const IssuerConfirmSignIn: FC = () => {
     />
   )
 }
+
+export default IssuerConfirmSignIn

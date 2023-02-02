@@ -21,3 +21,5 @@ export const IssuerSignIn: FC = () => {
     />
   )
 }
+
+export default IssuerSignIn
