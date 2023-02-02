@@ -11,7 +11,7 @@ export const IssuanceResult: FC = () => {
   const isLoading = false
   const error = null
   const isValid = true
-  const pathTo = ROUTES.issuer.credential_form
+  const pathTo = ROUTES.issuer.credentialForm
 
   if (authState.appFlow !== 'issuer') {
     updateAuthState({ appFlow: null })

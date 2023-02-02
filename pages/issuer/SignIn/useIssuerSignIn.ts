@@ -38,7 +38,7 @@ export const useIssuerSignIn = () => {
     storage.setItem('signUpToken', data.token)
     updateAuthState({ ...authState, username: username })
     if (!error) {
-      router.push(`${ROUTES.issuer.confirm_signin}${data.signup ? '?signup=true' : ''}`)
+      router.push(`${ROUTES.issuer.confirmSignIn}${data.signup ? '?signup=true' : ''}`)
     }
   }, [data, error, storage, router, authState, updateAuthState, username])
 
