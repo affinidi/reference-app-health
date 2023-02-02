@@ -1,4 +1,5 @@
 import { SyntheticEvent, useEffect } from 'react'
+import queryString from 'query-string'
 import { useRouter } from 'next/router'
 
 import { useSessionStorage } from 'hooks/holder/useSessionStorage'
@@ -8,7 +9,6 @@ import { useAuthContext } from 'hooks/useAuthContext'
 
 import { ROUTES } from 'utils'
 
-import queryString from 'query-string'
 
 export const useIssuerConfirmSignIn = () => {
   const storage = useSessionStorage()
@@ -39,7 +39,7 @@ export const useIssuerConfirmSignIn = () => {
   }
 
   useEffect(() => {
-    if (data) {
+    if (data && !authState.authorizedAsHolder) {
       updateAuthState({
         ...authState,
         loading: false,
