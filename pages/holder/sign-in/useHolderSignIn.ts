@@ -35,6 +35,7 @@ export const useHolderSignIn = () => {
       updateAuthState({ ...authState, username: username })
       if (!error) router.push(ROUTES.holder.confirmSignIn)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, error, router, username])
 
   const disabled = !username || isLoading

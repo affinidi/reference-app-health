@@ -49,6 +49,7 @@ export const useHolderConfirmSignIn = () => {
     if (authState.username === '') {
       router.push(ROUTES.holder.signIn)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, error, router])
 
   useEffect(() => {
