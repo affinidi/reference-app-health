@@ -50,7 +50,8 @@ export const useIssuerConfirmSignIn = () => {
     if (authState.username === '') {
       router.push(ROUTES.issuer.signIn)
     }
-  }, [data, error, authState, updateAuthState, router, storage, pathTo])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, error, router])
 
   useEffect(() => {
     if (signInData) {

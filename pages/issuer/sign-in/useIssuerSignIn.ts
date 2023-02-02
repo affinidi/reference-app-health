@@ -39,7 +39,8 @@ export const useIssuerSignIn = () => {
     if (!error) {
       router.push(`${ROUTES.issuer.confirmSignIn}${data.signup ? '?signup=true' : ''}`)
     }
-  }, [data, error, storage, router, authState, updateAuthState, username])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, error, router, username])
 
   const disabled = !username || isLoading
 
