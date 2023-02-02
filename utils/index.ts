@@ -58,6 +58,9 @@ export const ROUTES = {
     home: "/holder/",
   },
   issuer: {
-    crednetial_form: "/issuer/credential-form",
+    signin: '/issuer/signin',
+    confirm_signin: '/issuer/confirm-signin',
+    credential_form: "/issuer/credential-form",
+    result: '/issuer/result',
   },
 };
