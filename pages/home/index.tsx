@@ -69,7 +69,7 @@ export const Home: FC = () => {
             gap={8}
             onClick={() => {
               updateAuthState({ appFlow: "issuer" });
-              navigate.push(ROUTES.issuer.credential_form);
+              navigate.push(ROUTES.issuer.credentialForm);
             }}
           >
             <S.Details>
