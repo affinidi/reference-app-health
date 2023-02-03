@@ -1,10 +1,10 @@
 import { FC } from 'react'
 
-import { ConfirmSignInForm } from 'modules/shared/ConfirmSignInForm/ConfirmSignInForm'
+import { ConfirmSignInForm } from '../../components/ConfirmSignInForm'
 
 import { useIssuerConfirmSignIn } from './useIssuerConfirmSignIn'
 
-export const IssuerConfirmSignIn: FC = () => {
+const IssuerConfirmSignIn: FC = () => {
   const { error, onSubmit, inputs, isButtonDisabled, isLoading, handleResendCode } =
     useIssuerConfirmSignIn()
 
@@ -19,3 +19,5 @@ export const IssuerConfirmSignIn: FC = () => {
     />
   )
 }
+
+export default IssuerConfirmSignIn;

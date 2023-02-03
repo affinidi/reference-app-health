@@ -1,11 +1,11 @@
 import { FC } from 'react'
 import { ROUTES } from 'utils'
-import { useNavigate } from 'react-router'
 import { useAuthContext } from 'hooks/useAuthContext'
 import { Result } from "./components/Result";
+import { useRouter } from 'next/router';
 
-export const IssuanceResult: FC = () => {
-  const navigate = useNavigate()
+const IssuanceResult: FC = () => {
+  const router = useRouter()
   const { authState, updateAuthState } = useAuthContext()
 
   const isLoading = false
@@ -15,8 +15,10 @@ export const IssuanceResult: FC = () => {
 
   if (authState.appFlow !== 'issuer') {
     updateAuthState({ appFlow: null })
-    navigate(ROUTES.home)
+    router.push(ROUTES.home)
   }
 
   return <Result isLoading={isLoading} error={error} isValid={isValid} pathTo={pathTo} />
 }
+
+export default IssuanceResult;

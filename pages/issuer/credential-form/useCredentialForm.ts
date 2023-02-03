@@ -11,7 +11,7 @@ import {
 } from 'services/issuance/issuance.api'
 import { issuanceService } from 'services/issuance'
 
-import { adjustForUTCOffset } from './CredentialForm'
+import { adjustForUTCOffset } from './index'
 
 import { JSON_SCHEMA_URL, ROUTES } from 'utils'
 

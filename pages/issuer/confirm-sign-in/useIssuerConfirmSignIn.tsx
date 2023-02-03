@@ -3,7 +3,7 @@ import queryString from 'query-string'
 import { useRouter } from 'next/router'
 
 import { useSessionStorage } from 'hooks/holder/useSessionStorage'
-import { useConfirmSignIn } from 'modules/shared/ConfirmSignInForm/useConfirmSignIn'
+import { useConfirmSignIn } from '../../components/ConfirmSignInForm/useConfirmSignIn'
 import { useIssuerConfirmSignInMutation, useIssuerSignInMutation } from 'hooks/useAuthentication'
 import { useAuthContext } from 'hooks/useAuthContext'
 

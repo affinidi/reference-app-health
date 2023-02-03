@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import { useNavigate } from 'react-router'
 
 import { useAuthContext } from 'hooks/useAuthContext'
 import { ErrorResponse } from 'hooks/useAuthentication'
@@ -8,6 +7,7 @@ import { Box, Button, Container, Header, Spinner } from 'components'
 
 import { ResultContent } from './ResultContent'
 import * as S from './Result.styled'
+import { useRouter } from 'next/router'
 
 export type ResultProps = {
   isLoading: boolean
@@ -17,11 +17,11 @@ export type ResultProps = {
 }
 
 export const Result: FC<ResultProps> = ({ isLoading, isValid, error, pathTo }) => {
-  const navigate = useNavigate()
+  const router = useRouter()
   const { authState } = useAuthContext()
 
   if (authState.appFlow === null || authState.appFlow === 'holder') {
-    navigate(ROUTES.home)
+    router.push(ROUTES.home)
   }
 
   if (isLoading) {
@@ -58,7 +58,7 @@ export const Result: FC<ResultProps> = ({ isLoading, isValid, error, pathTo }) =
                 : 'Your ticket has been issued.'}
             </S.ResultPara>
 
-            <Button fullWidth variant="outlined" onClick={() => navigate(pathTo)}>
+            <Button fullWidth variant="outlined" onClick={() => router.push(pathTo)}>
               {authState.appFlow === 'verifier' ? 'SCAN NEXT QR CODE' : 'ISSUE NEXT TICKET'}
             </Button>
           </Box>

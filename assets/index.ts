@@ -6,3 +6,4 @@ export { default as IssuerFlowIcon } from "./issuerFlowIcon";
 export { default as ValidCredential } from "./validCredential";
 export { default as InvalidCredential } from "./invalidCredential";
 export { default as IssuedIcon } from "./issuedIcon";
+export { default as LoadingIcon } from "./loading";

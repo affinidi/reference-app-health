@@ -1,10 +1,10 @@
 import { FC } from 'react'
 
-import { SignInForm } from 'modules/shared/SignInForm'
+import { SignInForm } from '../../components/SignInForm'
 
 import { useIssuerSignIn } from './useIssuerSignIn'
 
-export const IssuerSignIn: FC = () => {
+const IssuerSignIn: FC = () => {
   const { handleSignIn, setUsername, disabled, error, isLoading, inputError, setInputError } =
     useIssuerSignIn()
 
@@ -21,3 +21,5 @@ export const IssuerSignIn: FC = () => {
     />
   )
 }
+
+export default IssuerSignIn;

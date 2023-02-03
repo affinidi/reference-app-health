@@ -19,7 +19,7 @@ export const adjustForUTCOffset = (date: Date) => {
   )
 }
 
-export const CredentialForm: FC = () => {
+const CredentialForm: FC = () => {
   const { handleSubmit, validate, isCreating } = useCredentialForm()
 
   return (
@@ -134,3 +134,5 @@ export const CredentialForm: FC = () => {
     </>
   )
 }
+
+export default CredentialForm;
