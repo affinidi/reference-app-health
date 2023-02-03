@@ -37,7 +37,6 @@ export const useHolderConfirmSignIn = () => {
     if (data && !authState.authorizedAsHolder) {
       storage.setItem('accessToken', data.accessToken)
       updateAuthState({
-        ...authState,
         loading: false,
         authorizedAsHolder: true,
       })

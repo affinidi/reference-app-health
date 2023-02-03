@@ -33,7 +33,7 @@ export const useHolderSignIn = () => {
   useEffect(() => {
     if (data && !authState.username) {
       storage.setItem('signUpToken', data)
-      updateAuthState({ ...authState, username: username })
+      updateAuthState({ username: username })
       if (!error) router.push(ROUTES.holder.confirmSignIn)
     }
   }, [authState, data, error, router, storage, updateAuthState, username])

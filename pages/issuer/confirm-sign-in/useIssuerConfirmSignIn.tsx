@@ -41,7 +41,6 @@ export const useIssuerConfirmSignIn = () => {
   useEffect(() => {
     if (data && !authState.authorizedAsIssuer) {
       updateAuthState({
-        ...authState,
         loading: false,
         authorizedAsIssuer: true,
       })
