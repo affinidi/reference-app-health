@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { ROUTES } from 'utils'
 import { useNavigate } from 'react-router'
 import { useAuthContext } from 'hooks/useAuthContext'
-import { Result } from 'components'
+import { Result } from "./components/Result";
 
 export const IssuanceResult: FC = () => {
   const navigate = useNavigate()

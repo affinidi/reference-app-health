@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router'
 
 import { useAuthContext } from 'hooks/useAuthContext'
 import { ErrorResponse } from 'hooks/useAuthentication'
-import { PATHS } from 'router/paths'
+import { ROUTES } from 'utils'
 import { Box, Button, Container, Header, Spinner } from 'components'
 
 import { ResultContent } from './ResultContent'
@@ -16,12 +16,12 @@ export type ResultProps = {
   pathTo: string
 }
 
-const Result: FC<ResultProps> = ({ isLoading, isValid, error, pathTo }) => {
+export const Result: FC<ResultProps> = ({ isLoading, isValid, error, pathTo }) => {
   const navigate = useNavigate()
   const { authState } = useAuthContext()
 
   if (authState.appFlow === null || authState.appFlow === 'holder') {
-    navigate(PATHS.HOME)
+    navigate(ROUTES.home)
   }
 
   if (isLoading) {

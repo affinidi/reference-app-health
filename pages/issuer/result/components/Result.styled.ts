@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { pxToRem } from 'utils'
 
-import Typography from '../Typography/Typography'
+import Typography from '../../../../components/Typography/Typography'
 
 export const ResultTitle = styled(Typography)<{ $isVerified?: boolean; $isIssuance?: boolean }>`
   color: ${(props) =>
