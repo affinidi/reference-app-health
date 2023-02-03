@@ -31,13 +31,12 @@ export const useHolderSignIn = () => {
   }
 
   useEffect(() => {
-    if (data) {
+    if (data && !authState.username) {
       storage.setItem('signUpToken', data)
       updateAuthState({ ...authState, username: username })
       if (!error) router.push(ROUTES.holder.confirmSignIn)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, error, router, username])
+  }, [authState, data, error, router, storage, updateAuthState, username])
 
   const disabled = !username || isLoading
 

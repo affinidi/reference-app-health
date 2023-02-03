@@ -14,7 +14,7 @@ export const useHolderConfirmSignIn = () => {
   const { authState, updateAuthState } = useAuthContext()
   const { data, error, mutateAsync, isLoading } = useConfirmSignInMutation()
   const { data: signInData, mutateAsync: signInMutateAsync } = useHolderSignInMutation()
-  const { pathTo, computedCode, inputs, isButtonDisabled } = useConfirmSignIn(error?.message)
+  const { computedCode, inputs, isButtonDisabled } = useConfirmSignIn(error?.message)
 
   const handleResendCode = async () => {
     if (!authState.username) {
@@ -34,7 +34,7 @@ export const useHolderConfirmSignIn = () => {
   }
 
   useEffect(() => {
-    if (data) {
+    if (data && !authState.authorizedAsHolder) {
       storage.setItem('accessToken', data.accessToken)
       updateAuthState({
         ...authState,
@@ -45,13 +45,12 @@ export const useHolderConfirmSignIn = () => {
         router.push(ROUTES.holder.claimVc)
       } else if (authState.vcHash && authState.vcKey) {
         router.push(ROUTES.holder.onboard)
-      } else router.push(pathTo(authState.appFlow))
+      } else router.push(ROUTES.holder.home)
     }
     if (authState.username === '') {
       router.push(ROUTES.holder.signIn)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, error, router])
+  }, [authState, data, error, router, storage, updateAuthState])
 
   useEffect(() => {
     if (signInData) {

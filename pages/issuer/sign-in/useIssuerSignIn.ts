@@ -30,17 +30,16 @@ export const useIssuerSignIn = () => {
   }
 
   useEffect(() => {
-    if (!data) {
+    if (!data || authState.username) {
       return
     }
 
     storage.setItem('signUpToken', data.token)
-    updateAuthState({ ...authState, username: username })
+    updateAuthState({...authState, username: username })
     if (!error) {
       router.push(`${ROUTES.issuer.confirmSignIn}${data.signup ? '?signup=true' : ''}`)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, error, router, username])
+  }, [authState, data, error, router, storage, updateAuthState, username])
 
   const disabled = !username || isLoading
 
