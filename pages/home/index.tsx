@@ -10,7 +10,7 @@ import { HolderFlowIcon, VerifierFlowIcon, IssuerFlowIcon } from "assets/index";
 import * as S from "./home.styled";
 
 export const Home: FC = () => {
-  const navigate = useRouter();
+  const router = useRouter();
 
   const { updateAuthState } = useAuthContext();
 
@@ -27,7 +27,7 @@ export const Home: FC = () => {
             gap={8}
             onClick={() => {
               updateAuthState({ appFlow: "holder" });
-              navigate.push(ROUTES.holder.home);
+              router.push(ROUTES.holder.home);
             }}
           >
             <S.Details>
@@ -48,7 +48,7 @@ export const Home: FC = () => {
             gap={8}
             onClick={() => {
               updateAuthState({ appFlow: "verifier" });
-              navigate.push(ROUTES.verifier.welcome);
+              router.push(ROUTES.verifier.welcome);
             }}
           >
             <S.Details>
@@ -69,7 +69,7 @@ export const Home: FC = () => {
             gap={8}
             onClick={() => {
               updateAuthState({ appFlow: "issuer" });
-              navigate.push(ROUTES.issuer.crednetial_form);
+              router.push(ROUTES.issuer.credentialForm);
             }}
           >
             <S.Details>
