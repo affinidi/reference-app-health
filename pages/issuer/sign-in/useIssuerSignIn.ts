@@ -30,15 +30,14 @@ export const useIssuerSignIn = () => {
   }
 
   useEffect(() => {
-    if (!data || authState.username) {
-      return
-    }
+    if (data && !authState.username) {
 
     storage.setItem('signUpToken', data.token)
-    updateAuthState({ username: username })
+    updateAuthState({username: username })
     if (!error) {
       router.push(`${ROUTES.issuer.confirmSignIn}${data.signup ? '?signup=true' : ''}`)
     }
+  }
   }, [authState, data, error, router, storage, updateAuthState, username])
 
   const disabled = !username || isLoading

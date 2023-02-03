@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { SignInForm } from 'shared/SignInForm'
+import { SignInForm } from 'pages/components/SignInForm'
 
 import { useIssuerSignIn } from './useIssuerSignIn'
 

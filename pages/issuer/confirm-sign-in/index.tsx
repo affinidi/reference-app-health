@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { ConfirmSignInForm } from 'shared/ConfirmSignInForm/ConfirmSignInForm'
+import { ConfirmSignInForm } from 'pages/components/ConfirmSignInForm/ConfirmSignInForm'
 
 import { useIssuerConfirmSignIn } from './useIssuerConfirmSignIn'
 

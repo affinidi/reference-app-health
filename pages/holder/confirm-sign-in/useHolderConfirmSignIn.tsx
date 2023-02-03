@@ -2,7 +2,7 @@ import { SyntheticEvent, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 import { useSessionStorage } from 'hooks/holder/useSessionStorage'
-import { useConfirmSignIn } from 'shared/ConfirmSignInForm/useConfirmSignIn'
+import { useConfirmSignIn } from 'pages/components/ConfirmSignInForm/useConfirmSignIn'
 import { useConfirmSignInMutation, useHolderSignInMutation } from 'hooks/useAuthentication'
 import { useAuthContext } from 'hooks/useAuthContext'
 
