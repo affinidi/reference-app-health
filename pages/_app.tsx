@@ -5,6 +5,7 @@ import { ThemeProvider } from "styled-components";
 import { theme } from "utils/theme";
 import { AuthProvider } from "contexts/AuthContext";
 import { NavBar } from "components";
+import { AuthRedirect } from "components/Authorisation/AuthRedirect";
 
 export default function App({
   Component,
@@ -22,8 +23,10 @@ export default function App({
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <NavBar />
-          <Component {...pageProps} />
+          <AuthRedirect>
+            <NavBar />
+            <Component {...pageProps} />
+          </AuthRedirect>
         </AuthProvider>
       </QueryClientProvider>
     </ThemeProvider>

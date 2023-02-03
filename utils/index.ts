@@ -56,6 +56,11 @@ export const ROUTES = {
   },
   holder: {
     home: "/holder/",
+    signIn: "/holder/sign-in",
+    confirmSignIn: "/holder/confirm-sign-in",
+    credential: "/holder/credential",
+    onboard: "/holder/onboard",
+    claimVc: "/holder/claim",
   },
   issuer: {
     signIn: '/issuer/sign-in',
