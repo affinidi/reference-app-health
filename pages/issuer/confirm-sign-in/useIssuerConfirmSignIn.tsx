@@ -3,7 +3,7 @@ import queryString from 'query-string'
 import { useRouter } from 'next/router'
 
 import { useSessionStorage } from 'hooks/holder/useSessionStorage'
-import { useConfirmSignIn } from '../../components/ConfirmSignInForm/useConfirmSignIn'
+import { useConfirmSignIn } from 'pages/components/ConfirmSignInForm/useConfirmSignIn'
 import { useIssuerConfirmSignInMutation, useIssuerSignInMutation } from 'hooks/useAuthentication'
 import { useAuthContext } from 'hooks/useAuthContext'
 
@@ -15,7 +15,7 @@ export const useIssuerConfirmSignIn = () => {
   const { authState, updateAuthState } = useAuthContext()
   const { data, error, mutateAsync, isLoading } = useIssuerConfirmSignInMutation()
   const { data: signInData, mutateAsync: signInMutateAsync } = useIssuerSignInMutation()
-  const { pathTo, computedCode, inputs, isButtonDisabled } = useConfirmSignIn(error?.message)
+  const { computedCode, inputs, isButtonDisabled } = useConfirmSignIn(error?.message)
 
   const onSubmit = async (e?: SyntheticEvent) => {
     e?.preventDefault()
@@ -38,18 +38,17 @@ export const useIssuerConfirmSignIn = () => {
   }
 
   useEffect(() => {
-    if (data) {
+    if (data && !authState.authorizedAsIssuer) {
       updateAuthState({
-        ...authState,
         loading: false,
         authorizedAsIssuer: true,
       })
-      router.push(pathTo(authState.appFlow))
+      router.push(ROUTES.issuer.credentialForm)
     }
     if (authState.username === '') {
       router.push(ROUTES.issuer.signIn)
     }
-  }, [data, error, authState, updateAuthState, router, storage, pathTo])
+  }, [authState, data, error, router, updateAuthState])
 
   useEffect(() => {
     if (signInData) {

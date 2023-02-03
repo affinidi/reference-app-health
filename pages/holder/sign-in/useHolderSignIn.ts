@@ -3,16 +3,17 @@ import { useRouter } from 'next/router'
 
 import { useSessionStorage } from 'hooks/holder/useSessionStorage'
 import { useAuthContext } from 'hooks/useAuthContext'
-import { useIssuerSignInMutation } from 'hooks/useAuthentication'
+import { useHolderSignInMutation } from 'hooks/useAuthentication'
+
 import { ROUTES } from 'utils'
 
-export const useIssuerSignIn = () => {
+export const useHolderSignIn = () => {
   const [username, setUsername] = useState('')
   const [inputError, setInputError] = useState<string | null>(null)
   const router = useRouter()
   const storage = useSessionStorage()
   const { authState, updateAuthState } = useAuthContext()
-  const { data, mutateAsync, error, isLoading } = useIssuerSignInMutation()
+  const { data, mutateAsync, error, isLoading } = useHolderSignInMutation()
 
   const validateEmail = (email: string) =>
     email.match(
@@ -31,11 +32,9 @@ export const useIssuerSignIn = () => {
 
   useEffect(() => {
     if (data && !authState.username) {
-      storage.setItem('signUpToken', data.token)
-      updateAuthState({username: username })
-      if (!error) {
-        router.push(`${ROUTES.issuer.confirmSignIn}${data.signup ? '?signup=true' : ''}`)
-      }
+      storage.setItem('signUpToken', data)
+      updateAuthState({ username: username })
+      if (!error) router.push(ROUTES.holder.confirmSignIn)
     }
   }, [authState, data, error, router, storage, updateAuthState, username])
 

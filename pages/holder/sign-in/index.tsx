@@ -2,11 +2,11 @@ import { FC } from 'react'
 
 import { SignInForm } from 'pages/components/SignInForm'
 
-import { useIssuerSignIn } from './useIssuerSignIn'
+import { useHolderSignIn } from './useHolderSignIn'
 
-export const IssuerSignIn: FC = () => {
+export const HolderSignIn: FC = () => {
   const { handleSignIn, setUsername, disabled, error, isLoading, inputError, setInputError } =
-    useIssuerSignIn()
+    useHolderSignIn()
 
   return (
     <SignInForm
@@ -15,11 +15,11 @@ export const IssuerSignIn: FC = () => {
       disabled={disabled}
       isLoading={isLoading}
       error={error}
-      role="issuer"
       inputError={inputError}
       setInputError={setInputError}
+      role="holder"
     />
   )
 }
 
-export default IssuerSignIn
+export default HolderSignIn

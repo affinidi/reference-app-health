@@ -1,6 +1,7 @@
 import { ClipboardEventHandler, KeyboardEvent, useMemo, useRef, useState } from 'react'
 
-import { ROUTES, Keys } from 'utils'
+import { ROUTES } from 'utils'
+import { Keys } from 'enums/keys'
 
 import * as S from './ConfirmSignInForm.styled'
 

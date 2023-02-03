@@ -2,11 +2,11 @@ import { FC } from 'react'
 
 import { ConfirmSignInForm } from 'pages/components/ConfirmSignInForm/ConfirmSignInForm'
 
-import { useIssuerConfirmSignIn } from './useIssuerConfirmSignIn'
+import { useHolderConfirmSignIn } from './useHolderConfirmSignIn'
 
-export const IssuerConfirmSignIn: FC = () => {
+export const HolderConfirmSignIn: FC = () => {
   const { error, onSubmit, inputs, isButtonDisabled, isLoading, handleResendCode } =
-    useIssuerConfirmSignIn()
+    useHolderConfirmSignIn()
 
   return (
     <ConfirmSignInForm
@@ -20,4 +20,4 @@ export const IssuerConfirmSignIn: FC = () => {
   )
 }
 
-export default IssuerConfirmSignIn
+export default HolderConfirmSignIn
