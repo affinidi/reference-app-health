@@ -110,8 +110,6 @@ export const useCredentialForm = () => {
   const validate = useCallback((values: EventSubjectData) => {
     const errors = {} as Partial<EventSubjectData>
 
-    console.log('values: ', values);
-
     if (!values.eventName) {
       errors.eventName = 'Mandatory field'
     }

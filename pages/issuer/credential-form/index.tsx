@@ -29,8 +29,6 @@ const CredentialForm: FC = () => {
 
                   <S.Heading variant="h6">Event details</S.Heading>
 
-                  {console.log(formikProps.errors)}
-
                   <div className="grid lg:grid-cols-2 lg:gap-x-8">
                     <S.InputWrapper
                       label="Event name"

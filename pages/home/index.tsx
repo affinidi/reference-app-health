@@ -19,7 +19,7 @@ export const Home: FC = () => {
       <Header title="Home" />
 
       <Container title="Please select one of the following options">
-        <div className="grid lg:grid-cols-3 gap-12 lg:gap-16">
+        <S.Wrapper className="grid lg:grid-cols-3 gap-12 lg:gap-16">
           <S.Card
             alignItems="center"
             direction="row"
@@ -82,7 +82,7 @@ export const Home: FC = () => {
               <IssuerFlowIcon />
             </S.Icon>
           </S.Card>
-        </div>
+        </S.Wrapper>
       </Container>
     </>
   );
