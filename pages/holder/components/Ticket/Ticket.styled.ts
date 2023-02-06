@@ -32,8 +32,8 @@ export const Ticket = styled.div<{ isValid: boolean }>`
     left: 0;
     background-image: ${(props) =>
       props.isValid
-        ? `url(/src/assets/svg/ticket-preview-highlight-blue.svg)`
-        : `url(/src/assets/svg/ticket-preview-highlight-gray.svg)`};
+        ? `url(/assets/svg/ticket-preview-highlight-blue.svg)`
+        : `url(/assets/svg/ticket-preview-highlight-gray.svg)`};
     border-radius: 15px 0 0 15px;
   }
 
@@ -44,8 +44,8 @@ export const Ticket = styled.div<{ isValid: boolean }>`
     right: 0;
     background-image: ${(props) =>
       props.isValid
-        ? `url(/src/assets/svg/watermark-blue.svg)`
-        : `url(/src/assets/svg/watermark-gray.svg)`};
+        ? `url(/assets/svg/watermark-blue.svg)`
+        : `url(/assets/svg/watermark-gray.svg)`};
     border-radius: 0 15px 15px 0;
   }
 `
