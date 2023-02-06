@@ -9,7 +9,6 @@ import { useAuthContext } from 'hooks/useAuthContext'
 
 import { ROUTES } from 'utils'
 
-
 export const useIssuerConfirmSignIn = () => {
   const storage = useSessionStorage()
   const router = useRouter()
@@ -32,7 +31,7 @@ export const useIssuerConfirmSignIn = () => {
 
   const handleResendCode = async () => {
     if (!authState.username) {
-      router.push(ROUTES.holder.signIn)
+      router.push(ROUTES.issuer.signIn)
       return
     }
     await signInMutateAsync({ username: authState.username })
@@ -44,8 +43,9 @@ export const useIssuerConfirmSignIn = () => {
         loading: false,
         authorizedAsIssuer: true,
       })
-      router.push(ROUTES.issuer.credentialForm)
+      // router.push(ROUTES.issuer.credentialForm)
     }
+
     if (authState.username === '') {
       router.push(ROUTES.issuer.signIn)
     }

@@ -65,5 +65,6 @@ export const ROUTES = {
     signIn: "/issuer/sign-in",
     confirmSignIn: "/issuer/confirm-sign-in",
     credentialForm: "/issuer/credential-form",
+    result: "/issuer/result",
   },
 };

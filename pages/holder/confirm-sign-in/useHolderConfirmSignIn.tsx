@@ -40,12 +40,14 @@ export const useHolderConfirmSignIn = () => {
         loading: false,
         authorizedAsHolder: true,
       })
+
       if (authState.vcOfferToken) {
         router.push(ROUTES.holder.claimVc)
       } else if (authState.vcHash && authState.vcKey) {
         router.push(ROUTES.holder.onboard)
-      } else router.push(ROUTES.holder.home)
+      }
     }
+
     if (authState.username === '') {
       router.push(ROUTES.holder.signIn)
     }
