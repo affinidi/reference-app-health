@@ -134,8 +134,6 @@ export type UserState = {
   authorizedAsIssuer: boolean
   authorizedAsHolder: boolean
   loading: boolean
-  vcHash: string
-  vcKey: string
   vcOfferToken: string
   appFlow: 'holder' | 'issuer' | 'verifier' | null
 }
@@ -148,8 +146,6 @@ const BASIC_STATE: UserState = {
   authorizedAsHolder: false,
   authorizedAsIssuer: false,
   loading: true,
-  vcHash: '',
-  vcKey: '',
   vcOfferToken: '',
   appFlow: null,
 }

@@ -15,6 +15,10 @@ export const Ticket = styled.div<{ isValid: boolean }>`
   filter: drop-shadow(0 4px 29px rgba(0, 0, 0, 0.15));
   border-radius: 15px;
   cursor: pointer;
+  
+  * {
+    cursor: pointer;
+  }
 
   &:before,
   &:after {
@@ -32,8 +36,8 @@ export const Ticket = styled.div<{ isValid: boolean }>`
     left: 0;
     background-image: ${(props) =>
       props.isValid
-        ? `url(/assets/svg/ticket-preview-highlight-blue.svg)`
-        : `url(/assets/svg/ticket-preview-highlight-gray.svg)`};
+        ? `url(./images/ticket-preview-highlight-blue.svg)`
+        : `url(./images/ticket-preview-highlight-gray.svg)`};
     border-radius: 15px 0 0 15px;
   }
 
@@ -44,8 +48,8 @@ export const Ticket = styled.div<{ isValid: boolean }>`
     right: 0;
     background-image: ${(props) =>
       props.isValid
-        ? `url(/assets/svg/watermark-blue.svg)`
-        : `url(/assets/svg/watermark-gray.svg)`};
+        ? `url(./images/watermark-blue.svg)`
+        : `url(./images/watermark-gray.svg)`};
     border-radius: 0 15px 15px 0;
   }
 `

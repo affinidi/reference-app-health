@@ -43,8 +43,6 @@ export const useHolderConfirmSignIn = () => {
 
       if (authState.vcOfferToken) {
         router.push(ROUTES.holder.claimVc)
-      } else if (authState.vcHash && authState.vcKey) {
-        router.push(ROUTES.holder.onboard)
       }
     }
 

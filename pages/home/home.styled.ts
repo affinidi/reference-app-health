@@ -3,6 +3,10 @@ import styled from 'styled-components'
 import { pxToRem } from 'utils'
 import { Box, Typography } from 'components'
 
+export const Wrapper = styled.div`
+  padding-bottom: ${pxToRem(40)};
+`
+
 export const Card = styled(Box)<{ $disabled?: boolean }>`
   padding: ${pxToRem(24)};
   margin-top: ${pxToRem(40)};

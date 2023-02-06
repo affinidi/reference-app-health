@@ -1,14 +1,16 @@
 import { FC, useEffect } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/router'
+
+import { ROUTES } from 'utils'
 import { useAuthContext } from 'hooks/useAuthContext'
 import { useClaimCredentialQuery } from 'hooks/holder/useCredentials'
 import { Container, Header, Spinner } from 'components'
-import { ROUTES } from 'utils'
 
-export const ClaimVc: FC = () => {
+const ClaimVc: FC = () => {
   const { authState, updateAuthState } = useAuthContext()
-  const navigate = useNavigate()
-  const [searchParams] = useSearchParams()
+  const { push } = useRouter()
+  const searchParams = useSearchParams()
   const credentialOfferRequestToken = searchParams.get('credentialOfferRequestToken')
   const { data, refetch } = useClaimCredentialQuery(authState.vcOfferToken)
 
@@ -16,17 +18,15 @@ export const ClaimVc: FC = () => {
     if (credentialOfferRequestToken !== null) {
       updateAuthState({ vcOfferToken: credentialOfferRequestToken as string })
     }
-    if (!authState.authorizedAsHolder) {
-      navigate(ROUTES.holder.signIn)
-    }
+
     refetch()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams])
+  }, [push, refetch, searchParams, credentialOfferRequestToken])
 
   useEffect(() => {
-    if (data) navigate(`${ROUTES.holder.credential}/${data.credentialIds[0]}`)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
+    if (data) {
+      push(`${ROUTES.holder.credential}/${data.credentialIds[0]}`)
+    }
+  }, [data, push])
 
   return (
     <>
@@ -37,3 +37,5 @@ export const ClaimVc: FC = () => {
     </>
   )
 }
+
+export default ClaimVc
