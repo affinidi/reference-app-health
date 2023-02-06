@@ -9,7 +9,7 @@ import NoTicket from 'assets/noTicket'
 
 import { JSON_SCHEMA_URL } from 'utils'
 
-import TicketCard from './home/TicketCard/TicketCard'
+import TicketCard from './components/TicketCard/TicketCard'
 import * as S from './index.styled'
 
 const Home: FC = () => {

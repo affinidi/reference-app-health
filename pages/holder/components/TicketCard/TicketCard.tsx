@@ -4,7 +4,7 @@ import { Credential } from 'pages/holder/types'
 import { ROUTES } from 'utils'
 
 import { Box, Typography } from 'components'
-import { Ticket } from './components/Ticket/Ticket.styled'
+import { Ticket } from '../Ticket/Ticket'
 import { useRouter } from 'next/router'
 
 export type TicketCardProps = {

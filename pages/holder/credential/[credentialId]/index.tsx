@@ -5,7 +5,7 @@ import { StoredW3CCredential } from 'services/cloud-wallet/cloud-wallet.api'
 import { useGetCredentialQuery, useShareCredentialMutation } from 'hooks/holder/useCredentials'
 import { ROUTES } from 'utils'
 import { Container, Header, Spinner } from 'components'
-import { Credential } from '../../components/Credential'
+import { Credential } from '../../components/Credential/Credential'
 
 
 
