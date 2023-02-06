@@ -43,8 +43,9 @@ export const useIssuerConfirmSignIn = () => {
         loading: false,
         authorizedAsIssuer: true,
       })
-      router.push(ROUTES.issuer.credentialForm)
+      // router.push(ROUTES.issuer.credentialForm)
     }
+
     if (authState.username === '') {
       router.push(ROUTES.issuer.signIn)
     }

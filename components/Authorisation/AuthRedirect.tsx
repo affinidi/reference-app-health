@@ -11,7 +11,7 @@ type AuthRedirectProps = {
 }
 
 export const AuthRedirect: FC<AuthRedirectProps> = ({ children }) => {
-  const { route, push } = useRouter()
+  const { route, replace } = useRouter()
   const { authState, authenticate } = useAuthContext()
   const [isLoading, setIsLoading] = useState(true)
 
@@ -20,44 +20,42 @@ export const AuthRedirect: FC<AuthRedirectProps> = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    (async () => {
-      if (!authState.loading) {
-        if (route.includes('/holder')) {
-          if (
-            !authState.authorizedAsHolder &&
-            route !== ROUTES.holder.signIn &&
-            route !== ROUTES.holder.confirmSignIn
-          ) {
-            await push(ROUTES.holder.signIn)
-          } else if (
-            authState.authorizedAsHolder &&
-            (route === ROUTES.holder.signIn ||
-              route === ROUTES.holder.confirmSignIn)
-          ) {
-            await push(ROUTES.holder.home)
-          }
+    if (!authState.loading) {
+      if (route.includes('/holder')) {
+        if (
+          !authState.authorizedAsHolder &&
+          route !== ROUTES.holder.signIn &&
+          route !== ROUTES.holder.confirmSignIn
+        ) {
+           replace(ROUTES.holder.signIn)
+        } else if (
+          authState.authorizedAsHolder &&
+          (route === ROUTES.holder.signIn ||
+            route === ROUTES.holder.confirmSignIn)
+        ) {
+           replace(ROUTES.holder.home)
         }
-
-        if (route.includes('/issuer')) {
-          if (
-            !authState.authorizedAsIssuer &&
-            route !== ROUTES.issuer.signIn &&
-            route !== ROUTES.issuer.confirmSignIn
-          ) {
-            await push(ROUTES.issuer.signIn)
-          } else if (
-            authState.authorizedAsIssuer &&
-            (route === ROUTES.issuer.signIn ||
-              route === ROUTES.issuer.confirmSignIn)
-          ) {
-            await push(ROUTES.issuer.credentialForm)
-          }
-        }
-
-        setIsLoading(false)
       }
-    })()
-  }, [route, push, authState])
+
+      if (route.includes('/issuer')) {
+        if (
+          !authState.authorizedAsIssuer &&
+          route !== ROUTES.issuer.signIn &&
+          route !== ROUTES.issuer.confirmSignIn
+        ) {
+          replace(ROUTES.issuer.signIn)
+        } else if (
+          authState.authorizedAsIssuer &&
+          (route === ROUTES.issuer.signIn ||
+            route === ROUTES.issuer.confirmSignIn)
+        ) {
+           replace(ROUTES.issuer.credentialForm)
+        }
+      }
+
+      setIsLoading(false)
+    }
+  }, [route, replace, authState])
 
   if (isLoading) {
     return <Spinner />
