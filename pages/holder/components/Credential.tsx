@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { AnyData } from 'services/cloud-wallet/cloud-wallet.api'
 import { format } from 'date-fns'
 
-import { TicketDetails } from 'components'
+import { TicketDetails } from './TicketDetails/TicketDetails'
 
 import * as S from './Credential.styled'
 

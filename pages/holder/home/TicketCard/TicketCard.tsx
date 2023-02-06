@@ -1,11 +1,11 @@
 import { FC } from 'react'
-import { useNavigate } from 'react-router'
 
 import { Credential } from 'pages/holder/types'
 import { ROUTES } from 'utils'
 
 import { Box, Typography } from 'components'
 import { Ticket } from './components/Ticket/Ticket.styled'
+import { useRouter } from 'next/router'
 
 export type TicketCardProps = {
   credential: Credential
@@ -13,12 +13,12 @@ export type TicketCardProps = {
 }
 
 const TicketCard: FC<TicketCardProps> = ({ credential, isValid }) => {
-  const navigate = useNavigate()
+  const router = useRouter()
 
   return (
     <Ticket
       isValid={isValid}
-      onClick={() => navigate(`${ROUTES.holder.credential}/${credential.credentialId}`)}
+      onClick={() => router.push(`${ROUTES.holder.credential}/${credential.credentialId}`)}
     >
       <Box gap={32}>
         <Box>

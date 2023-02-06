@@ -1,14 +1,17 @@
 import { FC, useEffect } from 'react'
-import { useParams } from 'react-router'
+import { useRouter } from 'next/router'
 
 import { StoredW3CCredential } from 'services/cloud-wallet/cloud-wallet.api'
 import { useGetCredentialQuery, useShareCredentialMutation } from 'hooks/holder/useCredentials'
 import { ROUTES } from 'utils'
 import { Container, Header, Spinner } from 'components'
-import { Credential } from '../components/Credential'
+import { Credential } from '../../components/Credential'
 
-export const CredentialView: FC = () => {
-  const { credentialId } = useParams()
+
+
+const CredentialView: FC = () => {
+  const router = useRouter()
+  const { credentialId } = router.query
   const { data, isLoading } = useGetCredentialQuery(credentialId || '')
   const { data: shareCredentialData, mutateAsync } = useShareCredentialMutation()
 
@@ -45,3 +48,5 @@ export const CredentialView: FC = () => {
     </>
   )
 }
+
+export default CredentialView

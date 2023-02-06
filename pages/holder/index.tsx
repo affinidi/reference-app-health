@@ -2,17 +2,17 @@ import { FC } from 'react'
 import { format } from 'date-fns'
 import { StoredW3CCredential } from 'services/cloud-wallet/cloud-wallet.api'
 import { useCredentialsQuery } from 'hooks/holder/useCredentials' 
-import { Credential } from '../types'
+import { Credential } from './types'
 
 import { Container, Header, Spinner, Typography } from 'components'
 import NoTicket from 'assets/noTicket'
 
 import { JSON_SCHEMA_URL } from 'utils'
 
-import TicketCard from './TicketCard/TicketCard'
-import * as S from './Home.styled'
+import TicketCard from './home/TicketCard/TicketCard'
+import * as S from './index.styled'
 
-export const Home: FC = () => {
+const Home: FC = () => {
   const { data, error, isLoading } = useCredentialsQuery()
 
   if (isLoading) {
@@ -116,3 +116,5 @@ export const Home: FC = () => {
     </>
   )
 }
+
+export default Home
