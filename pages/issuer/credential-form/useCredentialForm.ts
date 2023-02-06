@@ -3,6 +3,9 @@ import { useCallback, useState } from 'react'
 import * as EmailValidator from 'email-validator'
 import { useRouter } from 'next/router'
 
+import { JSON_SCHEMA_URL, ROUTES } from 'utils'
+import { apiKeyHash, projectDid, projectId } from 'pages/env'
+
 import { parseSchemaURL } from 'services/issuance/parse.schema.url'
 import {
   CreateIssuanceInput,
@@ -11,11 +14,16 @@ import {
 } from 'services/issuance/issuance.api'
 import { issuanceService } from 'services/issuance'
 
-import { adjustForUTCOffset } from './index'
-
-import { JSON_SCHEMA_URL, ROUTES } from 'utils'
-
-import { apiKeyHash, projectDid, projectId } from 'pages/env'
+export const adjustForUTCOffset = (date: Date) => {
+  return new Date(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate(),
+    date.getUTCHours(),
+    date.getUTCMinutes(),
+    date.getUTCSeconds(),
+  )
+}
 
 export type EventSubjectData = {
   eventName: string

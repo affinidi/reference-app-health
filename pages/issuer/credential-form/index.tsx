@@ -2,22 +2,11 @@ import { FC } from 'react'
 import { Formik } from 'formik'
 
 import { Container, Header, Input, Textarea } from 'components'
+import { JSON_SCHEMA_URL } from 'utils'
 
 import { initialValues, useCredentialForm } from './useCredentialForm'
 import * as S from './CredentialForm.styled'
 
-import { JSON_SCHEMA_URL } from 'utils'
-
-export const adjustForUTCOffset = (date: Date) => {
-  return new Date(
-    date.getUTCFullYear(),
-    date.getUTCMonth(),
-    date.getUTCDate(),
-    date.getUTCHours(),
-    date.getUTCMinutes(),
-    date.getUTCSeconds(),
-  )
-}
 
 const CredentialForm: FC = () => {
   const { handleSubmit, validate, isCreating } = useCredentialForm()

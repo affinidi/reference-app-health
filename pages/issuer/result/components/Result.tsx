@@ -1,8 +1,8 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 
+import { ROUTES } from 'utils'
 import { useAuthContext } from 'hooks/useAuthContext'
 import { ErrorResponse } from 'hooks/useAuthentication'
-import { ROUTES } from 'utils'
 import { Box, Button, Container, Header, Spinner } from 'components'
 
 import { ResultContent } from './ResultContent'
@@ -20,9 +20,11 @@ export const Result: FC<ResultProps> = ({ isLoading, isValid, error, pathTo }) =
   const router = useRouter()
   const { authState } = useAuthContext()
 
-  if (authState.appFlow === null || authState.appFlow === 'holder') {
-    router.push(ROUTES.home)
-  }
+  useEffect(() => {
+    if (authState.appFlow === null || authState.appFlow === 'holder') {
+      router.push(ROUTES.home)
+    }
+  }, [authState.appFlow, router])
 
   if (isLoading) {
     return (
@@ -58,7 +60,12 @@ export const Result: FC<ResultProps> = ({ isLoading, isValid, error, pathTo }) =
                 : 'Your ticket has been issued.'}
             </S.ResultPara>
 
-            <Button fullWidth variant="outlined" onClick={() => router.push(pathTo)}>
+            <Button
+              fullWidth
+              color="quaternary"
+              variant="outlined"
+              onClick={() => router.push(pathTo)}
+            >
               {authState.appFlow === 'verifier' ? 'SCAN NEXT QR CODE' : 'ISSUE NEXT TICKET'}
             </Button>
           </Box>
@@ -67,5 +74,3 @@ export const Result: FC<ResultProps> = ({ isLoading, isValid, error, pathTo }) =
     </>
   )
 }
-
-export default Result
