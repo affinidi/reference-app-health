@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import { useRouter } from 'next/router';
 
 import { ROUTES } from 'utils'
@@ -12,10 +12,11 @@ const IssuanceResult: FC = () => {
 
   const pathTo = ROUTES.issuer.credentialForm
 
-  if (authState.appFlow !== 'issuer') {
-    updateAuthState({ appFlow: null })
-    router.push(ROUTES.home)
-  }
+  useEffect(() => {
+    if (authState.appFlow !== 'issuer') {
+      router.push(ROUTES.home)
+    }
+  }, [authState.appFlow, router])
 
   return <Result isLoading={false} error={null} isValid={true} pathTo={pathTo} />
 }
