@@ -26,18 +26,20 @@ export const useIssuerSignIn = () => {
       setInputError('This is not a valid email address.')
       return
     }
+
+    updateAuthState({ username })
     await mutateAsync({ username })
   }
 
   useEffect(() => {
-    if (data && !authState.username) {
+    if (data) {
       storage.setItem('signUpToken', data.token)
-      updateAuthState({username: username })
+
       if (!error) {
         router.push(`${ROUTES.issuer.confirmSignIn}${data.signup ? '?signup=true' : ''}`)
       }
     }
-  }, [authState, data, error, router, storage, updateAuthState, username])
+  }, [data, error, router, storage])
 
   const disabled = !username || isLoading
 
