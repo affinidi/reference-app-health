@@ -64,6 +64,7 @@ export const useRetrieveSharedCredentialQuery = (hash: string, key: string) => {
 export const useClaimCredentialQuery = (token: string) => {
   return useQuery<ClaimCredentialOutput, ErrorResponse>(['claimedCredentials', { token }], () =>
     claimCredential(token),
+    { enabled: Boolean(token) }
   )
 }
 

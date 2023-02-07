@@ -12,18 +12,18 @@ const ClaimVc: FC = () => {
   const { push } = useRouter()
   const searchParams = useSearchParams()
   const credentialOfferRequestToken = searchParams.get('credentialOfferRequestToken')
-  const { data, refetch } = useClaimCredentialQuery(authState.vcOfferToken)
+  const { data, refetch } = useClaimCredentialQuery(authState.authorizedAsHolder ? authState.vcOfferToken : '')
 
   useEffect(() => {
     if (credentialOfferRequestToken !== null) {
-      updateAuthState({ vcOfferToken: credentialOfferRequestToken as string })
+      updateAuthState({ vcOfferToken: credentialOfferRequestToken })
     }
-
-    refetch()
-  }, [push, refetch, searchParams, credentialOfferRequestToken])
+  }, [refetch, credentialOfferRequestToken])
 
   useEffect(() => {
     if (data) {
+      updateAuthState({ vcOfferToken: '' })
+
       push(`${ROUTES.holder.credential}/${data.credentialIds[0]}`)
     }
   }, [data, push])

@@ -33,7 +33,11 @@ export const AuthRedirect: FC<AuthRedirectProps> = ({ children }) => {
           (route === ROUTES.holder.signIn ||
             route === ROUTES.holder.confirmSignIn)
         ) {
-           replace(ROUTES.holder.home)
+          if (authState.vcOfferToken) {
+            replace(ROUTES.holder.claimVc)
+          } else {
+            replace(ROUTES.holder.home)
+          }
         }
       }
 
