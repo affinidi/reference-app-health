@@ -27,7 +27,7 @@ export const AuthRedirect: FC<AuthRedirectProps> = ({ children }) => {
           route !== ROUTES.holder.signIn &&
           route !== ROUTES.holder.confirmSignIn
         ) {
-           replace(ROUTES.holder.signIn)
+          replace(ROUTES.holder.signIn)
         } else if (
           authState.authorizedAsHolder &&
           (route === ROUTES.holder.signIn ||
@@ -53,7 +53,7 @@ export const AuthRedirect: FC<AuthRedirectProps> = ({ children }) => {
           (route === ROUTES.issuer.signIn ||
             route === ROUTES.issuer.confirmSignIn)
         ) {
-           replace(ROUTES.issuer.credentialForm)
+          replace(ROUTES.issuer.credentialForm)
         }
       }
 

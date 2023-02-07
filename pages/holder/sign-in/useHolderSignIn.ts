@@ -27,16 +27,20 @@ export const useHolderSignIn = () => {
       setInputError('This is not a valid email address.')
       return
     }
+
+    updateAuthState({ username })
     await mutateAsync({ username })
   }
 
   useEffect(() => {
-    if (data && !authState.username) {
+    if (data) {
       storage.setItem('signUpToken', data)
-      updateAuthState({ username: username })
-      if (!error) router.push(ROUTES.holder.confirmSignIn)
+
+      if (!error) {
+        router.push(ROUTES.holder.confirmSignIn)
+      }
     }
-  }, [authState, data, error, router, storage, updateAuthState, username])
+  }, [data, error, router, storage])
 
   const disabled = !username || isLoading
 
