@@ -2,16 +2,8 @@ import { useMutation } from '@tanstack/react-query'
 import { Dispatch, SetStateAction, useState } from 'react'
 
 import { cloudWalletService } from 'services/cloud-wallet'
-import {
-  userManagementService,
-  AuthConfirmationInput,
-  isHttpError,
-} from 'services/user-management'
-import {
-  ConfirmSignInInput,
-  ConfirmSignInOutput,
-  SignInInput,
-} from 'services/cloud-wallet/cloud-wallet.api'
+import { AuthConfirmationInput, isHttpError, userManagementService, } from 'services/user-management'
+import { ConfirmSignInInput, ConfirmSignInOutput, SignInInput, } from 'services/cloud-wallet/cloud-wallet.api'
 import { useRouter } from 'next/router'
 
 export type ErrorResponse = {
@@ -135,7 +127,6 @@ export type UserState = {
   authorizedAsHolder: boolean
   loading: boolean
   vcOfferToken: string
-  appFlow: 'holder' | 'issuer' | 'verifier' | null
 }
 
 const BASIC_STATE: UserState = {
@@ -147,7 +138,6 @@ const BASIC_STATE: UserState = {
   authorizedAsIssuer: false,
   loading: true,
   vcOfferToken: '',
-  appFlow: null,
 }
 
 export const useAuthentication = () => {

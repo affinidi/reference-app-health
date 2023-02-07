@@ -1,18 +1,14 @@
-import { FC } from "react";
-import { useRouter } from "next/router";
+import { FC } from 'react'
+import { useRouter } from 'next/router'
 
-import { Container, Header } from "components";
-import { ROUTES } from "utils";
-import { useAuthContext } from "hooks/useAuthContext";
+import { ROUTES } from 'utils'
+import { HolderFlowIcon, IssuerFlowIcon, VerifierFlowIcon } from 'assets'
+import { Container, Header } from 'components'
 
-import { HolderFlowIcon, VerifierFlowIcon, IssuerFlowIcon } from "assets/index";
-
-import * as S from "./home.styled";
+import * as S from './home.styled'
 
 export const Home: FC = () => {
   const router = useRouter();
-
-  const { updateAuthState } = useAuthContext();
 
   return (
     <>
@@ -25,10 +21,7 @@ export const Home: FC = () => {
             direction="row"
             justifyContent="space-between"
             gap={8}
-            onClick={() => {
-              updateAuthState({ appFlow: "holder" });
-              router.push(ROUTES.holder.home);
-            }}
+            onClick={() => router.push(ROUTES.holder.home)}
           >
             <S.Details>
               <S.Heading variant="h6">Collect tickets</S.Heading>
@@ -46,10 +39,7 @@ export const Home: FC = () => {
             direction="row"
             justifyContent="space-between"
             gap={8}
-            onClick={() => {
-              updateAuthState({ appFlow: "verifier" });
-              router.push(ROUTES.verifier.welcome);
-            }}
+            onClick={() => router.push(ROUTES.verifier.welcome)}
           >
             <S.Details>
               <S.Heading variant="h6">Verify tickets</S.Heading>
@@ -67,10 +57,7 @@ export const Home: FC = () => {
             direction="row"
             justifyContent="space-between"
             gap={8}
-            onClick={() => {
-              updateAuthState({ appFlow: "issuer" });
-              router.push(ROUTES.issuer.credentialForm);
-            }}
+            onClick={() => router.push(ROUTES.issuer.credentialForm)}
           >
             <S.Details>
               <S.Heading variant="h6">Issue ticket</S.Heading>
