@@ -5,14 +5,11 @@ import { ROUTES } from 'utils'
 import { W3CCredential } from 'services/verifier/verifier.api'
 import { useVerifyCredentialsMutation } from 'hooks/verifier/useVerification'
 import { useRetrieveSharedCredentialQuery } from 'hooks/holder/useCredentials'
-import { useAuthContext } from 'hooks/useAuthContext'
-import { Spinner } from 'components'
 
 import { Result } from '../../components/Result/Result'
 
 const VerifierResult: FC = () => {
   const { query: { key, hash } } = useRouter()
-  const { authState } = useAuthContext()
   const { data, isLoading, error } = useRetrieveSharedCredentialQuery(hash as string, key as string);
 
   const {
@@ -27,10 +24,6 @@ const VerifierResult: FC = () => {
       mutateAsync(data as W3CCredential);
     }
   }, [data, mutateAsync]);
-
-  if (!authState.authorizedAsIssuer) {
-    return <Spinner />
-  }
 
   return (
     <Result

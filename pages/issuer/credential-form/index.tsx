@@ -1,13 +1,12 @@
 import { FC } from 'react'
 import { Formik } from 'formik'
 
-import { Container, Header, Input, Spinner, Textarea } from 'components'
 import { JSON_SCHEMA_URL } from 'utils'
+import { useAuthContext } from 'hooks/useAuthContext'
+import { Container, Header, Input, Spinner, Textarea } from 'components'
 
 import { initialValues, useCredentialForm } from './useCredentialForm'
 import * as S from './CredentialForm.styled'
-import { useAuthContext } from 'hooks/useAuthContext'
-
 
 const CredentialForm: FC = () => {
   const { authState } = useAuthContext()
