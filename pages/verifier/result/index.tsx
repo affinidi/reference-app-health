@@ -1,10 +1,12 @@
-import { FC, useEffect } from "react";
-import { W3CCredential } from "services/verifier/verifier.api";
-import { useVerifyCredentialsMutation } from "hooks/verifier/useVerification";
-import { useRetrieveSharedCredentialQuery } from "hooks/holder/useCredentials";
-import { Result } from "./components/Result";
-import { ROUTES } from "utils";
-import { useRouter } from 'next/router';
+import { FC, useEffect } from 'react'
+import { useRouter } from 'next/router'
+
+import { ROUTES } from 'utils'
+import { W3CCredential } from 'services/verifier/verifier.api'
+import { useVerifyCredentialsMutation } from 'hooks/verifier/useVerification'
+import { useRetrieveSharedCredentialQuery } from 'hooks/holder/useCredentials'
+
+import { Result } from '../../components/Result/Result'
 
 const VerifierResult: FC = () => {
   const { query: { key, hash } } = useRouter()
@@ -24,14 +26,12 @@ const VerifierResult: FC = () => {
   }, [data, mutateAsync]);
 
   return (
-    <>
-      <Result
-        isLoading={isLoading || verifyCredentialIsLoading}
-        error={error || verifyCredentialError}
-        isValid={!!verifyCredentialData?.isValid}
-        pathTo={ROUTES.verifier.scan}
-      />
-    </>
+    <Result
+      isLoading={isLoading || verifyCredentialIsLoading}
+      error={error || verifyCredentialError}
+      isValid={!!verifyCredentialData?.isValid}
+      pathTo={ROUTES.verifier.scan}
+    />
   );
 };
 

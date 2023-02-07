@@ -1,19 +1,24 @@
 import { FC } from 'react'
 import { format } from 'date-fns'
 import { StoredW3CCredential } from 'services/cloud-wallet/cloud-wallet.api'
-import { useCredentialsQuery } from 'hooks/holder/useCredentials' 
+import { useCredentialsQuery } from 'hooks/holder/useCredentials'
 import { Credential } from './types'
 
-import { Container, Header, Spinner, Typography } from 'components'
-import NoTicket from 'assets/noTicket'
-
 import { JSON_SCHEMA_URL } from 'utils'
+import { useAuthContext } from 'hooks/useAuthContext'
+import NoTicket from 'assets/noTicket'
+import { Container, Header, Spinner, Typography } from 'components'
 
 import TicketCard from './components/TicketCard/TicketCard'
 import * as S from './index.styled'
 
 const Home: FC = () => {
+  const { authState } = useAuthContext()
   const { data, error, isLoading } = useCredentialsQuery()
+
+  if (!authState.authorizedAsHolder) {
+    return <Spinner />
+  }
 
   if (isLoading) {
     return (
@@ -51,7 +56,7 @@ const Home: FC = () => {
         <Container>
           <div className="grid justify-content-center">
             <Typography align="center" variant="p2">
-              You don't have any tickets yet.
+              You don&apos;t have any tickets yet.
             </Typography>
             <S.IconContainer>
               <NoTicket />
