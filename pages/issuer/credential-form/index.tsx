@@ -1,9 +1,9 @@
-import { FC } from "react";
-import { Field, Formik } from "formik";
+import { FC } from 'react'
+import { Field, Formik } from 'formik'
 
-import { JSON_SCHEMA_URL } from "utils";
-import { useAuthContext } from "hooks/useAuthContext";
-import { Container, Header, Input, Select, Spinner } from "components";
+import { JSON_SCHEMA_URL } from 'utils'
+import { useAuthContext } from 'hooks/useAuthContext'
+import { Container, Header, Input, Select, Spinner } from 'components'
 
 import {
   DosageUnitOptions,
@@ -11,53 +11,53 @@ import {
   initialValues,
   useCredentialForm,
   SelectOption,
-} from "./useCredentialForm";
-import * as S from "./CredentialForm.styled";
+} from './useCredentialForm'
+import * as S from './CredentialForm.styled'
 
 const CredentialForm: FC = () => {
-  const { authState } = useAuthContext();
-  const { handleSubmit, validate, isCreating } = useCredentialForm();
+  const { authState } = useAuthContext()
+  const { handleSubmit, validate, isCreating } = useCredentialForm()
 
   const CustomSelectComponent = ({ field, form, ...props }) => {
-    const { name } = field;
+    const { name } = field
     const handleSelectChange = (value: unknown) => {
-      form.setFieldValue(name, (value as SelectOption).value);
-    };
+      form.setFieldValue(name, (value as SelectOption).value)
+    }
 
-    return <Select onChange={handleSelectChange} {...props} />;
-  };
+    return <Select onChange={handleSelectChange} {...props} />
+  }
 
   if (!authState.authorizedAsIssuer) {
-    return <Spinner />;
+    return <Spinner />
   }
 
   return (
     <>
-      <Header title="Enter details" />
+      <Header title='Enter details' />
 
       <Container>
-        <div className="grid lg:grid-cols-12">
-          <div className="lg:col-span-8 lg:col-start-3">
+        <div className='grid lg:grid-cols-12'>
+          <div className='lg:col-span-8 lg:col-start-3'>
             <Formik
               initialValues={initialValues}
               onSubmit={handleSubmit}
               validate={validate}
             >
               {(formikProps) => (
-                <form id="form" onSubmit={formikProps.handleSubmit}>
-                  <S.Title variant="p1">
+                <form id='form' onSubmit={formikProps.handleSubmit}>
+                  <S.Title variant='p1'>
                     Please fill in the form below to issue a prescription.
                   </S.Title>
 
-                  <Input label="Schema URL" value={JSON_SCHEMA_URL} disabled />
+                  <Input label='Schema URL' value={JSON_SCHEMA_URL} disabled />
 
-                  <S.Heading variant="h6">Prescription details</S.Heading>
+                  <S.Heading variant='h6'>Prescription details</S.Heading>
 
-                  <div className="grid lg:grid-cols-2 lg:gap-x-8">
+                  <div className='grid lg:grid-cols-2 lg:gap-x-8'>
                     <S.InputWrapper
-                      label="Medication"
-                      placeholder="Enter medication name"
-                      name="medicationName"
+                      label='Medication'
+                      placeholder='Enter medication name'
+                      name='medicationName'
                       maxLength={100}
                       value={formikProps.values.medicationName}
                       onChange={(_, event) => formikProps.handleChange(event)}
@@ -69,15 +69,15 @@ const CredentialForm: FC = () => {
                       helpText={
                         formikProps.touched.medicationName
                           ? formikProps.errors.medicationName
-                          : ""
+                          : ''
                       }
                       onBlur={formikProps.handleBlur}
                     />
                     <S.InputWrapper
-                      label="Date"
-                      placeholder="DD/MM/YYYY"
-                      name="prescribedAt"
-                      type="date"
+                      label='Date'
+                      placeholder='DD/MM/YYYY'
+                      name='prescribedAt'
+                      type='date'
                       value={formikProps.values.prescribedAt}
                       onChange={(_, event) => formikProps.handleChange(event)}
                       hasError={
@@ -88,13 +88,13 @@ const CredentialForm: FC = () => {
                       helpText={
                         formikProps.touched.prescribedAt
                           ? formikProps.errors.prescribedAt
-                          : ""
+                          : ''
                       }
                       onBlur={formikProps.handleBlur}
                     />
                     <S.InputWrapper
-                      label="Practitioner"
-                      name="practitionerName"
+                      label='Practitioner'
+                      name='practitionerName'
                       placeholder="Enter practitioner's name"
                       maxLength={100}
                       value={formikProps.values.practitionerName}
@@ -107,19 +107,19 @@ const CredentialForm: FC = () => {
                       helpText={
                         formikProps.touched.practitionerName
                           ? formikProps.errors.practitionerName
-                          : ""
+                          : ''
                       }
                       onBlur={formikProps.handleBlur}
                     />
                   </div>
-                  <div className="grid lg:grid-cols-2 lg:gap-x-8">
-                    <div className="grid lg:grid-rows-2">
-                      <S.Heading variant="h6">Dosage</S.Heading>
-                      <div className="grid lg:grid-cols-2 lg:gap-x-8">
+                  <div className='grid lg:grid-cols-2 lg:gap-x-8'>
+                    <div className='grid lg:grid-rows-2'>
+                      <S.Heading variant='h6'>Dosage</S.Heading>
+                      <div className='grid lg:grid-cols-2 lg:gap-x-8'>
                         <S.InputWrapper
-                          label="Amount"
-                          name="dosageAmount"
-                          type="number"
+                          label='Amount'
+                          name='dosageAmount'
+                          type='number'
                           value={formikProps.values.dosageAmount}
                           onChange={(_, event) =>
                             formikProps.handleChange(event)
@@ -132,13 +132,13 @@ const CredentialForm: FC = () => {
                           helpText={
                             formikProps.touched.dosageAmount
                               ? formikProps.errors.dosageAmount
-                              : ""
+                              : ''
                           }
                           onBlur={formikProps.handleBlur}
                         />
                         <Field
-                          label="Unit"
-                          name="dosageUnit"
+                          label='Unit'
+                          name='dosageUnit'
                           defaultValue={DosageUnitOptions[0]}
                           options={DosageUnitOptions}
                           component={CustomSelectComponent}
@@ -150,19 +150,19 @@ const CredentialForm: FC = () => {
                           helpText={
                             formikProps.touched.dosageUnit
                               ? formikProps.errors.dosageUnit
-                              : ""
+                              : ''
                           }
                           onBlur={formikProps.handleBlur}
                         />
                       </div>
                     </div>
-                    <div className="grid lg:grid-rows-2">
-                      <S.Heading variant="h6">Frequency</S.Heading>
-                      <div className="grid lg:grid-cols-2 lg:gap-x-8">
+                    <div className='grid lg:grid-rows-2'>
+                      <S.Heading variant='h6'>Frequency</S.Heading>
+                      <div className='grid lg:grid-cols-2 lg:gap-x-8'>
                         <S.InputWrapper
-                          label="Times"
-                          name="frequencyTimes"
-                          type="number"
+                          label='Times'
+                          name='frequencyTimes'
+                          type='number'
                           value={formikProps.values.frequencyTimes}
                           onChange={(_, event) =>
                             formikProps.handleChange(event)
@@ -175,13 +175,13 @@ const CredentialForm: FC = () => {
                           helpText={
                             formikProps.touched.frequencyTimes
                               ? formikProps.errors.frequencyTimes
-                              : ""
+                              : ''
                           }
                           onBlur={formikProps.handleBlur}
                         />
                         <Field
-                          label="Interval"
-                          name="frequencyIntervalUnit"
+                          label='Interval'
+                          name='frequencyIntervalUnit'
                           defaultValue={FrequencyIntervalUnitOptions[0]}
                           options={FrequencyIntervalUnitOptions}
                           component={CustomSelectComponent}
@@ -195,7 +195,7 @@ const CredentialForm: FC = () => {
                           helpText={
                             formikProps.touched.frequencyIntervalUnit
                               ? formikProps.errors.frequencyIntervalUnit
-                              : ""
+                              : ''
                           }
                           onBlur={formikProps.handleBlur}
                         />
@@ -203,14 +203,14 @@ const CredentialForm: FC = () => {
                     </div>
                   </div>
 
-                  <S.Heading variant="h6">Patient information</S.Heading>
+                  <S.Heading variant='h6'>Patient information</S.Heading>
 
-                  <div className="grid lg:grid-cols-2 lg:gap-x-8">
+                  <div className='grid lg:grid-cols-2 lg:gap-x-8'>
                     <S.InputWrapper
-                      label="Patient name"
-                      name="patientName"
+                      label='Patient name'
+                      name='patientName'
                       maxLength={100}
-                      placeholder="Enter patient name"
+                      placeholder='Enter patient name'
                       value={formikProps.values.patientName}
                       onChange={(_, event) => formikProps.handleChange(event)}
                       hasError={
@@ -221,15 +221,15 @@ const CredentialForm: FC = () => {
                       helpText={
                         formikProps.touched.patientName
                           ? formikProps.errors.patientName
-                          : ""
+                          : ''
                       }
                       onBlur={formikProps.handleBlur}
                     />
                     <S.InputWrapper
-                      label="Patient email"
-                      name="patientEmail"
-                      type="email"
-                      placeholder="Enter patient email"
+                      label='Patient email'
+                      name='patientEmail'
+                      type='email'
+                      placeholder='Enter patient email'
                       maxLength={100}
                       value={formikProps.values.patientEmail}
                       onChange={(_, event) => formikProps.handleChange(event)}
@@ -241,15 +241,15 @@ const CredentialForm: FC = () => {
                       helpText={
                         formikProps.touched.patientEmail
                           ? formikProps.errors.patientEmail
-                          : ""
+                          : ''
                       }
                       onBlur={formikProps.handleBlur}
                     />
                   </div>
 
                   <S.ButtonWrapper
-                    type="submit"
-                    form="form"
+                    type='submit'
+                    form='form'
                     disabled={!(formikProps.isValid && formikProps.dirty)}
                     loading={isCreating}
                   >
@@ -262,7 +262,7 @@ const CredentialForm: FC = () => {
         </div>
       </Container>
     </>
-  );
-};
+  )
+}
 
-export default CredentialForm;
+export default CredentialForm
