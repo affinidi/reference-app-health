@@ -8,7 +8,7 @@ export type BrandColorsKeys =
   | '5'
   | '3'
   | '1'
-export type BrandColorsNames = 'primary' | 'secondary'
+export type BrandColorsNames = 'primary' | 'secondary' | 'tertiary'
 export type NeutralColorsNames = 'primary' | 'secondary'
 export type UtilityColorsKeys =
   | '100'
@@ -27,27 +27,39 @@ type BrandColors = {
 }
 
 const primaryBrand: BrandColors = {
-  100: '#060f5f',
-  90: '#1f276f',
-  70: '#51578f',
-  50: '#8287af',
-  30: '#b4b7cf',
-  15: '#dadbe7',
-  5: '#f3f3f7',
-  3: '#f8f8fa',
-  1: '#fdfdfd',
+  100: '#403ea7',
+  90: '#5351b0',
+  70: '#7978c1',
+  50: '#9f9ed3',
+  30: '#c6c5e5',
+  15: '#e2e2f2',
+  5: '#f5f5fb',
+  3: '#f9f9fc',
+  1: '#fdfdfe',
 }
 
 const secondaryBrand: BrandColors = {
-  100: '#279af1',
-  90: '#3da4f2',
-  70: '#68b8f5',
-  50: '#93ccf8',
-  30: '#bee1fb',
-  15: '#dff0fd',
-  5: '#f4fafe',
-  3: '#f9fcff',
-  1: '#fdfeff',
+  100: '#6bf7d4',
+  90: '#7af8d8',
+  70: '#97f9e1',
+  50: '#b5fbe9',
+  30: '#d3fdf2',
+  15: '#e9fef9',
+  5: '#f8fffd',
+  3: '#fbfffe',
+  1: '#feffff',
+}
+
+const tertiaryBrand: BrandColors = {
+  100: '#2eba97',
+  90: '#43c1a1',
+  70: '#6dcfb6',
+  50: '#96ddcb',
+  30: '#c0eae0',
+  15: '#e0f5ef',
+  5: '#f5fcfa',
+  3: '#f9fdfc',
+  1: '#fdfefe',
 }
 
 type NeutralColors = {
@@ -91,6 +103,7 @@ export const theme: Theme = {
     brand: {
       primary: primaryBrand,
       secondary: secondaryBrand,
+      tertiary: tertiaryBrand,
     },
     neutral: {
       primary: primaryNeutral,

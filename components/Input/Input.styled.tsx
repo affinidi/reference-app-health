@@ -17,7 +17,7 @@ const getTextColor = (props: Props) => {
   }
 
   if (props.$disabled) {
-    return props.theme.colors.neutral.primary['30']
+    return props.theme.colors.neutral.primary['50']
   }
 
   return ''
@@ -110,11 +110,11 @@ export const Input = styled.input<Pick<Props, '$hasError'> & { $hasIcon: boolean
     `}
   ::placeholder {
     font-weight: 500;
-    color: ${(props) => props.theme.colors.neutral.primary['30']};
+    color: ${(props) => props.theme.colors.neutral.primary['50']};
   }
 
   &[disabled] {
-    color: ${(props) => props.theme.colors.neutral.primary['30']};
+    color: ${(props) => props.theme.colors.neutral.primary['50']};
   }
 `
 
