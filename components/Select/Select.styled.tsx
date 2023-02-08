@@ -65,7 +65,7 @@ export const Select = styled(ReactSelect)<{ $hasError?: boolean }>`
   }
 
   .select__control {
-    min-height: ${pxToRem(44)};
+    min-height: ${pxToRem(48)};
     border-radius: 4px;
     border-width: ${({ $hasError }) => ($hasError ? '2px' : '1px')};
     border-style: solid;

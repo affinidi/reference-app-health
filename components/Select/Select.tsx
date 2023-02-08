@@ -31,9 +31,9 @@ export const Select = ({
   placeholder = 'Select option',
   ...props
 }: SelectProps) => (
-  <S.Wrapper direction="column" gap={8} className={className}>
+  <S.Wrapper direction="column" gap={4} className={className}>
     {label && (
-      <S.Label variant="p7" $hasError={hasError} $disabled={isDisabled}>
+      <S.Label variant="p4" $hasError={hasError} $disabled={isDisabled}>
         {label}
       </S.Label>
     )}

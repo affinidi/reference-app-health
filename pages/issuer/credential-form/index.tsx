@@ -46,7 +46,7 @@ const CredentialForm: FC = () => {
               {(formikProps) => (
                 <form id="form" onSubmit={formikProps.handleSubmit}>
                   <S.Title variant="p1">
-                    Please fill in the form below to issue a credential.
+                    Please fill in the form below to issue a prescription.
                   </S.Title>
 
                   <Input label="Schema URL" value={JSON_SCHEMA_URL} disabled />
@@ -55,7 +55,7 @@ const CredentialForm: FC = () => {
 
                   <div className="grid lg:grid-cols-2 lg:gap-x-8">
                     <S.InputWrapper
-                      label="Medication name"
+                      label="Medication"
                       placeholder="Enter medication name"
                       name="medicationName"
                       maxLength={100}
@@ -115,7 +115,7 @@ const CredentialForm: FC = () => {
                   <div className="grid lg:grid-cols-2 lg:gap-x-8">
                     <div className="grid lg:grid-rows-2">
                       <S.Heading variant="h6">Dosage</S.Heading>
-                      <div className="grid lg:grid-cols-2 lg:gap-x-4">
+                      <div className="grid lg:grid-cols-2 lg:gap-x-8">
                         <S.InputWrapper
                           label="Amount"
                           name="dosageAmount"
@@ -137,6 +137,7 @@ const CredentialForm: FC = () => {
                           onBlur={formikProps.handleBlur}
                         />
                         <Field
+                          label="Unit"
                           name="dosageUnit"
                           defaultValue={DosageUnitOptions[0]}
                           options={DosageUnitOptions}
@@ -157,7 +158,7 @@ const CredentialForm: FC = () => {
                     </div>
                     <div className="grid lg:grid-rows-2">
                       <S.Heading variant="h6">Frequency</S.Heading>
-                      <div className="grid lg:grid-cols-2 lg:gap-x-4">
+                      <div className="grid lg:grid-cols-2 lg:gap-x-8">
                         <S.InputWrapper
                           label="Times"
                           name="frequencyTimes"
@@ -179,6 +180,7 @@ const CredentialForm: FC = () => {
                           onBlur={formikProps.handleBlur}
                         />
                         <Field
+                          label="Interval"
                           name="frequencyIntervalUnit"
                           defaultValue={FrequencyIntervalUnitOptions[0]}
                           options={FrequencyIntervalUnitOptions}
