@@ -122,7 +122,7 @@ _This app uses the Affinidi VC Issuance API for performing the Claim Flow._
 
 Learn more about [VCs](https://academy.affinidi.com/what-are-verifiable-credentials-79f1846a7b9), [trust triangle](https://academy.affinidi.com/what-is-the-trust-triangle-9a9caf36b321) and [Decentralized Identifiers (DIDs)](https://academy.affinidi.com/demystifying-decentralized-identifiers-dids-2dc6fc3148fd).
 
-## Overview diagram
+## Overview diagrams
 
 > We'll use "Health" flavor as an example.
 
@@ -235,7 +235,7 @@ Affinidi collects usage data to improve our products and services. For informati
 
 ## Feedback, Support, and Community
 
-[Click here](https://github.com/affinidi/reference-app-portable-reputation/issues) to create a ticket and we will get on it right away. If you are facing technical or other issues, you can reach out to us on [Discord](https://discord.com/invite/jx2hGBk5xE).
+[Click here](https://github.com/affinidi/reference-app-health/issues) to create a ticket and we will get on it right away. If you are facing technical or other issues, you can reach out to us on [Discord](https://discord.com/invite/jx2hGBk5xE).
 
 ## FAQ
 
