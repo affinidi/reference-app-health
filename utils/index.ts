@@ -21,7 +21,7 @@ export const extractHashAndKeyFromVSShareUrl = (
 };
 
 export const JSON_SCHEMA_URL =
-  "https://schema.affinidi.com/EventEligibilityV1-0.json";
+  "https://schema.affinidi.com/PrescriptionV1-2.json";
 
 export const ROUTES = {
   home: "/",
