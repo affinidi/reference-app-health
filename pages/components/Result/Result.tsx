@@ -23,7 +23,7 @@ export const Result: FC<ResultProps> = ({ isLoading = false, isValid, error = nu
     return (
       <>
         <Header
-          title={isVerifier ? 'QR code scanned' : 'Ticket Issued'}
+          title={isVerifier ? 'QR code scanned' : 'Prescription Issued'}
           hasBackIcon
         />
         <Container>
@@ -38,19 +38,25 @@ export const Result: FC<ResultProps> = ({ isLoading = false, isValid, error = nu
   return (
     <>
       <Header
-        title={isVerifier ? 'QR code scanned' : 'Ticket issued'}
+        title={isVerifier ? 'QR code scanned' : 'Prescription issued'}
         hasBackIcon
       />
       <Container>
         <div className="grid lg:grid-cols-3 gap-12 lg:gap-16">
-          <Box className="lg:col-start-2" alignItems="center">
-            <ResultContent isValid={isResultValid} isIssuance={!isVerifier} />
+          <Box
+            className="lg:col-start-2"
+            alignItems="center"
+          >
+            <ResultContent
+              isValid={isResultValid}
+              isIssuance={!isVerifier}
+            />
             <S.ResultPara variant="p1">
               {isVerifier
                 ? isResultValid
-                  ? 'Ticket successfully checked.'
-                  : 'Ticket is invalid'
-                : 'Your ticket has been issued.'}
+                  ? 'Prescription successfully checked.'
+                  : 'Prescription is invalid'
+                : 'Your prescription has been issued.'}
             </S.ResultPara>
 
             <Button
@@ -59,7 +65,7 @@ export const Result: FC<ResultProps> = ({ isLoading = false, isValid, error = nu
               variant="outlined"
               onClick={() => router.push(pathTo)}
             >
-              {isVerifier ? 'SCAN NEXT QR CODE' : 'ISSUE NEXT TICKET'}
+              {isVerifier ? 'Scan next qr code' : 'Issue next prescription'}
             </Button>
           </Box>
         </div>

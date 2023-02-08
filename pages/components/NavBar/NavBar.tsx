@@ -1,9 +1,9 @@
-import { FC } from "react";
+import { FC } from 'react'
 
-import EventiLogoIcon from "public/images/eventi-logo-icon.svg";
-import CloseIcon from "public/images/icon-close.svg";
-import MenuIcon from "public/images/icon-menu.svg";
-import { Typography, Container, Modal } from 'components'
+import Logo from 'public/images/logo.svg'
+import CloseIcon from 'public/images/icon-close.svg'
+import MenuIcon from 'public/images/icon-menu.svg'
+import { Container, Modal, Typography } from 'components'
 
 import { useNavBar } from './useNavBar'
 import * as S from './NavBar.styled'
@@ -17,7 +17,7 @@ const NavBar: FC = () => {
       <Container>
         <S.Container justifyContent="space-between" alignItems="center" direction="row">
           <S.Logo>
-            <Image onClick={handleGoHomePage} src={EventiLogoIcon} alt="Eventi" aria-label="app-logo" />
+            <Image onClick={handleGoHomePage} src={Logo} alt="healthi" aria-label="app-logo" />
           </S.Logo>
 
           {isAuthorized && (

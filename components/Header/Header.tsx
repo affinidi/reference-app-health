@@ -1,7 +1,8 @@
 import { FC } from 'react'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 
-import { BackIcon } from 'assets'
+import BackIcon from 'public/images/icon-back.svg'
 
 import Container from '../Container/Container'
 
@@ -25,7 +26,7 @@ const Header: FC<HeaderProps> = ({ title, hasBackIcon, path }) => {
               path ? navigate.push(path) : hasBackIcon ? navigate.back() : null
             }
           >
-            <BackIcon />
+            <Image src={BackIcon} alt="Go back" />
           </S.IconWrapper>
         )}
 

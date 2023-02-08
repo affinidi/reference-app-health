@@ -1,9 +1,12 @@
 import { FC } from 'react'
 import { useRouter } from 'next/router'
-import { Box, Container, Header } from 'components'
-import { ScanQr } from 'assets'
-import * as S from './index.styled'
+import Image from 'next/image'
+
 import { ROUTES } from 'utils'
+import { Box, Button, Container, Header } from 'components'
+import QrScan from 'public/images/illustration-qr-scan-default.svg'
+
+import * as S from './Verifier.styled'
 
 const Verifier: FC = () => {
   const router = useRouter()
@@ -15,11 +18,13 @@ const Verifier: FC = () => {
       <Container>
         <div className="grid lg:grid-cols-3 lg:gap-16">
           <Box alignItems="center" className="lg:col-start-2">
-            <ScanQr />
-            <S.WelcomeMessage variant="p1">
-              Welcome to the Eventi ticket scanner. Click “scan QR code” to start checking tickets.
+            <Image src={QrScan} alt="QR Scan" />
+
+            <S.WelcomeMessage align="center" variant="p1">
+              Welcome to the healthi scanner. Tap “scan QR code” to start checking medical records.
             </S.WelcomeMessage>
-            <S.ScanButton onClick={() => router.push(ROUTES.verifier.scan)}>SCAN QR CODE</S.ScanButton>
+
+            <Button fullWidth onClick={() => router.push(ROUTES.verifier.scan)}>SCAN QR CODE</Button>
           </Box>
         </div>
       </Container>
