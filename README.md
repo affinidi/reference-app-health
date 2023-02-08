@@ -72,11 +72,9 @@ Job interviewer can then quickly verify the QR and validate your knowledge of th
 
 There are three flows in the app: **issuer**, **verifier** and **holder**.
 
-> You can use the same wallet account for testing issuer and holder flows.
-
 ### Issuer flow
 
-1. Authenticate into your wallet,
+1. Authenticate into your Affinidi account,
 2. Enter credential subject details and holder information,
 3. Click "Issue".
 
