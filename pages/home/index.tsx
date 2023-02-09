@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 
 import { ROUTES } from 'utils'
 import WalletIcon from 'public/images/icon-wallet.svg'
@@ -8,10 +9,9 @@ import BulkIssuanceIcon from 'public/images/icon-bulk-issuance.svg'
 import { Box, Container, Header, Typography } from 'components'
 
 import * as S from './home.styled'
-import Image from 'next/image'
 
 export const Home: FC = () => {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
     <>
@@ -33,7 +33,10 @@ export const Home: FC = () => {
               </Typography>
             </Box>
             <S.Icon>
-              <Image src={WalletIcon} alt="Wallet" />
+              <Image
+                src={WalletIcon}
+                alt="Wallet"
+              />
             </S.Icon>
           </S.Card>
 
@@ -51,7 +54,10 @@ export const Home: FC = () => {
               </Typography>
             </Box>
             <S.Icon>
-              <Image src={DigitalCheckIcon} alt="Check" />
+              <Image
+                src={DigitalCheckIcon}
+                alt="Check"
+              />
             </S.Icon>
           </S.Card>
 
@@ -69,12 +75,15 @@ export const Home: FC = () => {
               </Typography>
             </Box>
             <S.Icon>
-              <Image src={BulkIssuanceIcon} alt="Bulk Issuance" />
+              <Image
+                src={BulkIssuanceIcon}
+                alt="Bulk Issuance"
+              />
             </S.Icon>
           </S.Card>
         </S.Wrapper>
       </Container>
     </>
-  );
-};
-export default Home;
+  )
+}
+export default Home

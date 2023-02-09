@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { format } from 'date-fns'
+import Image from 'next/image'
 
 import { JSON_SCHEMA_URL } from 'utils'
 import { StoredW3CCredential } from 'services/cloud-wallet/cloud-wallet.api'
@@ -55,11 +56,17 @@ const Home: FC = () => {
         <Header title="Your medical records" />
         <Container>
           <div className="grid justify-content-center">
-            <Typography align="center" variant="p2">
+            <Typography
+              align="center"
+              variant="p2"
+            >
               You don&apos;t have any medical records yet.
             </Typography>
             <S.IconContainer>
-              <NoData />
+              <Image
+                src={NoData}
+                alt="No medical records"
+              />
             </S.IconContainer>
           </div>
         </Container>
@@ -88,7 +95,13 @@ const Home: FC = () => {
         credentialId: credentialItem?.id,
       }
 
-      return <PrescriptionCard key={credentialItem.id} credential={credential} isValid={isValid} />
+      return (
+        <PrescriptionCard
+          key={credentialItem.id}
+          credential={credential}
+          isValid={isValid}
+        />
+      )
     })
 
   return (
