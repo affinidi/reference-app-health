@@ -95,6 +95,35 @@ export const cloudWalletClient = {
 
     return { vc }
   },
+  shareCredential: async (input: { id: string }, options: Options): Promise<{ qrCode: string; sharingUrl: string }> => {
+    const { data } = await axios<{ qrCode: string; sharingUrl: string }>(
+      `${cloudWalletApiUrl}/v1/wallet/credentials/${input.id}/share`,
+      {
+        method: 'POST',
+        headers: {
+          'Api-Key': issuerApiKeyHash,
+          Authorization: options.accessToken,
+        },
+      }
+    )
+
+    return data
+  },
+  claimCredentials: async (input: { credentialOfferRequestToken: string }, options: Options): Promise<{ credentialIds: string[] }> => {
+    const { data } = await axios<{ credentialIds: string[] }>(
+      `${cloudWalletApiUrl}/v1/wallet/credentials/claim`,
+      {
+        method: 'GET',
+        params: input,
+        headers: {
+          'Api-Key': issuerApiKeyHash,
+          Authorization: options.accessToken,
+        },
+      }
+    )
+
+    return data
+  },
   signCredential: async (input: { vc: VerifiableCredential }, options: Options): Promise<{ vc: VerifiableCredential }> => {
     const {
       data: { signedCredential: vc },

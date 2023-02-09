@@ -2,10 +2,11 @@ import { useMutation } from '@tanstack/react-query'
 import { Dispatch, SetStateAction, useState } from 'react'
 
 import { cloudWalletService } from 'services/cloud-wallet'
-import { AuthConfirmationInput, isHttpError, userManagementService, } from 'services/user-management'
 import { ConfirmSignInInput, ConfirmSignInOutput, SignInInput, } from 'services/cloud-wallet/cloud-wallet.api'
 import { useRouter } from 'next/router'
 import { clearSessionStorage, useSessionStorage } from './useSessionStorage'
+import axios from 'axios'
+import { hostUrl } from '../pages/env'
 
 export type ErrorResponse = {
   name: string
@@ -17,59 +18,25 @@ export type ErrorResponse = {
     location: string
   }
 }
-export const holderSignIn = ({ username }: SignInInput) => {
-  return cloudWalletService.signInPasswordless({ username })
+export const holderSignIn = async ({ username }: SignInInput): Promise<string> => {
+  const { data: { token } } = await axios<{ token: string }>(
+    `${hostUrl}/api/holder/sign-in`,
+    { method: 'POST', data: { username } }
+  )
+
+  return token
 }
 
-export const issuerSignInOrSignUp = async ({ username }: SignInInput) => {
-  try {
-    const token = await userManagementService.signIn({ username })
-
-    return {
-      token,
-      signup: false,
-    }
-  } catch (error: unknown) {
-    if (!isHttpError(error)) {
-      throw error
-    }
-
-    if (error.status === 404 || error.status === 422) {
-      const token = await userManagementService.signupUser({ username })
-
-      return {
-        token,
-        signup: true,
-      }
-    }
-
-    throw new Error(error?.error?.message)
-  }
-}
-
-export const holderConfirmSignin = ({
+export const holderConfirmSignin = async ({
   token,
   confirmationCode,
-}: ConfirmSignInInput) => {
-  return cloudWalletService.confirmSignInPasswordless({
-    token,
-    confirmationCode,
-  })
-}
+}: ConfirmSignInInput): Promise<{ accessToken: string }> => {
+  const { data: { accessToken } } = await axios<{ accessToken: string }>(
+    `${hostUrl}/api/holder/confirm-sign-in`,
+    { method: 'POST', data: { token, confirmationCode } }
+  )
 
-export const issuerConfirmSigninOrSignup = ({
-  token,
-  confirmationCode,
-  signup,
-}: AuthConfirmationInput) => {
-  if (signup) {
-    return userManagementService.signupConfirmation({
-      token,
-      confirmationCode,
-    })
-  }
-
-  return userManagementService.signInConfirmation({ token, confirmationCode })
+  return { accessToken }
 }
 
 export const logout = async (authState: UserState) => {
@@ -88,31 +55,13 @@ export const useHolderSignInMutation = () => {
   )
 }
 
-export const useIssuerSignInMutation = () => {
-  return useMutation<
-    {
-      token: string
-      signup: boolean
-    },
-    ErrorResponse,
-    SignInInput,
-    () => void
-  >((data: SignInInput) => issuerSignInOrSignUp(data))
-}
-
 export const useConfirmSignInMutation = () => {
   return useMutation<
-    ConfirmSignInOutput,
+    { accessToken: string },
     ErrorResponse,
     ConfirmSignInInput,
     () => void
   >((data: ConfirmSignInInput) => holderConfirmSignin(data))
-}
-
-export const useIssuerConfirmSignInMutation = () => {
-  return useMutation<boolean, ErrorResponse, AuthConfirmationInput, () => void>(
-    (data: AuthConfirmationInput) => issuerConfirmSigninOrSignup(data)
-  )
 }
 
 export type UserState = {
@@ -155,14 +104,12 @@ export const useAuthentication = () => {
       return
     }
 
-    try {
-      const response = await cloudWalletService.getDid()
-      if (response) {
-        updateAuthState({ loading: false, authorizedAsHolder: true })
-      }
-    } catch (error) {
-      updateAuthState({ loading: false, authorizedAsHolder: false })
+    if (router.pathname.includes('/holder')) {
+      updateAuthState({ loading: false, authorizedAsHolder: Boolean(getItem('accessToken')) })
+      return
     }
+
+    updateAuthState({ loading: false, authorizedAsHolder: false, authorizedAsIssuer: false })
   }
 
   return { authState, setAuthState, updateAuthState, authenticate }

@@ -1,36 +1,46 @@
+import axios from 'axios'
 import { FC, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
 
 import { ROUTES } from 'utils'
-import { useAuthContext } from 'hooks/useAuthContext'
-import { useClaimCredentialQuery } from 'hooks/holder/useCredentials'
 import { Container, Header, Spinner } from 'components'
+import { hostUrl } from 'pages/env'
+import { useSessionStorage } from 'hooks/useSessionStorage'
 
 const ClaimVc: FC = () => {
-  const { authState, updateAuthState } = useAuthContext()
   const { push } = useRouter()
+  const { getItem } = useSessionStorage()
   const searchParams = useSearchParams()
   const credentialOfferRequestToken = searchParams.get('credentialOfferRequestToken')
-  const { data, refetch } = useClaimCredentialQuery(authState.authorizedAsHolder ? authState.vcOfferToken : '')
 
   useEffect(() => {
-    if (credentialOfferRequestToken !== null) {
-      updateAuthState({ vcOfferToken: credentialOfferRequestToken })
+    if (!credentialOfferRequestToken) return
+
+    async function claimVc() {
+      try {
+        const { data: { credentialId } } = await axios<{ credentialId: string }>(
+          `${hostUrl}/api/holder/claim-vc`,
+          {
+            method: 'POST',
+            data: {
+              credentialOfferRequestToken,
+            },
+            headers: {
+              'Authorization': getItem('accessToken'),
+            }
+          }
+        )
+  
+        await push(`${ROUTES.holder.credential}/${credentialId}`)
+      } catch {
+        // TODO: show error
+        await push(ROUTES.holder.home)
+      }
     }
-  }, [refetch, credentialOfferRequestToken])
 
-  useEffect(() => {
-    if (data) {
-      updateAuthState({ vcOfferToken: '' })
-
-      push(`${ROUTES.holder.credential}/${data.credentialIds[0]}`)
-    }
-  }, [data, push])
-
-  if (!authState.authorizedAsHolder) {
-    return <Spinner />
-  }
+    claimVc()
+  }, [credentialOfferRequestToken])
 
   return (
     <>

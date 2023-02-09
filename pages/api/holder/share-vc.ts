@@ -8,7 +8,9 @@ import { authenticateCloudWallet } from '../helpers/authenticate-cloud-wallet'
 import { cloudWalletClient } from '../clients/cloud-wallet-client'
 
 type HandlerResponse = {
-  vc: VerifiableCredential
+  vc: VerifiableCredential,
+  qrCode: string
+  sharingUrl: string
 };
 
 const requestSchema = z
@@ -23,11 +25,12 @@ export async function handler(
 ) {
   const accessToken = authenticateCloudWallet(req)
 
-  const { id } = requestSchema.parse(req.query)
+  const { id } = requestSchema.parse(req.body)
 
   const { vc } = await cloudWalletClient.getCredentialById({ id }, { accessToken })
+  const { qrCode, sharingUrl } = await cloudWalletClient.shareCredential({ id }, { accessToken })
 
-  res.status(200).json({ vc })
+  res.status(200).json({ vc, qrCode, sharingUrl })
 }
 
-export default use(allowedHttpMethods('GET'), errorHandler)(handler)
+export default use(allowedHttpMethods('POST'), errorHandler)(handler)

@@ -1,49 +1,63 @@
-import { FC, useEffect } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
-import { StoredW3CCredential } from 'services/cloud-wallet/cloud-wallet.api'
-import { useGetCredentialQuery, useShareCredentialMutation } from 'hooks/holder/useCredentials'
 import { ROUTES } from 'utils'
 import { Container, Header, Spinner } from 'components'
 
 import { Credential } from '../../components/Credential/Credential'
-import { useAuthContext } from 'hooks/useAuthContext'
+import { VerifiableCredential } from '../../../../types/vc'
+import axios from 'axios'
+import { hostUrl } from '../../../env'
+import { useSessionStorage } from '../../../../hooks/useSessionStorage'
 
 const CredentialView: FC = () => {
-  const { authState } = useAuthContext()
   const router = useRouter()
+  const { getItem } = useSessionStorage()
   const credentialId = router.query.credentialId as string
-  const { data, isLoading } = useGetCredentialQuery(credentialId || '')
-  const { data: shareCredentialData, mutateAsync } = useShareCredentialMutation()
+
+  const [vc, setVc] = useState<VerifiableCredential>()
+  const [qrCode, setQrCode] = useState<string>()
 
   useEffect(() => {
-    if (credentialId) {
-      mutateAsync(credentialId)
-    }
-  }, [mutateAsync, credentialId])
+    if (!credentialId) return
 
-  if (isLoading || !authState.authorizedAsHolder) {
+    async function shareVc() {
+      const { data: { vc, qrCode } } = await axios<{ vc: VerifiableCredential; qrCode: string }>(
+        `${hostUrl}/api/holder/share-vc`,
+        {
+          method: 'POST',
+          data: {
+            id: credentialId,
+          },
+          headers: {
+            'Authorization': getItem('accessToken'),
+          }
+        }
+      )
+
+      setVc(vc)
+      setQrCode(qrCode)
+    }
+
+    shareVc()
+  }, [credentialId])
+
+  if (!vc) {
     return <Spinner />
   }
-
-  if (!(data as StoredW3CCredential).type) {
-    return null
-  }
-
-  const credential = data as StoredW3CCredential
 
   return (
     <>
       <Header
-        title={credential.credentialSubject.eventName || ''}
+        title={vc.credentialSubject.eventName || ''}
         path={ROUTES.holder.home}
         hasBackIcon
       />
 
       <Container>
         <Credential
-          credentialSubject={credential.credentialSubject}
-          qrCode={shareCredentialData?.qrCode}
+          credentialSubject={vc.credentialSubject}
+          qrCode={qrCode}
         />
       </Container>
     </>

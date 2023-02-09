@@ -1,9 +1,7 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { format } from 'date-fns'
 
-import { JSON_SCHEMA_URL } from 'utils'
 import { StoredW3CCredential } from 'services/cloud-wallet/cloud-wallet.api'
-import { useCredentialsQuery } from 'hooks/holder/useCredentials'
 import { useAuthContext } from 'hooks/useAuthContext'
 import NoData from 'public/images/illustration-empty-state.svg'
 import { Container, Header, Spinner, Typography } from 'components'
@@ -11,16 +9,40 @@ import { Container, Header, Spinner, Typography } from 'components'
 import { Credential } from './types'
 import PrescriptionCard from './components/PrescriptionCard/PrescriptionCard'
 import * as S from './index.styled'
+import { VerifiableCredential } from '../../types/vc'
+import { hostUrl } from '../env'
+import axios from 'axios'
+import { useSessionStorage } from '../../hooks/useSessionStorage'
 
 const Home: FC = () => {
   const { authState } = useAuthContext()
-  const { data, error, isLoading } = useCredentialsQuery()
+  const { getItem } = useSessionStorage()
+
+  const [error, setError] = useState<any>()
+  const [vcs, setVcs] = useState<VerifiableCredential[]>()
+
+  useEffect(() => {
+    async function fetchVcs() {
+      try {
+        const { data: { vcs } } = await axios<{ vcs: VerifiableCredential[] }>(
+          `${hostUrl}/api/holder/get-vcs`,
+          { method: 'GET', headers: { 'Authorization': getItem('accessToken') } }
+        )
+  
+        setVcs(vcs)
+      } catch (error) {
+        setError(error)
+      }
+    }
+
+    fetchVcs()
+  }, [])
 
   if (!authState.authorizedAsHolder) {
     return <Spinner />
   }
 
-  if (isLoading) {
+  if (!vcs) {
     return (
       <>
         <Header title="Your medical records" />
@@ -44,12 +66,7 @@ const Home: FC = () => {
     )
   }
 
-  const prescriptions = data.filter((credentialItem) => {
-    const credentialSchema = (credentialItem as StoredW3CCredential).credentialSchema
-    return credentialSchema?.id === JSON_SCHEMA_URL
-  })
-
-  if (prescriptions.length === 0) {
+  if (vcs.length === 0) {
     return (
       <>
         <Header title="Your medical records" />
@@ -68,7 +85,7 @@ const Home: FC = () => {
   }
 
   // @ts-ignore
-  const validPrescriptions: StoredW3CCredential[] = prescriptions.filter((credentialItem) => {
+  const validPrescriptions: StoredW3CCredential[] = vcs.filter((credentialItem) => {
     const credentialSubject = (credentialItem as StoredW3CCredential)?.credentialSubject
     return Date.parse(credentialSubject?.startDate) >= Date.now()
   })
