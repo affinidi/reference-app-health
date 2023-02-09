@@ -28,6 +28,10 @@ const ClaimVc: FC = () => {
     }
   }, [data, push])
 
+  if (!authState.authorizedAsHolder) {
+    return <Spinner />
+  }
+
   return (
     <>
       <Header title="Claim credential" />

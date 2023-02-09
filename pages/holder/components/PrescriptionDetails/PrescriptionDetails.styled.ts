@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
 import { pxToRem } from 'utils'
-import { Box, Typography } from 'components'
+import { Box } from 'components'
 
 export const DataCard = styled.div`
-  background-color: ${(props) => props.theme.colors.brand.secondary['100']};
+  background-color: ${(props) => props.theme.colors.brand.secondary['50']};
   padding: ${pxToRem(40)};
 
   @media (max-width: 1024px) {
@@ -20,7 +20,7 @@ export const DataCard = styled.div`
 `
 
 export const QrCodeCard = styled(Box)`
-  background-color: ${(props) => props.theme.colors.brand.secondary['100']};
+  background-color: ${(props) => props.theme.colors.brand.secondary['50']};
   position: relative;
   padding: ${pxToRem(40)};
 
@@ -88,11 +88,7 @@ export const QrCodeCard = styled(Box)`
   }
 `
 
-export const Data = styled(Typography)`
-  color: ${(props) => props.theme.colors.neutral.secondary['100']};
-`
-
-export const TicketDetailsCard = styled(Box)`
+export const PrescriptionDetailsCard = styled(Box)`
   flex-direction: row;
 
   @media (max-width: 1024px) {

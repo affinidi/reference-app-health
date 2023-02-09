@@ -5,11 +5,12 @@ import { StoredW3CCredential } from 'services/cloud-wallet/cloud-wallet.api'
 import { useGetCredentialQuery, useShareCredentialMutation } from 'hooks/holder/useCredentials'
 import { ROUTES } from 'utils'
 import { Container, Header, Spinner } from 'components'
+
 import { Credential } from '../../components/Credential/Credential'
-
-
+import { useAuthContext } from 'hooks/useAuthContext'
 
 const CredentialView: FC = () => {
+  const { authState } = useAuthContext()
   const router = useRouter()
   const { credentialId } = router.query
   const { data, isLoading } = useGetCredentialQuery(credentialId || '')
@@ -21,7 +22,7 @@ const CredentialView: FC = () => {
     }
   }, [mutateAsync, credentialId])
 
-  if (isLoading) {
+  if (isLoading || !authState.authorizedAsHolder) {
     return <Spinner />
   }
 

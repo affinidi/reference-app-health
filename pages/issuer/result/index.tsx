@@ -1,24 +1,19 @@
-import { FC, useEffect } from 'react'
-import { useRouter } from 'next/router';
+import { FC } from 'react'
 
 import { ROUTES } from 'utils'
 import { useAuthContext } from 'hooks/useAuthContext'
+import { Spinner } from 'components'
 
-import { Result } from "./components/Result";
+import { Result } from '../../components/Result/Result'
 
 const IssuanceResult: FC = () => {
-  const router = useRouter()
-  const { authState, updateAuthState } = useAuthContext()
+  const { authState } = useAuthContext()
 
-  const pathTo = ROUTES.issuer.credentialForm
+  if (!authState.authorizedAsIssuer) {
+    return <Spinner />
+  }
 
-  useEffect(() => {
-    if (authState.appFlow !== 'issuer') {
-      router.push(ROUTES.home)
-    }
-  }, [authState.appFlow, router])
-
-  return <Result isLoading={false} error={null} isValid={true} pathTo={pathTo} />
+  return <Result isValid={true} pathTo={ROUTES.issuer.credentialForm} />
 }
 
 export default IssuanceResult;

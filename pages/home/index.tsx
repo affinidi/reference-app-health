@@ -1,18 +1,17 @@
-import { FC } from "react";
-import { useRouter } from "next/router";
+import { FC } from 'react'
+import { useRouter } from 'next/router'
 
-import { Container, Header } from "components";
-import { ROUTES } from "utils";
-import { useAuthContext } from "hooks/useAuthContext";
+import { ROUTES } from 'utils'
+import WalletIcon from 'public/images/icon-wallet.svg'
+import DigitalCheckIcon from 'public/images/icon-digital-check.svg'
+import BulkIssuanceIcon from 'public/images/icon-bulk-issuance.svg'
+import { Box, Container, Header, Typography } from 'components'
 
-import { HolderFlowIcon, VerifierFlowIcon, IssuerFlowIcon } from "assets/index";
-
-import * as S from "./home.styled";
+import * as S from './home.styled'
+import Image from 'next/image'
 
 export const Home: FC = () => {
   const router = useRouter();
-
-  const { updateAuthState } = useAuthContext();
 
   return (
     <>
@@ -25,19 +24,16 @@ export const Home: FC = () => {
             direction="row"
             justifyContent="space-between"
             gap={8}
-            onClick={() => {
-              updateAuthState({ appFlow: "holder" });
-              router.push(ROUTES.holder.home);
-            }}
+            onClick={() => router.push(ROUTES.holder.home)}
           >
-            <S.Details>
-              <S.Heading variant="h6">Collect tickets</S.Heading>
-              <S.Para variant="p1">
-                Collect your tickets or view tickets stored in your wallet
-              </S.Para>
-            </S.Details>
+            <Box gap={16}>
+              <Typography variant="h6">Collect medical records</Typography>
+              <Typography variant="p1">
+                Collect your medical records or view them stored in your wallet
+              </Typography>
+            </Box>
             <S.Icon>
-              <HolderFlowIcon />
+              <Image src={WalletIcon} alt="Wallet" />
             </S.Icon>
           </S.Card>
 
@@ -46,19 +42,16 @@ export const Home: FC = () => {
             direction="row"
             justifyContent="space-between"
             gap={8}
-            onClick={() => {
-              updateAuthState({ appFlow: "verifier" });
-              router.push(ROUTES.verifier.welcome);
-            }}
+            onClick={() => router.push(ROUTES.verifier.welcome)}
           >
-            <S.Details>
-              <S.Heading variant="h6">Verify tickets</S.Heading>
-              <S.Para variant="p1">
-                Verify tickets with a QR code scanner
-              </S.Para>
-            </S.Details>
+            <Box gap={16}>
+              <Typography variant="h6">Verify medical records</Typography>
+              <Typography variant="p1">
+                Verify medical records with a QR code scanner
+              </Typography>
+            </Box>
             <S.Icon>
-              <VerifierFlowIcon />
+              <Image src={DigitalCheckIcon} alt="Check" />
             </S.Icon>
           </S.Card>
 
@@ -67,19 +60,16 @@ export const Home: FC = () => {
             direction="row"
             justifyContent="space-between"
             gap={8}
-            onClick={() => {
-              updateAuthState({ appFlow: "issuer" });
-              router.push(ROUTES.issuer.credentialForm);
-            }}
+            onClick={() => router.push(ROUTES.issuer.credentialForm)}
           >
-            <S.Details>
-              <S.Heading variant="h6">Issue ticket</S.Heading>
-              <S.Para variant="p1">
-                Issue tickets to your customers easily
-              </S.Para>
-            </S.Details>
+            <Box gap={16}>
+              <Typography variant="h6">Issue medical records</Typography>
+              <Typography variant="p1">
+                Issue medical records to your patients easily
+              </Typography>
+            </Box>
             <S.Icon>
-              <IssuerFlowIcon />
+              <Image src={BulkIssuanceIcon} alt="Bulk Issuance" />
             </S.Icon>
           </S.Card>
         </S.Wrapper>

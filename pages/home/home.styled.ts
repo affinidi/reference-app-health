@@ -21,20 +21,12 @@ export const Card = styled(Box)<{ $disabled?: boolean }>`
     cursor: pointer;
   }
 
-  @media (min-width: ${pxToRem(500)}) {
+  @media (min-width: 1024px) {
     width: auto;
     padding: ${pxToRem(32)};
   }
 
   ${(props) => (props.$disabled ? `opacity: 0.5; cursor: default;` : null)}
-`
-
-export const Heading = styled(Typography)`
-  margin-bottom: ${pxToRem(8)};
-  font-size: ${pxToRem(20)};
-  font-weight: bold;
-  line-height: 1.4;
-  letter-spacing: ${pxToRem(-0.2)};
 `
 
 export const Para = styled(Typography)`
@@ -45,12 +37,8 @@ export const Para = styled(Typography)`
   letter-spacing: ${pxToRem(0.2)};
 `
 
-export const Details = styled.div`
-  width: 80%;
-`
-
 export const Icon = styled.div`
-  @media (min-width: ${pxToRem(500)}) {
+  @media (min-width: 1024px) {
     width: ${pxToRem(48)};
     height: ${pxToRem(48)};
   }
