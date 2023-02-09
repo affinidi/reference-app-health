@@ -44,14 +44,12 @@ export const AuthRedirect: FC<AuthRedirectProps> = ({ children }) => {
       if (route.includes('/issuer')) {
         if (
           !authState.authorizedAsIssuer &&
-          route !== ROUTES.issuer.signIn &&
-          route !== ROUTES.issuer.confirmSignIn
+          route !== ROUTES.issuer.logIn
         ) {
-          replace(ROUTES.issuer.signIn)
+          replace(ROUTES.issuer.logIn)
         } else if (
           authState.authorizedAsIssuer &&
-          (route === ROUTES.issuer.signIn ||
-            route === ROUTES.issuer.confirmSignIn)
+          route === ROUTES.issuer.logIn
         ) {
           replace(ROUTES.issuer.credentialForm)
         }

@@ -3,14 +3,16 @@ import { FC, useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Container, ContainerForm, Header, Input } from 'components'
 import { useSessionStorage } from 'hooks/useSessionStorage'
+import { useAuthentication } from 'hooks/useAuthentication'
 import { hostUrl } from 'pages/env'
+import { ROUTES } from 'utils'
 
 import * as S from './index.styled'
-import { ROUTES } from '../../../utils'
 
 const IssuerLogIn: FC = () => {
   const router = useRouter()
   const { setItem } = useSessionStorage()
+  const { updateAuthState } = useAuthentication()
 
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
@@ -24,18 +26,20 @@ const IssuerLogIn: FC = () => {
     try {
       await axios(
         `${hostUrl}/api/issuer/log-in`,
-        { headers: { 'Authorization': `Basic ${login}:${password}` } }
+        { method: 'POST', headers: { 'Authorization': `Basic ${login}:${password}` } }
       )
 
       setItem('issuerLogin', login)
       setItem('issuerPassword', password)
+
+      updateAuthState({ authorizedAsIssuer: true })
 
       await router.push(ROUTES.issuer.credentialForm)
     } catch {
       setIsError(true)
       setIsLoading(false)
     }
-  }, [login, password, setItem, router])
+  }, [login, password, setItem, router, updateAuthState])
 
   useEffect(() => {
     setIsError(false)

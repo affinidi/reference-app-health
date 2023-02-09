@@ -5,6 +5,7 @@ import { cloudWalletService } from 'services/cloud-wallet'
 import { AuthConfirmationInput, isHttpError, userManagementService, } from 'services/user-management'
 import { ConfirmSignInInput, ConfirmSignInOutput, SignInInput, } from 'services/cloud-wallet/cloud-wallet.api'
 import { useRouter } from 'next/router'
+import { clearSessionStorage, useSessionStorage } from './useSessionStorage'
 
 export type ErrorResponse = {
   name: string
@@ -78,11 +79,7 @@ export const logout = async (authState: UserState) => {
     } catch (e) {}
   }
 
-  if (authState.authorizedAsIssuer) {
-    try {
-      await userManagementService.logout()
-    } catch (e) {}
-  }
+  clearSessionStorage()
 }
 
 export const useHolderSignInMutation = () => {
@@ -142,6 +139,7 @@ const BASIC_STATE: UserState = {
 
 export const useAuthentication = () => {
   const [authState, setAuthState] = useState<UserState>(BASIC_STATE)
+  const { getItem } = useSessionStorage()
   const router = useRouter()
 
   const updatePartiallyState =
@@ -153,15 +151,7 @@ export const useAuthentication = () => {
 
   const authenticate = async () => {
     if (router.pathname.includes('/issuer')) {
-      try {
-        const response = await userManagementService.me()
-        if (response) {
-          updateAuthState({ loading: false, authorizedAsIssuer: true })
-        }
-      } catch (error) {
-        updateAuthState({ loading: false, authorizedAsIssuer: false })
-      }
-
+      updateAuthState({ loading: false, authorizedAsIssuer: Boolean(getItem('issuerLogin') && getItem('issuerPassword')) })
       return
     }
 

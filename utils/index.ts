@@ -38,8 +38,7 @@ export const ROUTES = {
     claimVc: "/holder/claim",
   },
   issuer: {
-    signIn: "/issuer/sign-in",
-    confirmSignIn: "/issuer/confirm-sign-in",
+    logIn: "/issuer/log-in",
     credentialForm: "/issuer/credential-form",
     result: "/issuer/result",
   },

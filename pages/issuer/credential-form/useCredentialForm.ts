@@ -52,6 +52,7 @@ export const useCredentialForm = () => {
         await axios(
           `${hostUrl}/api/issuer/send-vc-offer`,
           {
+            method: 'POST',
             data: {
               targetEmail: values.email,
               credentialSubject: {
