@@ -91,6 +91,8 @@ Claim link will be sent to the holder's email address.
 
 #### Share a credential
 
+> Note: You need to claim at least one VC to perform this flow.
+
 1. Authenticate into your wallet,
 2. Select a VC that you want to share,
 3. Show the QR code to the verifier.
