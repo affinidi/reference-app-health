@@ -1,8 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import { Dispatch, SetStateAction, useState } from 'react'
 
-import { cloudWalletService } from 'services/cloud-wallet'
-import { ConfirmSignInInput, ConfirmSignInOutput, SignInInput, } from 'services/cloud-wallet/cloud-wallet.api'
 import { useRouter } from 'next/router'
 import { clearSessionStorage, useSessionStorage } from './useSessionStorage'
 import axios from 'axios'
@@ -18,22 +16,22 @@ export type ErrorResponse = {
     location: string
   }
 }
-export const holderSignIn = async ({ username }: SignInInput): Promise<string> => {
+export const holderSignIn = async (input: { username: string }): Promise<string> => {
   const { data: { token } } = await axios<{ token: string }>(
     `${hostUrl}/api/holder/sign-in`,
-    { method: 'POST', data: { username } }
+    { method: 'POST', data: input }
   )
 
   return token
 }
 
-export const holderConfirmSignin = async ({
-  token,
-  confirmationCode,
-}: ConfirmSignInInput): Promise<{ accessToken: string }> => {
+export const holderConfirmSignin = async (input: {
+  token: string;
+  confirmationCode: string
+}): Promise<{ accessToken: string }> => {
   const { data: { accessToken } } = await axios<{ accessToken: string }>(
     `${hostUrl}/api/holder/confirm-sign-in`,
-    { method: 'POST', data: { token, confirmationCode } }
+    { method: 'POST', data: input }
   )
 
   return { accessToken }
@@ -41,17 +39,15 @@ export const holderConfirmSignin = async ({
 
 export const logout = async (authState: UserState) => {
   if (authState.authorizedAsHolder) {
-    try {
-      await cloudWalletService.logOut()
-    } catch (e) {}
+    // TODO: logout from holder's cloud wallet (implement an endpoint)
   }
 
   clearSessionStorage()
 }
 
 export const useHolderSignInMutation = () => {
-  return useMutation<string, ErrorResponse, SignInInput, () => void>(
-    (data: SignInInput) => holderSignIn(data)
+  return useMutation<string, ErrorResponse, { username: string }, () => void>(
+    (data) => holderSignIn(data)
   )
 }
 
@@ -59,9 +55,9 @@ export const useConfirmSignInMutation = () => {
   return useMutation<
     { accessToken: string },
     ErrorResponse,
-    ConfirmSignInInput,
+    { token: string; confirmationCode: string },
     () => void
-  >((data: ConfirmSignInInput) => holderConfirmSignin(data))
+  >((data) => holderConfirmSignin(data))
 }
 
 export type UserState = {

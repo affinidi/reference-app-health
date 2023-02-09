@@ -2,9 +2,7 @@ import { FC, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 import { ROUTES } from 'utils'
-import { W3CCredential } from 'services/verifier/verifier.api'
 import { useVerifyCredentialsMutation } from 'hooks/verifier/useVerification'
-import { useRetrieveSharedCredentialQuery } from 'hooks/holder/useCredentials'
 
 import { Result } from '../../components/Result/Result'
 

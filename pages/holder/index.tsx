@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 import { format } from 'date-fns'
 
-import { StoredW3CCredential } from 'services/cloud-wallet/cloud-wallet.api'
 import { useAuthContext } from 'hooks/useAuthContext'
 import NoData from 'public/images/illustration-empty-state.svg'
 import { Container, Header, Spinner, Typography } from 'components'
@@ -85,8 +84,8 @@ const Home: FC = () => {
   }
 
   // @ts-ignore
-  const validPrescriptions: StoredW3CCredential[] = vcs.filter((credentialItem) => {
-    const credentialSubject = (credentialItem as StoredW3CCredential)?.credentialSubject
+  const validPrescriptions: VerifiableCredential[] = vcs.filter((credentialItem) => {
+    const credentialSubject = (credentialItem as VerifiableCredential)?.credentialSubject
     return Date.parse(credentialSubject?.startDate) >= Date.now()
   })
 
@@ -94,10 +93,10 @@ const Home: FC = () => {
     prescriptions,
     isValid,
   }: {
-    prescriptions: StoredW3CCredential[]
+    prescriptions: VerifiableCredential[]
     isValid: boolean
   }) =>
-    prescriptions.map((credentialItem: StoredW3CCredential) => {
+    prescriptions.map((credentialItem: VerifiableCredential) => {
       const credential: Credential = {
         title: credentialItem?.credentialSubject?.eventName,
         date: format(new Date(credentialItem?.credentialSubject?.startDate), 'dd.MM.yyyy'),
