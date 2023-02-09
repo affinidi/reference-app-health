@@ -8,7 +8,7 @@ export const Div = styled.div<{ nested?: boolean }>`
 
 export const SmallHeading = styled(Typography)`
   margin: ${pxToRem(24)} 0 ${pxToRem(4)};
-  @media (min-width: ${pxToRem(500)}) {
+  @media (min-width: 1024px) {
     font-size: ${pxToRem(14)};
   }
 `
@@ -17,7 +17,7 @@ export const QrCodeContainer = styled.div`
   width: ${pxToRem(242)};
   height: ${pxToRem(242)};
   margin: 0 auto;
-  @media (min-width: ${pxToRem(500)}) {
+  @media (min-width: 1024px) {
     margin: 0 8%;
   }
 `

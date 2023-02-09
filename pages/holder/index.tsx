@@ -1,15 +1,15 @@
 import { FC } from 'react'
 import { format } from 'date-fns'
-import { StoredW3CCredential } from 'services/cloud-wallet/cloud-wallet.api'
-import { useCredentialsQuery } from 'hooks/holder/useCredentials'
-import { Credential } from './types'
 
 import { JSON_SCHEMA_URL } from 'utils'
+import { StoredW3CCredential } from 'services/cloud-wallet/cloud-wallet.api'
+import { useCredentialsQuery } from 'hooks/holder/useCredentials'
 import { useAuthContext } from 'hooks/useAuthContext'
-import NoTicket from 'assets/noTicket'
+import NoData from 'public/images/illustration-empty-state.svg'
 import { Container, Header, Spinner, Typography } from 'components'
 
-import TicketCard from './components/TicketCard/TicketCard'
+import { Credential } from './types'
+import PrescriptionCard from './components/PrescriptionCard/PrescriptionCard'
 import * as S from './index.styled'
 
 const Home: FC = () => {
@@ -23,7 +23,7 @@ const Home: FC = () => {
   if (isLoading) {
     return (
       <>
-        <Header title="Your tickets" />
+        <Header title="Your medical records" />
         <Container>
           <Spinner />
         </Container>
@@ -34,7 +34,7 @@ const Home: FC = () => {
   if (error) {
     return (
       <>
-        <Header title="Your tickets" />
+        <Header title="Your medical records" />
         <Container>
           <div className="grid justify-content-center">
             {error && <Typography variant="e1">{error?.message}</Typography>}
@@ -44,22 +44,22 @@ const Home: FC = () => {
     )
   }
 
-  const tickets = data.filter((credentialItem) => {
+  const prescriptions = data.filter((credentialItem) => {
     const credentialSchema = (credentialItem as StoredW3CCredential).credentialSchema
     return credentialSchema?.id === JSON_SCHEMA_URL
   })
 
-  if (tickets.length === 0) {
+  if (prescriptions.length === 0) {
     return (
       <>
-        <Header title="Your tickets" />
+        <Header title="Your medical records" />
         <Container>
           <div className="grid justify-content-center">
             <Typography align="center" variant="p2">
-              You don&apos;t have any tickets yet.
+              You don&apos;t have any medical records yet.
             </Typography>
             <S.IconContainer>
-              <NoTicket />
+              <NoData />
             </S.IconContainer>
           </div>
         </Container>
@@ -68,25 +68,19 @@ const Home: FC = () => {
   }
 
   // @ts-ignore
-  const validTickets: StoredW3CCredential[] = tickets.filter((credentialItem) => {
+  const validPrescriptions: StoredW3CCredential[] = prescriptions.filter((credentialItem) => {
     const credentialSubject = (credentialItem as StoredW3CCredential)?.credentialSubject
     return Date.parse(credentialSubject?.startDate) >= Date.now()
   })
 
-  // @ts-ignore
-  const expiredTickets: StoredW3CCredential[] = tickets.filter((credentialItem) => {
-    const credentialSubject = (credentialItem as StoredW3CCredential)?.credentialSubject
-    return Date.parse(credentialSubject?.startDate) < Date.now()
-  })
-
-  const getTicketCards = ({
-    tickets,
+  const getPrescriptionCards = ({
+    prescriptions,
     isValid,
   }: {
-    tickets: StoredW3CCredential[]
+    prescriptions: StoredW3CCredential[]
     isValid: boolean
   }) =>
-    tickets.map((credentialItem: StoredW3CCredential) => {
+    prescriptions.map((credentialItem: StoredW3CCredential) => {
       const credential: Credential = {
         title: credentialItem?.credentialSubject?.eventName,
         date: format(new Date(credentialItem?.credentialSubject?.startDate), 'dd.MM.yyyy'),
@@ -94,27 +88,17 @@ const Home: FC = () => {
         credentialId: credentialItem?.id,
       }
 
-      return <TicketCard key={credentialItem.id} credential={credential} isValid={isValid} />
+      return <PrescriptionCard key={credentialItem.id} credential={credential} isValid={isValid} />
     })
 
   return (
     <>
-      <Header title="Your tickets" />
+      <Header title="Your medical records" />
 
-      {validTickets.length > 0 && (
+      {validPrescriptions.length > 0 && (
         <Container>
-          <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-12 lg:gap-16">
-            {getTicketCards({ tickets: validTickets, isValid: true })}
-          </div>
-        </Container>
-      )}
-
-      {expiredTickets.length > 0 && (
-        <Container>
-          <S.SubTitle variant="h6">Expired tickets</S.SubTitle>
-
-          <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-12 lg:gap-16">
-            {getTicketCards({ tickets: expiredTickets, isValid: false })}
+          <div className="grid lg:grid-cols-2 xl:grid-cols-4 gap-12 lg:gap-16">
+            {getPrescriptionCards({ prescriptions: validPrescriptions, isValid: true })}
           </div>
         </Container>
       )}

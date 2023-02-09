@@ -2,10 +2,13 @@ import { FC } from 'react'
 import { useRouter } from 'next/router'
 
 import { ROUTES } from 'utils'
-import { HolderFlowIcon, IssuerFlowIcon, VerifierFlowIcon } from 'assets'
-import { Container, Header } from 'components'
+import WalletIcon from 'public/images/icon-wallet.svg'
+import DigitalCheckIcon from 'public/images/icon-digital-check.svg'
+import BulkIssuanceIcon from 'public/images/icon-bulk-issuance.svg'
+import { Box, Container, Header, Typography } from 'components'
 
 import * as S from './home.styled'
+import Image from 'next/image'
 
 export const Home: FC = () => {
   const router = useRouter();
@@ -23,14 +26,14 @@ export const Home: FC = () => {
             gap={8}
             onClick={() => router.push(ROUTES.holder.home)}
           >
-            <S.Details>
-              <S.Heading variant="h6">Collect tickets</S.Heading>
-              <S.Para variant="p1">
-                Collect your tickets or view tickets stored in your wallet
-              </S.Para>
-            </S.Details>
+            <Box gap={16}>
+              <Typography variant="h6">Collect medical records</Typography>
+              <Typography variant="p1">
+                Collect your medical records or view them stored in your wallet
+              </Typography>
+            </Box>
             <S.Icon>
-              <HolderFlowIcon />
+              <Image src={WalletIcon} alt="Wallet" />
             </S.Icon>
           </S.Card>
 
@@ -41,14 +44,14 @@ export const Home: FC = () => {
             gap={8}
             onClick={() => router.push(ROUTES.verifier.welcome)}
           >
-            <S.Details>
-              <S.Heading variant="h6">Verify tickets</S.Heading>
-              <S.Para variant="p1">
-                Verify tickets with a QR code scanner
-              </S.Para>
-            </S.Details>
+            <Box gap={16}>
+              <Typography variant="h6">Verify medical records</Typography>
+              <Typography variant="p1">
+                Verify medical records with a QR code scanner
+              </Typography>
+            </Box>
             <S.Icon>
-              <VerifierFlowIcon />
+              <Image src={DigitalCheckIcon} alt="Check" />
             </S.Icon>
           </S.Card>
 
@@ -59,14 +62,14 @@ export const Home: FC = () => {
             gap={8}
             onClick={() => router.push(ROUTES.issuer.credentialForm)}
           >
-            <S.Details>
-              <S.Heading variant="h6">Issue ticket</S.Heading>
-              <S.Para variant="p1">
-                Issue tickets to your customers easily
-              </S.Para>
-            </S.Details>
+            <Box gap={16}>
+              <Typography variant="h6">Issue medical records</Typography>
+              <Typography variant="p1">
+                Issue medical records to your patients easily
+              </Typography>
+            </Box>
             <S.Icon>
-              <IssuerFlowIcon />
+              <Image src={BulkIssuanceIcon} alt="Bulk Issuance" />
             </S.Icon>
           </S.Card>
         </S.Wrapper>
