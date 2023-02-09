@@ -1,16 +1,31 @@
 import { FC } from 'react'
-import { Formik } from 'formik'
+import { Field, Formik } from 'formik'
 
 import { JSON_SCHEMA_URL } from 'utils'
 import { useAuthContext } from 'hooks/useAuthContext'
-import { Container, Header, Input, Spinner, Textarea } from 'components'
+import { Container, Header, Input, Select, Spinner } from 'components'
 
-import { initialValues, useCredentialForm } from './useCredentialForm'
+import {
+  DosageUnitOptions,
+  FrequencyIntervalUnitOptions,
+  initialValues,
+  useCredentialForm,
+  SelectOption,
+} from './useCredentialForm'
 import * as S from './CredentialForm.styled'
 
 const CredentialForm: FC = () => {
   const { authState } = useAuthContext()
   const { handleSubmit, validate, isCreating } = useCredentialForm()
+
+  const CustomSelectComponent = ({ field, form, ...props }) => {
+    const { name } = field
+    const handleSelectChange = (value: unknown) => {
+      form.setFieldValue(name, (value as SelectOption).value)
+    }
+
+    return <Select onChange={handleSelectChange} {...props} />
+  }
 
   if (!authState.authorizedAsIssuer) {
     return <Spinner />
@@ -18,114 +33,230 @@ const CredentialForm: FC = () => {
 
   return (
     <>
-      <Header title="Enter details" />
+      <Header title='Enter details' />
 
       <Container>
-        <div className="grid lg:grid-cols-12">
-          <div className="lg:col-span-8 lg:col-start-3">
-            <Formik initialValues={initialValues} onSubmit={handleSubmit} validate={validate}>
+        <div className='grid lg:grid-cols-12'>
+          <div className='lg:col-span-8 lg:col-start-3'>
+            <Formik
+              initialValues={initialValues}
+              onSubmit={handleSubmit}
+              validate={validate}
+            >
               {(formikProps) => (
-                <form id="form" onSubmit={formikProps.handleSubmit}>
-                  <S.Title variant="p1">
-                    Please fill in the form below to issue a credential.
+                <form id='form' onSubmit={formikProps.handleSubmit}>
+                  <S.Title variant='p1'>
+                    Please fill in the form below to issue a prescription.
                   </S.Title>
 
-                  <Input label="Schema URL" value={JSON_SCHEMA_URL} disabled />
+                  <Input label='Schema URL' value={JSON_SCHEMA_URL} disabled />
 
-                  <S.Heading variant="h6">Event details</S.Heading>
+                  <S.Heading variant='h6'>Prescription details</S.Heading>
 
-                  <div className="grid lg:grid-cols-2 lg:gap-x-8">
+                  <div className='grid lg:grid-cols-2 lg:gap-x-8'>
                     <S.InputWrapper
-                      label="Event name"
-                      placeholder="Enter event name"
-                      name="eventName"
+                      label='Medication'
+                      placeholder='Enter medication name'
+                      name='medicationName'
                       maxLength={100}
-                      value={formikProps.values.eventName}
+                      value={formikProps.values.medicationName}
                       onChange={(_, event) => formikProps.handleChange(event)}
-                      hasError={formikProps.touched.eventName ? Boolean(formikProps.errors.eventName) : false}
-                      helpText={formikProps.touched.eventName ? formikProps.errors.eventName : ''}
+                      hasError={
+                        formikProps.touched.medicationName
+                          ? Boolean(formikProps.errors.medicationName)
+                          : false
+                      }
+                      helpText={
+                        formikProps.touched.medicationName
+                          ? formikProps.errors.medicationName
+                          : ''
+                      }
                       onBlur={formikProps.handleBlur}
                     />
                     <S.InputWrapper
-                      label="Event location"
-                      placeholder="Enter event location"
-                      name="eventLocation"
-                      maxLength={500}
-                      value={formikProps.values.eventLocation}
+                      label='Date'
+                      placeholder='DD/MM/YYYY'
+                      name='prescribedAt'
+                      type='date'
+                      value={formikProps.values.prescribedAt}
                       onChange={(_, event) => formikProps.handleChange(event)}
-                      hasError={formikProps.touched.eventLocation ? Boolean(formikProps.errors.eventLocation) : false}
-                      helpText={formikProps.touched.eventLocation ? formikProps.errors.eventLocation : ''}
+                      hasError={
+                        formikProps.touched.prescribedAt
+                          ? Boolean(formikProps.errors.prescribedAt)
+                          : false
+                      }
+                      helpText={
+                        formikProps.touched.prescribedAt
+                          ? formikProps.errors.prescribedAt
+                          : ''
+                      }
                       onBlur={formikProps.handleBlur}
                     />
                     <S.InputWrapper
-                      label="Start date & time"
-                      name="eventStartDateTime"
-                      type="datetime-local"
-                      value={formikProps.values.eventStartDateTime}
+                      label='Practitioner'
+                      name='practitionerName'
+                      placeholder="Enter practitioner's name"
+                      maxLength={100}
+                      value={formikProps.values.practitionerName}
                       onChange={(_, event) => formikProps.handleChange(event)}
-                      hasError={formikProps.touched.eventStartDateTime ? Boolean(formikProps.errors.eventStartDateTime) : false}
-                      helpText={formikProps.touched.eventStartDateTime ? formikProps.errors.eventStartDateTime : ''}
+                      hasError={
+                        formikProps.touched.practitionerName
+                          ? Boolean(formikProps.errors.practitionerName)
+                          : false
+                      }
+                      helpText={
+                        formikProps.touched.practitionerName
+                          ? formikProps.errors.practitionerName
+                          : ''
+                      }
+                      onBlur={formikProps.handleBlur}
+                    />
+                  </div>
+                  <div className='grid lg:grid-cols-2 lg:gap-x-8'>
+                    <div className='grid lg:grid-rows-2'>
+                      <S.Heading variant='h6'>Dosage</S.Heading>
+                      <div className='grid lg:grid-cols-2 lg:gap-x-8'>
+                        <S.InputWrapper
+                          label='Amount'
+                          name='dosageAmount'
+                          type='number'
+                          value={formikProps.values.dosageAmount}
+                          onChange={(_, event) =>
+                            formikProps.handleChange(event)
+                          }
+                          hasError={
+                            formikProps.touched.dosageAmount
+                              ? Boolean(formikProps.errors.dosageAmount)
+                              : false
+                          }
+                          helpText={
+                            formikProps.touched.dosageAmount
+                              ? formikProps.errors.dosageAmount
+                              : ''
+                          }
+                          onBlur={formikProps.handleBlur}
+                        />
+                        <Field
+                          label='Unit'
+                          name='dosageUnit'
+                          defaultValue={DosageUnitOptions[0]}
+                          options={DosageUnitOptions}
+                          component={CustomSelectComponent}
+                          hasError={
+                            formikProps.touched.dosageUnit
+                              ? Boolean(formikProps.errors.dosageUnit)
+                              : false
+                          }
+                          helpText={
+                            formikProps.touched.dosageUnit
+                              ? formikProps.errors.dosageUnit
+                              : ''
+                          }
+                          onBlur={formikProps.handleBlur}
+                        />
+                      </div>
+                    </div>
+                    <div className='grid lg:grid-rows-2'>
+                      <S.Heading variant='h6'>Frequency</S.Heading>
+                      <div className='grid lg:grid-cols-2 lg:gap-x-8'>
+                        <S.InputWrapper
+                          label='Times'
+                          name='frequencyTimes'
+                          type='number'
+                          value={formikProps.values.frequencyTimes}
+                          onChange={(_, event) =>
+                            formikProps.handleChange(event)
+                          }
+                          hasError={
+                            formikProps.touched.frequencyTimes
+                              ? Boolean(formikProps.errors.frequencyTimes)
+                              : false
+                          }
+                          helpText={
+                            formikProps.touched.frequencyTimes
+                              ? formikProps.errors.frequencyTimes
+                              : ''
+                          }
+                          onBlur={formikProps.handleBlur}
+                        />
+                        <Field
+                          label='Interval'
+                          name='frequencyIntervalUnit'
+                          defaultValue={FrequencyIntervalUnitOptions[0]}
+                          options={FrequencyIntervalUnitOptions}
+                          component={CustomSelectComponent}
+                          hasError={
+                            formikProps.touched.frequencyIntervalUnit
+                              ? Boolean(
+                                  formikProps.errors.frequencyIntervalUnit
+                                )
+                              : false
+                          }
+                          helpText={
+                            formikProps.touched.frequencyIntervalUnit
+                              ? formikProps.errors.frequencyIntervalUnit
+                              : ''
+                          }
+                          onBlur={formikProps.handleBlur}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <S.Heading variant='h6'>Patient information</S.Heading>
+
+                  <div className='grid lg:grid-cols-2 lg:gap-x-8'>
+                    <S.InputWrapper
+                      label='Patient name'
+                      name='patientName'
+                      maxLength={100}
+                      placeholder='Enter patient name'
+                      value={formikProps.values.patientName}
+                      onChange={(_, event) => formikProps.handleChange(event)}
+                      hasError={
+                        formikProps.touched.patientName
+                          ? Boolean(formikProps.errors.patientName)
+                          : false
+                      }
+                      helpText={
+                        formikProps.touched.patientName
+                          ? formikProps.errors.patientName
+                          : ''
+                      }
                       onBlur={formikProps.handleBlur}
                     />
                     <S.InputWrapper
-                      label="End date & time"
-                      name="eventEndDateTime"
-                      type="datetime-local"
-                      value={formikProps.values.eventEndDateTime}
+                      label='Patient email'
+                      name='patientEmail'
+                      type='email'
+                      placeholder='Enter patient email'
+                      maxLength={100}
+                      value={formikProps.values.patientEmail}
                       onChange={(_, event) => formikProps.handleChange(event)}
-                      hasError={formikProps.touched.eventEndDateTime ? Boolean(formikProps.errors.eventEndDateTime) : false}
-                      helpText={formikProps.touched.eventEndDateTime ? formikProps.errors.eventEndDateTime : ''}
-                      onBlur={formikProps.handleBlur}
-                    />
-                    <Textarea
-                      label="Event description"
-                      name="eventDescription"
-                      placeholder="Enter event description"
-                      maxLength={1000}
-                      value={formikProps.values.eventDescription}
-                      onChange={(value, e) => formikProps.handleChange(e)}
-                      hasError={formikProps.touched.eventDescription ? Boolean(formikProps.errors.eventDescription) : false}
-                      helpText={formikProps.touched.eventDescription ? formikProps.errors.eventDescription : ''}
+                      hasError={
+                        formikProps.touched.patientEmail
+                          ? Boolean(formikProps.errors.patientEmail)
+                          : false
+                      }
+                      helpText={
+                        formikProps.touched.patientEmail
+                          ? formikProps.errors.patientEmail
+                          : ''
+                      }
                       onBlur={formikProps.handleBlur}
                     />
                   </div>
 
-                  <S.Heading variant="h6">Ticket holder information</S.Heading>
-
-                  <div className="grid lg:grid-cols-2 lg:gap-x-8">
-                    <S.InputWrapper
-                      label="Ticket holder name"
-                      name="name"
-                      maxLength={100}
-                      placeholder="Enter ticket holder name"
-                      value={formikProps.values.name}
-                      onChange={(_, event) => formikProps.handleChange(event)}
-                      hasError={formikProps.touched.name ? Boolean(formikProps.errors.name) : false}
-                      helpText={formikProps.touched.name ? formikProps.errors.name : ''}
-                      onBlur={formikProps.handleBlur}
-                    />
-                    <S.InputWrapper
-                      label="Ticket holder email"
-                      name="email"
-                      type="email"
-                      placeholder="Enter ticket holder email"
-                      maxLength={100}
-                      value={formikProps.values.email}
-                      onChange={(_, event) => formikProps.handleChange(event)}
-                      hasError={formikProps.touched.email ? Boolean(formikProps.errors.email) : false}
-                      helpText={formikProps.touched.email ? formikProps.errors.email : ''}
-                      onBlur={formikProps.handleBlur}
-                    />
+                  <div className='grid lg:grid-cols-3'>
+                    <S.ButtonWrapper
+                      type='submit'
+                      form='form'
+                      disabled={!(formikProps.isValid && formikProps.dirty)}
+                      loading={isCreating}
+                    >
+                      Issue Prescription
+                    </S.ButtonWrapper>
                   </div>
-
-                  <S.ButtonWrapper
-                    type="submit"
-                    form="form"
-                    disabled={!(formikProps.isValid && formikProps.dirty)}
-                    loading={isCreating}
-                  >
-                    Issue ticket
-                  </S.ButtonWrapper>
                 </form>
               )}
             </Formik>
@@ -136,4 +267,4 @@ const CredentialForm: FC = () => {
   )
 }
 
-export default CredentialForm;
+export default CredentialForm
