@@ -2,7 +2,7 @@
 
 import axios from 'axios'
 import { VerifiableCredential } from 'types/vc'
-import { apiKeyHash, cloudWalletApiUrl } from '../env'
+import { issuerApiKeyHash, cloudWalletApiUrl } from '../env'
 
 type Options = {
   accessToken: string;
@@ -17,7 +17,7 @@ export const cloudWalletClient = {
       {
         method: 'POST',
         headers: {
-          'Api-Key': apiKeyHash,
+          'Api-Key': issuerApiKeyHash,
         },
         data: input,
       }
@@ -36,7 +36,7 @@ export const cloudWalletClient = {
       {
         method: 'POST',
         headers: {
-          'Api-Key': apiKeyHash,
+          'Api-Key': issuerApiKeyHash,
         },
         data: input,
       }
@@ -50,7 +50,7 @@ export const cloudWalletClient = {
       {
         method: 'GET',
         headers: {
-          'Api-Key': apiKeyHash,
+          'Api-Key': issuerApiKeyHash,
           Authorization: options.accessToken,
         },
       }
@@ -62,7 +62,7 @@ export const cloudWalletClient = {
     await axios<void>(`${cloudWalletApiUrl}/v1/users/logout`, {
       method: 'POST',
       headers: {
-        'Api-Key': apiKeyHash,
+        'Api-Key': issuerApiKeyHash,
         Authorization: options.accessToken,
       },
     })
@@ -73,7 +73,7 @@ export const cloudWalletClient = {
       {
         method: 'GET',
         headers: {
-          'Api-Key': apiKeyHash,
+          'Api-Key': issuerApiKeyHash,
           Authorization: options.accessToken,
         },
       }
@@ -87,7 +87,7 @@ export const cloudWalletClient = {
       {
         method: 'GET',
         headers: {
-          'Api-Key': apiKeyHash,
+          'Api-Key': issuerApiKeyHash,
           Authorization: options.accessToken,
         },
       }
@@ -103,7 +103,7 @@ export const cloudWalletClient = {
       {
         method: 'POST',
         headers: {
-          'Api-Key': apiKeyHash,
+          'Api-Key': issuerApiKeyHash,
           Authorization: options.accessToken,
         },
         data: {
@@ -121,7 +121,7 @@ export const cloudWalletClient = {
     await axios<void>(`${cloudWalletApiUrl}/v1/wallet/credentials`, {
       method: 'POST',
       headers: {
-        'Api-Key': apiKeyHash,
+        'Api-Key': issuerApiKeyHash,
         Authorization: options.accessToken,
       },
       data: {
