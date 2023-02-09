@@ -1,8 +1,9 @@
-import { Typography } from 'components'
 import React from 'react'
 import { Props, components } from 'react-select'
+import Image from 'next/image'
 
-import { ChevronDownIcon } from '../../assets/icons'
+import { Typography } from 'components'
+import ChevronDownIcon from 'public/images/icon-chevron-down.svg'
 
 import * as S from './Select.styled'
 
@@ -12,7 +13,9 @@ export type Option<TValue extends string | number> = {
 }
 
 export type SelectProps<
-  TOption extends Option<string | number> | unknown = Option<string | number> | unknown
+  TOption extends Option<string | number> | unknown =
+    | Option<string | number>
+    | unknown
 > = {
   label?: string
   hasError?: boolean
@@ -31,9 +34,9 @@ export const Select = ({
   placeholder = 'Select option',
   ...props
 }: SelectProps) => (
-  <S.Wrapper direction="column" gap={4} className={className}>
+  <S.Wrapper direction='column' gap={4} className={className}>
     {label && (
-      <S.Label variant="p4" $hasError={hasError} $disabled={isDisabled}>
+      <S.Label variant='p4' $hasError={hasError} $disabled={isDisabled}>
         {label}
       </S.Label>
     )}
@@ -47,14 +50,14 @@ export const Select = ({
       isSearchable={isSearchable}
       menuPortalTarget={menuPortalTarget}
       components={{
-        DropdownIndicator: () => <ChevronDownIcon />,
+        DropdownIndicator: () => <Image src={ChevronDownIcon} alt='Loading' />,
         Menu: (menuProps) => (
           <S.Menu>
             <components.Menu {...menuProps} />
           </S.Menu>
         ),
         Option: (optionProps) => (
-          <Typography variant="p2" tag="div">
+          <Typography variant='p2' tag='div'>
             <components.Option {...optionProps} />
           </Typography>
         ),
@@ -63,11 +66,11 @@ export const Select = ({
     />
 
     {helpText && (
-      <S.HelpText variant="p4" $hasError={hasError} $disabled={isDisabled}>
+      <S.HelpText variant='p4' $hasError={hasError} $disabled={isDisabled}>
         {helpText}
       </S.HelpText>
     )}
   </S.Wrapper>
 )
 
-export default Select;
+export default Select

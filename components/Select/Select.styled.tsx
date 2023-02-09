@@ -1,9 +1,10 @@
-import { Box, Typography } from 'components'
 import ReactSelect from 'react-select'
 import styled, { css } from 'styled-components'
 
-import { pxToRem } from '../../utils'
+import { pxToRem } from 'utils'
 
+import Box from '../Box/Box'
+import Typography from '../Typography/Typography'
 
 export const Wrapper = styled(Box)`
   margin-bottom: ${pxToRem(24)};
@@ -21,7 +22,10 @@ const getTextColor = (props) => {
   return ''
 }
 
-export const Label = styled(Typography)<{ $hasError?: boolean; $disabled?: boolean }>`
+export const Label = styled(Typography)<{
+  $hasError?: boolean
+  $disabled?: boolean
+}>`
   color: ${getTextColor};
 `
 
@@ -70,7 +74,9 @@ export const Select = styled(ReactSelect)<{ $hasError?: boolean }>`
     border-width: ${({ $hasError }) => ($hasError ? '2px' : '1px')};
     border-style: solid;
     border-color: ${({ theme, $hasError }) =>
-      $hasError ? theme.colors.utility.danger['100'] : theme.colors.neutral.primary['15']};
+      $hasError
+        ? theme.colors.utility.danger['100']
+        : theme.colors.neutral.primary['15']};
     background-color: transparent;
     box-shadow: none;
     cursor: pointer;
@@ -78,7 +84,9 @@ export const Select = styled(ReactSelect)<{ $hasError?: boolean }>`
 
     &:hover {
       border-color: ${({ theme, $hasError }) =>
-        $hasError ? theme.colors.utility.danger['100'] : theme.colors.brand.secondary['100']};
+        $hasError
+          ? theme.colors.utility.danger['100']
+          : theme.colors.brand.secondary['100']};
     }
   }
 
@@ -98,7 +106,9 @@ export const Select = styled(ReactSelect)<{ $hasError?: boolean }>`
   .select__control--is-focused {
     border-width: 2px;
     border-color: ${({ theme, $hasError }) =>
-      $hasError ? theme.colors.utility.danger['100'] : theme.colors.brand.secondary['100']};
+      $hasError
+        ? theme.colors.utility.danger['100']
+        : theme.colors.brand.secondary['100']};
 
     .select__value-container {
       padding-left: ${pxToRem(15)};
@@ -159,6 +169,9 @@ export const Menu = styled.div`
   }
 `
 
-export const HelpText = styled(Typography)<{ $hasError?: boolean; $disabled?: boolean }>`
+export const HelpText = styled(Typography)<{
+  $hasError?: boolean
+  $disabled?: boolean
+}>`
   color: ${getTextColor};
 `
