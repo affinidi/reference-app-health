@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
-import { verifierService } from 'services/verifier'
-import { W3CCredential, VerifyCredentialOutput } from 'services/verifier/verifier.api'
+import axios from 'axios'
+import { VerifyCredentialOutput } from 'services/verifier/verifier.api'
+import { hostUrl } from '../../pages/env'
 
 type ErrorResponse = {
   name: string
@@ -13,12 +14,17 @@ type ErrorResponse = {
   }
 }
 
-export const verifyCredentials = (data: W3CCredential) => {
-  return verifierService.verifyVc(data)
+export const verifyCredentials = async (input: { hash: string; key: string }): Promise<VerifyCredentialOutput> => {
+  const { data } = await axios<VerifyCredentialOutput>(
+    `${hostUrl}/api/verifier/verify-vc`,
+    { method: 'POST', data: input }
+  )
+
+  return data
 }
 
 export const useVerifyCredentialsMutation = () => {
-  return useMutation<VerifyCredentialOutput | undefined, ErrorResponse, W3CCredential, () => void>(
-    (data: W3CCredential) => verifyCredentials(data),
+  return useMutation<VerifyCredentialOutput | undefined, ErrorResponse, { hash: string; key: string }, () => void>(
+    (input) => verifyCredentials(input),
   )
 }

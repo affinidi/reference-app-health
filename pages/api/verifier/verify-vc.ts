@@ -4,6 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { allowedHttpMethods } from '../middlewares/allowed-http-methods'
 import { errorHandler } from '../middlewares/error-handler'
 import { verifierClient } from '../clients/verifier-client'
+import { cloudWalletClient } from '../clients/cloud-wallet-client'
 
 type HandlerResponse = {
   isValid: boolean
@@ -12,7 +13,8 @@ type HandlerResponse = {
 
 const requestSchema = z
   .object({
-    vc: z.any(),
+    hash: z.string(),
+    key: z.string(),
   })
   .strict()
 
@@ -20,7 +22,9 @@ async function handler(
   req: NextApiRequest,
   res: NextApiResponse<HandlerResponse>
 ) {
-  const { vc } = requestSchema.parse(req.body)
+  const { hash, key } = requestSchema.parse(req.body)
+
+  const { vc } = await cloudWalletClient.retrieveSharedCredential({ hash, key })
 
   const verificationResult = await verifierClient.verifyCredentials({
     verifiableCredentials: [vc]

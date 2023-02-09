@@ -9,8 +9,8 @@ import { useRetrieveSharedCredentialQuery } from 'hooks/holder/useCredentials'
 import { Result } from '../../components/Result/Result'
 
 const VerifierResult: FC = () => {
-  const { query: { key, hash } } = useRouter()
-  const { data, isLoading, error } = useRetrieveSharedCredentialQuery(hash as string, key as string);
+  const router = useRouter()
+  const { key, hash } = router.query as { key: string; hash: string }
 
   const {
     data: verifyCredentialData,
@@ -20,15 +20,15 @@ const VerifierResult: FC = () => {
   } = useVerifyCredentialsMutation();
 
   useEffect(() => {
-    if (data) {
-      mutateAsync(data as W3CCredential);
+    if (key && hash) {
+      mutateAsync({ key, hash });
     }
-  }, [data, mutateAsync]);
+  }, [key, hash, mutateAsync]);
 
   return (
     <Result
-      isLoading={isLoading || verifyCredentialIsLoading}
-      error={error || verifyCredentialError}
+      isLoading={verifyCredentialIsLoading}
+      error={verifyCredentialError}
       isValid={!!verifyCredentialData?.isValid}
       pathTo={ROUTES.verifier.scan}
     />
