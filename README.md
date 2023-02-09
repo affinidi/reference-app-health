@@ -12,7 +12,7 @@ You can take a role of an issuer, verifier or holder entity.
 With SSI it's possible to create flows without ever storing user's data, while still being able to verify it.  
 Users are responsible for their data and can store it in any way they want.
 
-The app is designed for a single industry-specific use case, making it an end-to-end example of a real app that you can deploy and use right away.
+The app has multiple implementations which are designed for industry-specific use cases, making it an end-to-end example of a real app that you can deploy and use right away.
 
 ## Getting started
 
@@ -26,7 +26,7 @@ Setting up the reference app is easy, just follow these steps:
     ```
     $ npm install
     ```
-3. Create a `.env` file:
+3. Create a `.env` file:f
     ```
     $ cp .env.example .env
     ```
@@ -70,7 +70,7 @@ Job interviewer can then quickly verify the QR and validate your knowledge of th
 
 ## Flows
 
-There are three flows in the app: **issuer**, **verifier** and **holder**.
+There are three flows in the app: **issuer**, **verifier** and **holder (claim & share)**.
 
 ### Issuer flow
 
@@ -79,11 +79,15 @@ There are three flows in the app: **issuer**, **verifier** and **holder**.
 3. Click "Issue".
 
 Claim link will be sent to the holder's email address.  
-Once holder opens the link, a VC will be issued and added to his wallet.
 
-### Holder flow
+### Holder claim flow
 
-> You need to have at least one app-specific VC in your wallet to use this flow.
+1. Open the offer email in your inbox,
+2. Click on the claim link,
+3. Authenticate into your wallet,
+4. Claim the credential and store it your wallet.
+
+### Holder share flow
 
 1. Authenticate into your wallet,
 2. Select a VC that you want to share,
