@@ -41,7 +41,7 @@ Setting up the reference app is easy, just follow these steps:
 
 ## App flavors
 
-We have created multiple variations of the same app for you to use.  
+We have created multiple implementations of the same app for you to use.  
 These are called "flavors" and they're adapted for a specific industry.
 
 ### "Ticketing" flavor
@@ -70,7 +70,7 @@ Job interviewer can then quickly verify the QR and validate your knowledge of th
 
 ## Flows
 
-There are three flows in the app: **issuer**, **verifier** and **holder (claim & share)**.
+There are three flows in the app: **issuer**, **verifier** and **holder**.
 
 ### Issuer flow
 
@@ -80,14 +80,16 @@ There are three flows in the app: **issuer**, **verifier** and **holder (claim &
 
 Claim link will be sent to the holder's email address.  
 
-### Holder claim flow
+### Holder flow
+
+#### Claim a credential
 
 1. Open the offer email in your inbox,
 2. Click on the claim link,
 3. Authenticate into your wallet,
 4. Claim the credential and store it your wallet.
 
-### Holder share flow
+#### Share a credential
 
 1. Authenticate into your wallet,
 2. Select a VC that you want to share,
