@@ -31,7 +31,7 @@ const getDetails = ({
   nested = false,
   qrCode,
 }: {
-  detailsObject: unknown
+  detailsObject: any
   nested?: boolean
   qrCode?: string
 }) => {

@@ -12,7 +12,7 @@ import { useAuthContext } from 'hooks/useAuthContext'
 const CredentialView: FC = () => {
   const { authState } = useAuthContext()
   const router = useRouter()
-  const { credentialId } = router.query
+  const credentialId = router.query.credentialId as string
   const { data, isLoading } = useGetCredentialQuery(credentialId || '')
   const { data: shareCredentialData, mutateAsync } = useShareCredentialMutation()
 

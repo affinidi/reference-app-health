@@ -1,4 +1,3 @@
-import { issuanceApiUrl } from 'pages/env'
 import {
   Api as IssuanceAPI,
   CreateIssuanceInput,
@@ -6,6 +5,8 @@ import {
   CreateIssuanceOutput,
   OfferDto,
 } from './issuance.api'
+
+const { issuanceApiUrl } = { issuanceApiUrl: '' }
 
 class IssuanceService {
   constructor(

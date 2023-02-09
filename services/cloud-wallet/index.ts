@@ -3,7 +3,6 @@ import {
   getItemFromSessionStorage,
 } from 'hooks/useSessionStorage'
 
-import { apiKeyHash, cloudWalletApiUrl } from 'pages/env'
 import {
   Api as CloudWalletApi,
   ConfirmSignInInput,
@@ -11,6 +10,8 @@ import {
   SaveCredentialInput,
   SignInInput,
 } from './cloud-wallet.api'
+
+const { apiKeyHash, cloudWalletApiUrl } = { apiKeyHash: '', cloudWalletApiUrl: '' }
 
 export const isHttpError = (
   object: unknown,

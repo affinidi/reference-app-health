@@ -1,5 +1,6 @@
-import { apiKeyHash, verifierApiUrl } from 'pages/env'
 import { Api as VerifierApi, W3CCredential } from './verifier.api'
+
+const { apiKeyHash, verifierApiUrl } = { apiKeyHash: '', verifierApiUrl: '' }
 
 class VerifierService {
   constructor(

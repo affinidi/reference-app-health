@@ -1,10 +1,11 @@
-import { userManagementApiUrl } from 'pages/env'
 import {
   Api,
   AuthConfirmationInput as AuthConfirmationInputBase,
   AuthLoginInput,
   AuthSignupInput,
 } from './user-management.api'
+
+const { userManagementApiUrl } = { userManagementApiUrl: '' }
 
 export interface AuthConfirmationInput extends AuthConfirmationInputBase {
   signup: boolean
