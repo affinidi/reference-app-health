@@ -203,15 +203,15 @@ sequenceDiagram
 sequenceDiagram
   autonumber
 
-  actor Verifier
   actor Holder
+  actor Verifier
   participant App
-  participant VerifierAPI as Verifier API
   participant CW as Cloud Wallet
+  participant VerifierAPI as Verifier API
 
   Holder-->>Verifier: Show the QR code
-  Verifier->>App: Scan the QR code and extract credential share token
-  App->>CW: Fetch the shared VC using the credential share token
+  Verifier->>App: Scan the QR code<br/>and extract credential share token
+  App->>CW: Fetch the shared VC<br/>using the credential share token
   CW->>App: Shared VC
   App->>VerifierAPI: Verify the VC
   VerifierAPI->>App: Verification result
