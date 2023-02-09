@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 
 import { hostUrl } from 'pages/env'
 import { ROUTES } from 'utils'
+import { useSessionStorage } from '../../../hooks/useSessionStorage'
 
 export const adjustForUTCOffset = (date: Date) => {
   return new Date(
@@ -40,6 +41,7 @@ export const initialValues: EventSubjectData = {
 
 export const useCredentialForm = () => {
   const router = useRouter()
+  const { getItem } = useSessionStorage()
   const [isCreating, setIsCreating] = useState(false)
 
   const handleSubmit = useCallback(
@@ -67,6 +69,9 @@ export const useCredentialForm = () => {
                 name: values.name,
                 email: values.email,
               },
+            },
+            headers: {
+              Authorization: `Basic ${getItem('issuerLogin')}:${getItem('issuerPassword')}`
             }
           }
         )
@@ -76,7 +81,7 @@ export const useCredentialForm = () => {
         setIsCreating(false)
       }
     },
-    [router],
+    [router, getItem],
   )
 
   const validate = useCallback((values: EventSubjectData) => {
