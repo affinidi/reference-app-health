@@ -16,10 +16,10 @@ const getTextColor = (props) => {
   }
 
   if (props.$disabled) {
-    return props.theme.colors.neutral.primary['30']
+    return props.theme.colors.neutral.primary['50']
   }
 
-  return ''
+  return props.theme.colors.neutral.primary['90']
 }
 
 export const Label = styled(Typography)<{
@@ -27,6 +27,12 @@ export const Label = styled(Typography)<{
   $disabled?: boolean
 }>`
   color: ${getTextColor};
+
+  ${(props) =>
+    props.$disabled &&
+    css`
+      color: ${props.theme.colors.neutral.primary['30']};
+    `}
 `
 
 export const Select = styled(ReactSelect)<{ $hasError?: boolean }>`
@@ -52,7 +58,7 @@ export const Select = styled(ReactSelect)<{ $hasError?: boolean }>`
     cursor: not-allowed;
 
     .select__placeholder {
-      color: ${({ theme }) => theme.colors.neutral.primary['30']};
+      color: ${({ theme }) => theme.colors.neutral.primary['50']};
     }
 
     .select__single-value {
@@ -86,7 +92,7 @@ export const Select = styled(ReactSelect)<{ $hasError?: boolean }>`
       border-color: ${({ theme, $hasError }) =>
         $hasError
           ? theme.colors.utility.danger['100']
-          : theme.colors.brand.secondary['100']};
+          : theme.colors.brand.primary['90']};
     }
   }
 
@@ -108,7 +114,7 @@ export const Select = styled(ReactSelect)<{ $hasError?: boolean }>`
     border-color: ${({ theme, $hasError }) =>
       $hasError
         ? theme.colors.utility.danger['100']
-        : theme.colors.brand.secondary['100']};
+        : theme.colors.brand.primary['90']};
 
     .select__value-container {
       padding-left: ${pxToRem(15)};
@@ -147,7 +153,7 @@ export const Menu = styled.div`
     margin: ${pxToRem(4)} 0;
     box-shadow: none;
     border-radius: 4px;
-    border: 2px solid ${({ theme }) => theme.colors.brand.secondary['100']};
+    border: 2px solid ${({ theme }) => theme.colors.brand.primary['90']};
   }
 
   .select__menu-list {

@@ -57,7 +57,7 @@ export const Select = ({
           </S.Menu>
         ),
         Option: (optionProps) => (
-          <Typography variant='p2' tag='div'>
+          <Typography variant='p1' tag='div'>
             <components.Option {...optionProps} />
           </Typography>
         ),
@@ -66,7 +66,7 @@ export const Select = ({
     />
 
     {helpText && (
-      <S.HelpText variant='p4' $hasError={hasError} $disabled={isDisabled}>
+      <S.HelpText variant='p3' $hasError={hasError} $disabled={isDisabled}>
         {helpText}
       </S.HelpText>
     )}
