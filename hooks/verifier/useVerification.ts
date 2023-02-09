@@ -1,6 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
-import { VerifyCredentialOutput } from 'services/verifier/verifier.api'
 import { hostUrl } from '../../pages/env'
 
 type ErrorResponse = {
@@ -12,6 +11,11 @@ type ErrorResponse = {
     issue: string
     location: string
   }
+}
+
+type VerifyCredentialOutput = {
+  isValid: boolean
+  errors?: string[]
 }
 
 export const verifyCredentials = async (input: { hash: string; key: string }): Promise<VerifyCredentialOutput> => {
