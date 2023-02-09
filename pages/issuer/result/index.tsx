@@ -16,4 +16,4 @@ const IssuanceResult: FC = () => {
   return <Result isValid={true} pathTo={ROUTES.issuer.credentialForm} />
 }
 
-export default IssuanceResult;
+export default IssuanceResult

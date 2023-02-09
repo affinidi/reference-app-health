@@ -1,4 +1,4 @@
-type KeyValues = 'signUpToken' | 'did' | 'accessToken'
+type KeyValues = 'signUpToken' | 'did' | 'accessToken' | 'issuerLogin' | 'issuerPassword'
 
 export const getItemFromSessionStorage = (key: KeyValues): string | undefined => {
   const stored = sessionStorage.getItem(key)

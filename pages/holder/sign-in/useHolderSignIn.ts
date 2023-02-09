@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
-import { useSessionStorage } from 'hooks/holder/useSessionStorage'
+import { useSessionStorage } from 'hooks/useSessionStorage'
 import { useAuthContext } from 'hooks/useAuthContext'
 import { useHolderSignInMutation } from 'hooks/useAuthentication'
 

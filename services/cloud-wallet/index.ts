@@ -1,7 +1,7 @@
 import {
   clearSessionStorage,
   getItemFromSessionStorage,
-} from 'hooks/holder/useSessionStorage'
+} from 'hooks/useSessionStorage'
 
 import { apiKeyHash, cloudWalletApiUrl } from 'pages/env'
 import {

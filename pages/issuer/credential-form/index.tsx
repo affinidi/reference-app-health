@@ -136,4 +136,4 @@ const CredentialForm: FC = () => {
   )
 }
 
-export default CredentialForm;
+export default CredentialForm

@@ -1,18 +1,11 @@
+import axios from 'axios'
 import { format } from 'date-fns'
 import { useCallback, useState } from 'react'
 import * as EmailValidator from 'email-validator'
 import { useRouter } from 'next/router'
 
-import { JSON_SCHEMA_URL, ROUTES } from 'utils'
-import { apiKeyHash, projectDid, projectId } from 'pages/env'
-
-import { parseSchemaURL } from 'services/issuance/parse.schema.url'
-import {
-  CreateIssuanceInput,
-  CreateIssuanceOfferInput,
-  VerificationMethod,
-} from 'services/issuance/issuance.api'
-import { issuanceService } from 'services/issuance'
+import { hostUrl } from 'pages/env'
+import { ROUTES } from 'utils'
 
 export const adjustForUTCOffset = (date: Date) => {
   return new Date(
@@ -53,51 +46,30 @@ export const useCredentialForm = () => {
     async (values: EventSubjectData) => {
       setIsCreating(true)
 
-      const walletUrl = `${window.location.origin}/holder/claim`
-      const { schemaType, jsonSchema, jsonLdContext } = parseSchemaURL(JSON_SCHEMA_URL)
-
-      const issuanceJson: CreateIssuanceInput = {
-        template: {
-          walletUrl,
-          verification: {
-            method: VerificationMethod.Email,
-          },
-          schema: {
-            type: schemaType,
-            jsonLdContextUrl: jsonLdContext.toString(),
-            jsonSchemaUrl: jsonSchema.toString(),
-          },
-          issuerDid: projectDid,
-        },
-        projectId,
-      }
-
-      const offerInput: CreateIssuanceOfferInput = {
-        verification: {
-          target: {
-            email: values.email,
-          },
-        },
-        credentialSubject: {
-          startDate: format(
-            adjustForUTCOffset(new Date(values.eventStartDateTime)),
-            "yyyy-MM-dd'T'HH:mm:ss'Z'",
-          ),
-          endDate: format(
-            adjustForUTCOffset(new Date(values.eventEndDateTime)),
-            "yyyy-MM-dd'T'HH:mm:ss'Z'",
-          ),
-          place: values.eventLocation,
-          eventName: values.eventName,
-          eventDescription: values.eventDescription,
-          name: values.name,
-          email: values.email,
-        },
-      }
-
       try {
-        const issuanceId = await issuanceService.createIssuance(apiKeyHash, issuanceJson)
-        await issuanceService.createOffer(apiKeyHash, issuanceId.id, offerInput)
+        await axios(
+          `${hostUrl}/api/issuer/send-vc-offer`,
+          {
+            data: {
+              targetEmail: values.email,
+              credentialSubject: {
+                startDate: format(
+                  adjustForUTCOffset(new Date(values.eventStartDateTime)),
+                  'yyyy-MM-dd\'T\'HH:mm:ss\'Z\'',
+                ),
+                endDate: format(
+                  adjustForUTCOffset(new Date(values.eventEndDateTime)),
+                  'yyyy-MM-dd\'T\'HH:mm:ss\'Z\'',
+                ),
+                place: values.eventLocation,
+                eventName: values.eventName,
+                eventDescription: values.eventDescription,
+                name: values.name,
+                email: values.email,
+              },
+            }
+          }
+        )
 
         router.push(ROUTES.issuer.result)
       } catch {
