@@ -7,10 +7,10 @@ import {
   useShareCredentialMutation,
 } from 'hooks/holder/useCredentials'
 import { ROUTES } from 'utils'
-import { Container, Header, Spinner } from 'components'
+import { Header, Spinner } from 'components'
+import { useAuthContext } from 'hooks/useAuthContext'
 
 import { Credential } from '../../components/Credential/Credential'
-import { useAuthContext } from 'hooks/useAuthContext'
 
 import * as S from './credential.syled'
 
