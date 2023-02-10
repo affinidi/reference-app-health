@@ -12,15 +12,9 @@ export type HeaderProps = {
   title: string
   hasBackIcon?: boolean
   path?: string
-  hideForMobile?: boolean
 }
 
-const Header: FC<HeaderProps> = ({
-  title,
-  hasBackIcon,
-  path,
-  hideForMobile,
-}) => {
+const Header: FC<HeaderProps> = ({ title, hasBackIcon, path }) => {
   const navigate = useRouter()
 
   return (
@@ -35,9 +29,7 @@ const Header: FC<HeaderProps> = ({
             <Image src={BackIcon} alt='Go back' />
           </S.IconWrapper>
         )}
-         <S.VisibilityWrapper $hideForMobile={hideForMobile}>
-            <S.Title variant='h4'>{title}</S.Title>
-          </S.VisibilityWrapper>
+        <S.Title variant='h4'>{title}</S.Title>
       </S.Container>
     </Container>
   )

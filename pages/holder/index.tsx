@@ -78,12 +78,12 @@ const Home: FC = () => {
 
   const getVcCards = ({
     vcs,
-    isValid,
   }: {
     vcs: StoredW3CCredential[]
-    isValid: boolean
-  }) =>
-    vcs.map((credentialItem: StoredW3CCredential) => {
+  }) => {
+    let vcNumber = 1
+
+    return vcs.map((credentialItem: StoredW3CCredential) => {
       const credential: Credential = {
         medicationName: credentialItem?.credentialSubject.medicationName,
         credentialId: credentialItem?.id,
@@ -91,12 +91,13 @@ const Home: FC = () => {
 
       return (
         <VcCard
+          title={`Prescription Record ${vcNumber++}`}
           key={credentialItem.id}
           credential={credential}
-          isValid={isValid}
         />
       )
     })
+  }
 
   return (
     <>
@@ -107,7 +108,6 @@ const Home: FC = () => {
           <div className='grid lg:grid-cols-2 xl:grid-cols-4 gap-12 lg:gap-16'>
             {getVcCards({
               vcs: validVcs,
-              isValid: true,
             })}
           </div>
         </Container>

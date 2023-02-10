@@ -30,12 +30,3 @@ export const Title = styled(Typography)`
   }
 `
 
-export const VisibilityWrapper = styled.div<{ $hideForMobile?: boolean }>`
-  @media (max-width: 1024px) {
-    ${(props) =>
-      props.$hideForMobile &&
-      css`
-        display: none;
-      `}
-  }
-`

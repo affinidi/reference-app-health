@@ -44,7 +44,6 @@ const CredentialView: FC = () => {
         title='Prescription Record'
         path={ROUTES.holder.home}
         hasBackIcon
-        hideForMobile={true}
       />
 
       <S.ContainerWrapper>

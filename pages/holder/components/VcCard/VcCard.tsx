@@ -11,10 +11,10 @@ import * as S from './VcCard.styled'
 
 export type VcCardProps = {
   credential: Credential
-  isValid: boolean
+  title: string
 }
 
-const VcCard: FC<VcCardProps> = ({ credential, isValid }) => {
+const VcCard: FC<VcCardProps> = ({ credential, title }) => {
   const router = useRouter()
 
   const handleClick = () => {
@@ -29,8 +29,8 @@ const VcCard: FC<VcCardProps> = ({ credential, isValid }) => {
 
       <Box direction='row' gap={4}>
         <Box>
-          <Typography variant='c1'>Prescription Record 1</Typography>
-          <Typography variant='p4'>{credential.medicationName}</Typography>
+          <Typography variant='h7'>{title}</Typography>
+          <Typography variant='p3'>{credential.medicationName}</Typography>
         </Box>
       </Box>
     </S.VcCard>
