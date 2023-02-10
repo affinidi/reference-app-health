@@ -41,16 +41,12 @@ export const QrCodeCard = styled(Box)`
 
     @media (min-width: 1024px) {
       max-width: none;
-
-      img {
-        height: ${pxToRem(292)};
-        width: ${pxToRem(292)};
-      }
+      height: ${pxToRem(292)};
     }
   }
 
   @media (max-width: 1024px) {
-    border-bottom: 3px dashed #fff;
+    border-bottom: 3px dashed ${props => props.theme.colors.neutral.secondary['100']};;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
 
@@ -69,7 +65,7 @@ export const QrCodeCard = styled(Box)`
   }
 
   @media (min-width: 1024px) {
-    border-left: 3px dashed #fff;
+    border-left: 3px dashed ${props => props.theme.colors.neutral.secondary['100']};;
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
 

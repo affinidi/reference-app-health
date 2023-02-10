@@ -40,7 +40,7 @@ export const SpinnerWrapper = styled.div`
   top: 50%;
   transform: translate(-50%, -50%);
 
-  svg {
+  img {
     display: block;
     animation: ${rotate} 1.5s linear infinite;
   }
@@ -49,6 +49,7 @@ export const SpinnerWrapper = styled.div`
 export const IconWrapper = styled.div<Pick<StyledButtonProps, '$loading'>>`
   opacity: ${(props) => (props.$loading ? '0' : '1')};
 
+  img,
   svg {
     display: block;
     max-height: ${pxToRem(20)};

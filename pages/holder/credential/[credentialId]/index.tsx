@@ -3,11 +3,13 @@ import { useRouter } from 'next/router'
 
 import { StoredW3CCredential } from 'services/cloud-wallet/cloud-wallet.api'
 import { useGetCredentialQuery, useShareCredentialMutation } from 'hooks/holder/useCredentials'
+import { useAuthContext } from 'hooks/useAuthContext'
 import { ROUTES } from 'utils'
-import { Container, Header, Spinner } from 'components'
+import { Header, Spinner } from 'components'
 
 import { Credential } from '../../components/Credential/Credential'
-import { useAuthContext } from 'hooks/useAuthContext'
+
+import * as S from './credentialId.styled'
 
 const CredentialView: FC = () => {
   const { authState } = useAuthContext()
@@ -40,12 +42,12 @@ const CredentialView: FC = () => {
         hasBackIcon
       />
 
-      <Container>
+      <S.Container>
         <Credential
           credentialSubject={credential.credentialSubject}
           qrCode={shareCredentialData?.qrCode}
         />
-      </Container>
+      </S.Container>
     </>
   )
 }

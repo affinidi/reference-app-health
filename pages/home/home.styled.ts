@@ -1,20 +1,17 @@
 import styled from 'styled-components'
 
 import { pxToRem } from 'utils'
-import { Box, Typography } from 'components'
+import { Box } from 'components'
 
 export const Wrapper = styled.div`
   padding-bottom: ${pxToRem(40)};
 `
 
-export const Card = styled(Box)<{ $disabled?: boolean }>`
+export const Card = styled(Box)`
   padding: ${pxToRem(24)};
-  margin-top: ${pxToRem(40)};
-  min-height: initial;
   border-radius: 8px;
   box-shadow: 0 ${pxToRem(4)} ${pxToRem(20)} 0 rgba(0, 0, 0, 0.1);
-  background-color: #ffffff;
-  overflow-wrap: anywhere;
+  background-color: ${props => props.theme.colors.neutral.secondary['100']};
   cursor: pointer;
 
   * {
@@ -22,19 +19,8 @@ export const Card = styled(Box)<{ $disabled?: boolean }>`
   }
 
   @media (min-width: 1024px) {
-    width: auto;
     padding: ${pxToRem(32)};
   }
-
-  ${(props) => (props.$disabled ? `opacity: 0.5; cursor: default;` : null)}
-`
-
-export const Para = styled(Typography)`
-  margin-top: ${pxToRem(16)};
-  font-size: ${pxToRem(16)};
-  font-style: normal;
-  line-height: 1.38;
-  letter-spacing: ${pxToRem(0.2)};
 `
 
 export const Icon = styled.div`
