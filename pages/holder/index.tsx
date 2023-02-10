@@ -24,7 +24,7 @@ const Home: FC = () => {
   if (isLoading) {
     return (
       <>
-        <Header title='Your medical records' />
+        <Header title='Your prescriptions' />
         <Container>
           <Spinner />
         </Container>
@@ -35,7 +35,7 @@ const Home: FC = () => {
   if (error) {
     return (
       <>
-        <Header title='Your medical records' />
+        <Header title='Your prescriptions' />
         <Container>
           <div className='grid justify-content-center'>
             {error && <Typography variant='e1'>{error?.message}</Typography>}
@@ -54,14 +54,14 @@ const Home: FC = () => {
   if (vcs.length === 0) {
     return (
       <>
-        <Header title='Your medical records' />
+        <Header title='Your prescriptions' />
         <Container>
           <div className='grid justify-content-center'>
             <Typography align='center' variant='p2'>
-              You don&apos;t have any medical records yet.
+              You don&apos;t have any prescriptions yet.
             </Typography>
             <S.IconContainer>
-              <Image src={NoData} alt='No medical records' />
+              <Image src={NoData} alt='No prescriptions' />
             </S.IconContainer>
           </div>
         </Container>
@@ -81,7 +81,7 @@ const Home: FC = () => {
 
     return vcs.map((credentialItem: StoredW3CCredential) => {
       const credential: Credential = {
-        title: `Prescription Record ${vcNumber++}`,
+        title: `${credentialItem?.credentialSubject.patient.name} ${credentialItem?.credentialSubject.prescribedAt}`,
         medicationName: credentialItem?.credentialSubject.medicationName,
         credentialId: credentialItem?.id,
       }
@@ -92,7 +92,7 @@ const Home: FC = () => {
 
   return (
     <>
-      <Header title='Your medical records' />
+      <Header title='Your prescriptions' />
 
       {validVcs.length > 0 && (
         <Container>

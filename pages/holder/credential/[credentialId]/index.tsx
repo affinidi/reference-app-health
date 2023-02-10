@@ -41,7 +41,7 @@ const CredentialView: FC = () => {
   return (
     <>
       <Header
-        title='Prescription Record'
+        title={`${credential?.credentialSubject.patient.name} ${credential?.credentialSubject.prescribedAt}`}
         path={ROUTES.holder.home}
         hasBackIcon
       />

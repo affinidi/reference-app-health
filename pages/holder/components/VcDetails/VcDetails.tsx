@@ -27,7 +27,6 @@ export const VcDetails: FC<VcDetailsProps> = ({
     <S.VcDetailsCard justifyContent='space-between'>
       <Box gap={8}>
         <Typography variant='h4'>{patientName}</Typography>
-        <Typography variant='s1'>Prescription Record</Typography>
       </Box>
 
       <S.MedicationDetailsContainer>

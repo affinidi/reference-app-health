@@ -21,7 +21,7 @@ const Verifier: FC = () => {
             <Image src={QrScan} alt="QR Scan" />
 
             <S.WelcomeMessage align="center" variant="p1">
-              Welcome to the healthi scanner. Tap “scan QR code” to start checking medical records.
+              Welcome to the healthi scanner. Tap “scan QR code” to start checking prescriptions.
             </S.WelcomeMessage>
 
             <Button fullWidth onClick={() => router.push(ROUTES.verifier.scan)}>SCAN QR CODE</Button>
