@@ -14,35 +14,68 @@ import {
 } from 'services/issuance/issuance.api'
 import { issuanceService } from 'services/issuance'
 
-export const adjustForUTCOffset = (date: Date) => {
-  return new Date(
-    date.getUTCFullYear(),
-    date.getUTCMonth(),
-    date.getUTCDate(),
-    date.getUTCHours(),
-    date.getUTCMinutes(),
-    date.getUTCSeconds(),
-  )
+export type SelectOption = {
+  value: string,
+  label: string
 }
 
-export type EventSubjectData = {
-  eventName: string
-  eventLocation: string
-  eventStartDateTime: string
-  eventEndDateTime: string
-  eventDescription: string
-  name: string
-  email: string
+export const DosageUnitOptions: SelectOption[] = [
+  {
+    value: 'mg',
+    label: 'mg',
+  },
+  {
+    value: 'g',
+    label: 'g',
+  },
+  {
+    value: 'ml',
+    label: 'ml',
+  },
+  {
+    value: 'piece',
+    label: 'piece',
+  },
+]
+
+export const FrequencyIntervalUnitOptions: SelectOption[] = [
+  {
+    value: 'hour',
+    label: 'per hour',
+  },
+  {
+    value: 'day',
+    label: 'per day',
+  },
+  {
+    value: 'week',
+    label: 'per week',
+  },
+]
+
+
+export type PrescriptionData = {
+  medicationName: string
+  prescribedAt: string
+  practitionerName: string
+  dosageAmount: string
+  dosageUnit: string
+  frequencyTimes: string
+  frequencyIntervalUnit: string
+  patientName: string
+  patientEmail: string
 }
 
-export const initialValues: EventSubjectData = {
-  eventName: '',
-  eventLocation: '',
-  eventStartDateTime: '',
-  eventEndDateTime: '',
-  eventDescription: '',
-  name: '',
-  email: '',
+export const initialValues: PrescriptionData = {
+  medicationName: '',
+  prescribedAt: '',
+  practitionerName: '',
+  dosageAmount: "1",
+  dosageUnit: DosageUnitOptions[0].value,
+  frequencyTimes: "1",
+  frequencyIntervalUnit: FrequencyIntervalUnitOptions[0].value,
+  patientName: '',
+  patientEmail: '',
 }
 
 export const useCredentialForm = () => {
@@ -50,7 +83,7 @@ export const useCredentialForm = () => {
   const [isCreating, setIsCreating] = useState(false)
 
   const handleSubmit = useCallback(
-    async (values: EventSubjectData) => {
+    async (values: PrescriptionData) => {  
       setIsCreating(true)
 
       const walletUrl = `${window.location.origin}/holder/claim`
@@ -75,23 +108,30 @@ export const useCredentialForm = () => {
       const offerInput: CreateIssuanceOfferInput = {
         verification: {
           target: {
-            email: values.email,
+            email: values.patientEmail,
           },
         },
         credentialSubject: {
-          startDate: format(
-            adjustForUTCOffset(new Date(values.eventStartDateTime)),
-            "yyyy-MM-dd'T'HH:mm:ss'Z'",
-          ),
-          endDate: format(
-            adjustForUTCOffset(new Date(values.eventEndDateTime)),
-            "yyyy-MM-dd'T'HH:mm:ss'Z'",
-          ),
-          place: values.eventLocation,
-          eventName: values.eventName,
-          eventDescription: values.eventDescription,
-          name: values.name,
-          email: values.email,
+          prescribedAt: format(new Date(values.prescribedAt), "yyyy-MM-dd"),
+          medicationName: values.medicationName,
+          dosage: {
+            amount: Number(values.dosageAmount),
+            unit: values.dosageUnit
+          },
+          practitioner: {
+            name: values.practitionerName,
+          },
+          frequency: {
+            amount: Number(values.frequencyTimes),
+            interval: {
+              amount: 1,
+              unit: values.frequencyIntervalUnit
+            }
+          },
+          patient: {
+            name: values.patientName,
+            email: values.patientEmail,
+          }
         },
       }
 
@@ -107,45 +147,45 @@ export const useCredentialForm = () => {
     [router],
   )
 
-  const validate = useCallback((values: EventSubjectData) => {
-    const errors = {} as Partial<EventSubjectData>
+  const validate = useCallback((values: PrescriptionData) => {
+    const errors = {} as Partial<PrescriptionData>
 
-    if (!values.eventName) {
-      errors.eventName = 'Mandatory field'
+    if (!values.medicationName) {
+      errors.medicationName = 'Mandatory field'
     }
 
-    if (!values.eventStartDateTime) {
-      errors.eventStartDateTime = 'Mandatory field'
+    if (!values.prescribedAt) {
+      errors.prescribedAt = 'Mandatory field'
     }
 
-    if (!values.eventEndDateTime) {
-      errors.eventEndDateTime = 'Mandatory field'
+    if (!values.practitionerName) {
+      errors.practitionerName = 'Mandatory field'
     }
 
-    if (
-      values.eventStartDateTime &&
-      values.eventEndDateTime &&
-      new Date(values.eventStartDateTime) > new Date(values.eventEndDateTime)
-    ) {
-      errors.eventStartDateTime = 'Start date time must not be greater than end date time'
+    if (!values.dosageAmount) {
+      errors.dosageAmount = 'Mandatory field'
     }
 
-    if (!values.eventLocation) {
-      errors.eventLocation = 'Mandatory field'
+    if (!values.dosageUnit) {
+      errors.dosageUnit = 'Mandatory field'
     }
 
-    if (!values.name) {
-      errors.name = 'Mandatory field'
+    if (!values.frequencyIntervalUnit) {
+      errors.frequencyIntervalUnit = 'Mandatory field'
     }
 
-    if (!values.email) {
-      errors.email = 'Mandatory field'
+    if (!values.frequencyTimes) {
+      errors.frequencyTimes = 'Mandatory field'
     }
 
-    if (!values.email) {
-      errors.email = 'Mandatory field'
-    } else if (!EmailValidator.validate(values.email)) {
-      errors.email = 'Invalid email'
+    if (!values.patientName) {
+      errors.patientName = 'Mandatory field'
+    }
+
+    if (!values.patientEmail) {
+      errors.patientEmail = 'Mandatory field'
+    } else if (!EmailValidator.validate(values.patientEmail)) {
+      errors.patientEmail = 'Invalid email'
     }
 
     return errors

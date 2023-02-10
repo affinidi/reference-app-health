@@ -16,5 +16,5 @@ export const InputWrapper = styled(Input)`
 `
 
 export const ButtonWrapper = styled(Button)`
-  margin-bottom: ${pxToRem(40)};
+  margin: ${pxToRem(40)} 0; 
 `
