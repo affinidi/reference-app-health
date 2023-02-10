@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { pxToRem } from 'utils'
 
@@ -27,5 +27,15 @@ export const Title = styled(Typography)`
 
   @media (max-width: 1024px) {
     padding-bottom: ${pxToRem(24)};
+  }
+`
+
+export const VisibilityWrapper = styled.div<{ $hideForMobile?: boolean }>`
+  @media (max-width: 1024px) {
+    ${(props) =>
+      props.$hideForMobile &&
+      css`
+        display: none;
+      `}
   }
 `
