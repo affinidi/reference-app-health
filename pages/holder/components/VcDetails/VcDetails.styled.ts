@@ -25,7 +25,7 @@ export const QrCodeCard = styled(Box)`
   }
 `
 
-export const PrescriptionDetailsCard = styled(Box)`
+export const VcDetailsContainer = styled(Box)`
   flex-direction: row;
   padding: ${pxToRem(40)};
   background-color: ${(props) => props.theme.colors.brand.secondary['50']};
@@ -42,7 +42,7 @@ export const PrescriptionDetailsCard = styled(Box)`
   }
 `
 
-export const DataCardInnerContainer = styled(Box)`
+export const VcDetailsCard = styled(Box)`
   gap: ${pxToRem(48)};
 
   @media (max-width: 1024px) {

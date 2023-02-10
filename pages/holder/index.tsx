@@ -9,7 +9,7 @@ import NoData from 'public/images/illustration-empty-state.svg'
 import { Container, Header, Spinner, Typography } from 'components'
 
 import { Credential } from './types'
-import PrescriptionCard from './components/PrescriptionCard/PrescriptionCard'
+import VcCard from './components/VcCard/VcCard'
 
 import * as S from './index.styled'
 
@@ -45,31 +45,23 @@ const Home: FC = () => {
     )
   }
 
-  console.log('dta:', data)
-
-  const prescriptions = data.filter((credentialItem) => {
+  const vcs = data.filter((credentialItem) => {
     const credentialSchema = (credentialItem as StoredW3CCredential)
       .credentialSchema
     return credentialSchema?.id === JSON_SCHEMA_URL
   })
 
-  if (prescriptions.length === 0) {
+  if (vcs.length === 0) {
     return (
       <>
         <Header title='Your medical records' />
         <Container>
-          <div className="grid justify-content-center">
-            <Typography
-              align="center"
-              variant="p2"
-            >
+          <div className='grid justify-content-center'>
+            <Typography align='center' variant='p2'>
               You don&apos;t have any medical records yet.
             </Typography>
             <S.IconContainer>
-              <Image
-                src={NoData}
-                alt="No medical records"
-              />
+              <Image src={NoData} alt='No medical records' />
             </S.IconContainer>
           </div>
         </Container>
@@ -78,29 +70,27 @@ const Home: FC = () => {
   }
 
   // @ts-ignore
-  const validPrescriptions: StoredW3CCredential[] = prescriptions.filter(
-    (credentialItem) => {
-      const credentialSubject = (credentialItem as StoredW3CCredential)
-        ?.credentialSubject
-      return Date.parse(credentialSubject?.prescribedAt) >= Date.now()
-    }
-  )
+  const validVcs: StoredW3CCredential[] = vcs.filter((credentialItem) => {
+    const credentialSubject = (credentialItem as StoredW3CCredential)
+      ?.credentialSubject
+    return Date.parse(credentialSubject?.prescribedAt) >= Date.now()
+  })
 
-  const getPrescriptionCards = ({
-    prescriptions,
+  const getVcCards = ({
+    vcs,
     isValid,
   }: {
-    prescriptions: StoredW3CCredential[]
+    vcs: StoredW3CCredential[]
     isValid: boolean
   }) =>
-    prescriptions.map((credentialItem: StoredW3CCredential) => {
+    vcs.map((credentialItem: StoredW3CCredential) => {
       const credential: Credential = {
         medicationName: credentialItem?.credentialSubject.medicationName,
         credentialId: credentialItem?.id,
       }
 
       return (
-        <PrescriptionCard
+        <VcCard
           key={credentialItem.id}
           credential={credential}
           isValid={isValid}
@@ -112,11 +102,11 @@ const Home: FC = () => {
     <>
       <Header title='Your medical records' />
 
-      {validPrescriptions.length > 0 && (
+      {validVcs.length > 0 && (
         <Container>
           <div className='grid lg:grid-cols-2 xl:grid-cols-4 gap-12 lg:gap-16'>
-            {getPrescriptionCards({
-              prescriptions: validPrescriptions,
+            {getVcCards({
+              vcs: validVcs,
               isValid: true,
             })}
           </div>

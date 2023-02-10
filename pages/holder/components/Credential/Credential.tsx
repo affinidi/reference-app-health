@@ -3,7 +3,7 @@ import { format } from 'date-fns'
 
 import { AnyData } from 'services/cloud-wallet/cloud-wallet.api'
 
-import { PrescriptionDetails } from '../PrescriptionDetails/PrescriptionDetails'
+import { VcDetails } from '../VcDetails/VcDetails'
 
 import * as S from './Credential.styled'
 
@@ -50,7 +50,7 @@ const getDetails = ({
   if (typeof detailsObject === 'object' && detailsObject !== null) {
     return (
       qrCode && (
-        <PrescriptionDetails
+        <VcDetails
           medicationName={detailsObject.medicationName}
           patientName={detailsObject.patient.name}
           date={format(new Date(detailsObject.prescribedAt), 'dd.MM.yyy')}
