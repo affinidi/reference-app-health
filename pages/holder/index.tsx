@@ -14,7 +14,7 @@ import { useHolderApi } from '../../hooks/holder/useHolderApi'
 const Home: FC = () => {
   const { authState } = useAuthContext()
   const { useGetVcsQuery } = useHolderApi()
-  const { data, error } = useGetVcsQuery()
+  const { data, error } = useGetVcsQuery() 
 
   if (!authState.authorizedAsHolder) {
     return <Spinner />

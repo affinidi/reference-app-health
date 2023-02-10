@@ -1,49 +1,40 @@
-import axios from 'axios'
-import { FC, useCallback, useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Container, ContainerForm, Header, Input } from 'components'
 import { useSessionStorage } from 'hooks/useSessionStorage'
 import { useAuthentication } from 'hooks/useAuthentication'
-import { hostUrl } from 'pages/env'
 import { ROUTES } from 'utils'
 
 import * as S from './index.styled'
+import { useIssuerApi } from '../../../hooks/issuer/useIssuerApi'
 
 const IssuerLogIn: FC = () => {
   const router = useRouter()
   const { setItem } = useSessionStorage()
   const { updateAuthState } = useAuthentication()
 
+  const { checkCredentialsMutation: { mutate, isSuccess, isError, isLoading, reset } } = useIssuerApi()
+
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const [isError, setIsError] = useState(false)
 
-  const handleLogIn = useCallback(async () => {
-    setIsLoading(true)
-    setIsError(false)
-    
-    try {
-      await axios(
-        `${hostUrl}/api/issuer/log-in`,
-        { method: 'POST', headers: { 'Authorization': `Basic ${login}:${password}` } }
-      )
-
-      setItem('issuerLogin', login)
-      setItem('issuerPassword', password)
-
-      updateAuthState({ authorizedAsIssuer: true })
-
-      await router.push(ROUTES.issuer.credentialForm)
-    } catch {
-      setIsError(true)
-      setIsLoading(false)
-    }
-  }, [login, password, setItem, router, updateAuthState])
+  const handleLogIn = () => {
+    mutate({ login, password })
+  }
 
   useEffect(() => {
-    setIsError(false)
-  }, [login, password])
+    if (isSuccess) {
+      setItem('issuerLogin', login)
+      setItem('issuerPassword', password)
+      updateAuthState({ authorizedAsIssuer: true })
+
+      router.push(ROUTES.issuer.credentialForm)
+    }
+  }, [isSuccess, router, setItem, updateAuthState, login, password])
+
+  useEffect(() => {
+    reset()
+  }, [login, password, reset])
 
   return (
     <>

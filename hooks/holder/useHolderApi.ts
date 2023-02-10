@@ -1,8 +1,9 @@
 import { useQuery, useMutation } from '@tanstack/react-query'
 import axios from 'axios'
-import { hostUrl } from '../../pages/env'
-import { VerifiableCredential } from '../../types/vc'
-import { useSessionStorage } from '../useSessionStorage'
+import { hostUrl } from 'pages/env'
+import { ErrorResponse } from 'types/error'
+import { VerifiableCredential } from 'types/vc'
+import { useSessionStorage } from 'hooks/useSessionStorage'
 
 const signIn = async (input: { username: string }): Promise<{ token: string }> => {
   const { data: { token } } = await axios<{ token: string }>(
@@ -73,11 +74,16 @@ export const useHolderApi = () => {
   const accessToken = getItem('accessToken')!
 
   return {
-    signInMutation: useMutation<OutputType<typeof signIn>, Error, InputType<typeof signIn>, () => void>((input) => signIn(input)),
-    confirmSignInMutation: useMutation<OutputType<typeof confirmSignIn>, Error, InputType<typeof confirmSignIn>, () => void>((input) => confirmSignIn(input)),
-    useGetVcsQuery: () => useQuery<OutputType<typeof getVcs>, Error>(['getVcs'], () => getVcs(accessToken)),
-    useClaimVcQuery: (input: InputType<typeof claimVc>) => useQuery<OutputType<typeof claimVc>, Error>([], () => claimVc(input, accessToken)),
-    useShareVcQuery: (input: InputType<typeof shareVc>) => useQuery<OutputType<typeof shareVc>, Error>([], () => shareVc(input, accessToken)),
+    signInMutation: useMutation<OutputType<typeof signIn>, ErrorResponse, InputType<typeof signIn>, () => void>((input) => signIn(input)),
+    confirmSignInMutation: useMutation<OutputType<typeof confirmSignIn>, ErrorResponse, InputType<typeof confirmSignIn>, () => void>((input) => confirmSignIn(input)),
+    useGetVcsQuery: () => useQuery<OutputType<typeof getVcs>, ErrorResponse>(['getVcs'], () => getVcs(accessToken)),
+    useClaimVcQuery: (input: InputType<typeof claimVc>) => useQuery<OutputType<typeof claimVc>, ErrorResponse>(
+      ['claimVc', input.credentialOfferRequestToken],
+      () => claimVc(input, accessToken)
+    ),
+    useShareVcQuery: (input: InputType<typeof shareVc>) => useQuery<OutputType<typeof shareVc>, ErrorResponse>(
+      ['shareVc', input.credentialId],
+      () => shareVc(input, accessToken)
+    ),
   }
 }
-
