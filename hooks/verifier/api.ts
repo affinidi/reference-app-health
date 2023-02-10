@@ -8,13 +8,13 @@ type VerifyCredentialOutput = {
   errors?: string[]
 }
 
-export const useVerifyVcQuery = (input: { hash: string; key: string }) => {
+export const useVerifyVcQuery = (data: { hash: string; key: string }) => {
   return useQuery<VerifyCredentialOutput, ErrorResponse>(['verifyVc'], async () => {
     const { data: { isValid, errors } } = await axios<VerifyCredentialOutput>(
       `${hostUrl}/api/verifier/verify-vc`,
-      { method: 'POST' }
+      { method: 'POST', data }
     )
   
     return { isValid, errors }
-  }, { enabled: Boolean(input.hash && input.key) })
+  }, { enabled: Boolean(data.hash && data.key) })
 }
