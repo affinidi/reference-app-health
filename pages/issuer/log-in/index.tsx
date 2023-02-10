@@ -1,24 +1,21 @@
 import { FC, useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
 import { Container, ContainerForm, Header, Input } from 'components'
 import { useSessionStorage } from 'hooks/useSessionStorage'
-import { useAuthentication } from 'hooks/useAuthentication'
 import { useCheckCredentialsMutation } from 'hooks/issuer/api'
-import { ROUTES } from 'utils'
+import { useAuthContext } from 'hooks/useAuthContext'
 
 import * as S from './index.styled'
 
 const IssuerLogIn: FC = () => {
-  const router = useRouter()
   const { setItem } = useSessionStorage()
-  const { updateAuthState } = useAuthentication()
-
+  const { updateAuthState } = useAuthContext()
   const { mutate, isSuccess, isError, isLoading, reset } = useCheckCredentialsMutation()
 
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleLogIn = () => {
+  const handleLogIn = (event: SubmitEvent) => {
+    event.preventDefault()
     mutate({ login, password })
   }
 
@@ -27,14 +24,12 @@ const IssuerLogIn: FC = () => {
       setItem('issuerLogin', login)
       setItem('issuerPassword', password)
       updateAuthState({ authorizedAsIssuer: true })
-
-      router.push(ROUTES.issuer.credentialForm)
     }
-  }, [isSuccess, router, setItem, updateAuthState, login, password])
+  }, [isSuccess])
 
   useEffect(() => {
     reset()
-  }, [login, password, reset])
+  }, [login, password])
 
   return (
     <>
@@ -53,6 +48,8 @@ const IssuerLogIn: FC = () => {
               onChange={(value) => setLogin(value)}
               hasError={isError}
             />
+
+            <br/>
 
             <Input
               id="password"
