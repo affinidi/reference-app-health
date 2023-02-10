@@ -27,6 +27,20 @@ export const useConfirmSignInMutation = () => {
   })
 }
 
+export const useLogOutMutation = () => {
+  const { getItem } = useSessionStorage()
+  const accessToken = getItem('accessToken')
+
+  return useMutation<void, ErrorResponse, void, () => void>(async () => {
+    if (!accessToken) return
+
+    await axios<void>(
+      `${hostUrl}/api/holder/log-out`,
+      { method: 'POST', headers: { 'Authorization': accessToken } }
+    )
+  })
+}
+
 export const useGetVcsQuery = () => {
   const { getItem } = useSessionStorage()
   const accessToken = getItem('accessToken')!

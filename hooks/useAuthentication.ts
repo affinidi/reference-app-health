@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react'
 
 import { useRouter } from 'next/router'
-import { clearSessionStorage, useSessionStorage } from './useSessionStorage'
+import { useSessionStorage } from './useSessionStorage'
 
 export type ErrorResponse = {
   name: string
@@ -12,14 +12,6 @@ export type ErrorResponse = {
     issue: string
     location: string
   }
-}
-
-export const logout = async (authState: UserState) => {
-  if (authState.authorizedAsHolder) {
-    // TODO: logout from holder's cloud wallet (implement an endpoint)
-  }
-
-  clearSessionStorage()
 }
 
 export type UserState = {
