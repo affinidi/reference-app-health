@@ -1,7 +1,7 @@
 import { useQuery, useMutation } from '@tanstack/react-query'
 import axios from 'axios'
 import { hostUrl } from 'pages/env'
-import { ErrorResponse } from 'types/error'
+import { ErrorResponse, InputType, OutputType } from 'types/api'
 import { VerifiableCredential } from 'types/vc'
 import { useSessionStorage } from 'hooks/useSessionStorage'
 
@@ -65,9 +65,6 @@ const shareVc = async (input: { credentialId: string }, accessToken: string): Pr
 
   return { vc, qrCode }
 }
-
-type InputType<T extends (...args: any[]) => any> = Parameters<T>[0]
-type OutputType<T extends (...args: any[]) => any> = Awaited<ReturnType<T>>
 
 export const useHolderApi = () => {
   const { getItem } = useSessionStorage()

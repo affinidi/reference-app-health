@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useMutation } from '@tanstack/react-query'
 import { hostUrl } from 'pages/env'
-import { ErrorResponse } from 'types/error'
+import { ErrorResponse, InputType, OutputType } from 'types/api'
 import { useSessionStorage } from '../useSessionStorage'
 
 const checkCredentials = async (credentials: { login: string; password: string }): Promise<void> => {
@@ -27,9 +27,6 @@ const generateAuthHeaders = (credentials: { login: string; password: string }) =
     Authorization: `Basic ${credentials.login}:${credentials.password}`
   }
 }
-
-type InputType<T extends (...args: any[]) => any> = Parameters<T>[0]
-type OutputType<T extends (...args: any[]) => any> = Awaited<ReturnType<T>>
 
 export const useIssuerApi = () => {
   const { getItem } = useSessionStorage()

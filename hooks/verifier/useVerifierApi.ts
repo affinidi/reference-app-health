@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
 import { hostUrl } from 'pages/env'
-import { ErrorResponse } from 'types/error'
+import { ErrorResponse, InputType, OutputType } from 'types/api'
 
 type VerifyCredentialOutput = {
   isValid: boolean
@@ -16,9 +16,6 @@ const verifyVc = async (input: { hash: string; key: string }): Promise<VerifyCre
 
   return data
 }
-
-type InputType<T extends (...args: any[]) => any> = Parameters<T>[0]
-type OutputType<T extends (...args: any[]) => any> = Awaited<ReturnType<T>>
 
 export const useVerifierApi = () => {
   return {
