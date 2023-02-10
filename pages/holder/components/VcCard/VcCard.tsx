@@ -11,10 +11,9 @@ import * as S from './VcCard.styled'
 
 export type VcCardProps = {
   credential: Credential
-  title: string
 }
 
-const VcCard: FC<VcCardProps> = ({ credential, title }) => {
+const VcCard: FC<VcCardProps> = ({ credential }) => {
   const router = useRouter()
 
   const handleClick = () => {
@@ -29,7 +28,7 @@ const VcCard: FC<VcCardProps> = ({ credential, title }) => {
 
       <Box direction='row' gap={4}>
         <Box>
-          <Typography variant='h7'>{title}</Typography>
+          <Typography variant='h7'>{credential.title}</Typography>
           <Typography variant='p3'>{credential.medicationName}</Typography>
         </Box>
       </Box>
