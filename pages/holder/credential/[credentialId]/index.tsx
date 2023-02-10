@@ -5,59 +5,38 @@ import { ROUTES } from 'utils'
 import { Container, Header, Spinner } from 'components'
 
 import { Credential } from '../../components/Credential/Credential'
-import { VerifiableCredential } from '../../../../types/vc'
-import axios from 'axios'
-import { hostUrl } from '../../../env'
-import { useSessionStorage } from '../../../../hooks/useSessionStorage'
+import { useHolderApi } from '../../../../hooks/holder/useHolderApi'
 
 const CredentialView: FC = () => {
   const router = useRouter()
-  const { getItem } = useSessionStorage()
   const credentialId = router.query.credentialId as string
 
-  const [vc, setVc] = useState<VerifiableCredential>()
-  const [qrCode, setQrCode] = useState<string>()
+  const { useShareVcQuery } = useHolderApi()
+  const { data, error } = useShareVcQuery({ credentialId })
 
   useEffect(() => {
-    if (!credentialId) return
-
-    async function shareVc() {
-      const { data: { vc, qrCode } } = await axios<{ vc: VerifiableCredential; qrCode: string }>(
-        `${hostUrl}/api/holder/share-vc`,
-        {
-          method: 'POST',
-          data: {
-            id: credentialId,
-          },
-          headers: {
-            'Authorization': getItem('accessToken'),
-          }
-        }
-      )
-
-      setVc(vc)
-      setQrCode(qrCode)
+    if (error) {
+      // TODO: show error
+      router.push(ROUTES.holder.home)
     }
+  }, [router, error])
 
-    shareVc()
-  }, [credentialId])
-
-  if (!vc) {
+  if (!data) {
     return <Spinner />
   }
 
   return (
     <>
       <Header
-        title={vc.credentialSubject.eventName || ''}
+        title={data.vc.credentialSubject.eventName || ''}
         path={ROUTES.holder.home}
         hasBackIcon
       />
 
       <Container>
         <Credential
-          credentialSubject={vc.credentialSubject}
-          qrCode={qrCode}
+          credentialSubject={data.vc.credentialSubject}
+          qrCode={data.qrCode}
         />
       </Container>
     </>

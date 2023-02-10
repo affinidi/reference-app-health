@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import { format } from 'date-fns'
 
 import { useAuthContext } from 'hooks/useAuthContext'
@@ -9,39 +9,18 @@ import { Credential } from './types'
 import PrescriptionCard from './components/PrescriptionCard/PrescriptionCard'
 import * as S from './index.styled'
 import { VerifiableCredential } from '../../types/vc'
-import { hostUrl } from '../env'
-import axios from 'axios'
-import { useSessionStorage } from '../../hooks/useSessionStorage'
+import { useHolderApi } from '../../hooks/holder/useHolderApi'
 
 const Home: FC = () => {
   const { authState } = useAuthContext()
-  const { getItem } = useSessionStorage()
-
-  const [error, setError] = useState<any>()
-  const [vcs, setVcs] = useState<VerifiableCredential[]>()
-
-  useEffect(() => {
-    async function fetchVcs() {
-      try {
-        const { data: { vcs } } = await axios<{ vcs: VerifiableCredential[] }>(
-          `${hostUrl}/api/holder/get-vcs`,
-          { method: 'GET', headers: { 'Authorization': getItem('accessToken') } }
-        )
-  
-        setVcs(vcs)
-      } catch (error) {
-        setError(error)
-      }
-    }
-
-    fetchVcs()
-  }, [])
+  const { useGetVcsQuery } = useHolderApi()
+  const { data, error } = useGetVcsQuery()
 
   if (!authState.authorizedAsHolder) {
     return <Spinner />
   }
 
-  if (!vcs) {
+  if (!data) {
     return (
       <>
         <Header title="Your medical records" />
@@ -65,7 +44,7 @@ const Home: FC = () => {
     )
   }
 
-  if (vcs.length === 0) {
+  if (data?.vcs.length === 0) {
     return (
       <>
         <Header title="Your medical records" />
@@ -83,8 +62,7 @@ const Home: FC = () => {
     )
   }
 
-  // @ts-ignore
-  const validPrescriptions: VerifiableCredential[] = vcs.filter((credentialItem) => {
+  const validPrescriptions: VerifiableCredential[] = data.vcs.filter((credentialItem) => {
     const credentialSubject = (credentialItem as VerifiableCredential)?.credentialSubject
     return Date.parse(credentialSubject?.startDate) >= Date.now()
   })
