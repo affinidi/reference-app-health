@@ -29,9 +29,9 @@ export const useConfirmSignInMutation = () => {
 
 export const useLogOutMutation = () => {
   const { getItem } = useSessionStorage()
-  const accessToken = getItem('accessToken')
-
+  
   return useMutation<void, ErrorResponse, void, () => void>(async () => {
+    const accessToken = getItem('accessToken')
     if (!accessToken) return
 
     await axios<void>(
@@ -41,25 +41,44 @@ export const useLogOutMutation = () => {
   })
 }
 
+
+export const useCheckHolderAuthMutation = () => {
+  const { getItem } = useSessionStorage()
+  
+  return useMutation<void, ErrorResponse, void, () => void>(async () => {
+    const accessToken = getItem('accessToken')
+    if (!accessToken) throw new Error('Access token is not present')
+    
+    await axios<{ did: string }>(
+      `${hostUrl}/api/holder/get-did`,
+      { method: 'POST', headers: { 'Authorization': accessToken } }
+    )
+  })
+}
+
 export const useGetVcsQuery = () => {
   const { getItem } = useSessionStorage()
-  const accessToken = getItem('accessToken')!
-
+  
   return useQuery<{ vcs: VerifiableCredential[] }, ErrorResponse>(['getVcs'], async () => {
+    const accessToken = getItem('accessToken')
+    if (!accessToken) throw new Error('Access token is not present')
+
     const { data: { vcs } } = await axios<{ vcs: VerifiableCredential[] }>(
       `${hostUrl}/api/holder/get-vcs`,
       { method: 'GET', headers: { 'Authorization': accessToken } }
     )
   
     return { vcs }
-  }, { enabled: Boolean(accessToken) })
+  })
 }
 
 export const useClaimVcQuery = (data: { credentialOfferRequestToken: string }) => {
   const { getItem } = useSessionStorage()
-  const accessToken = getItem('accessToken')!
-
+  
   return useQuery<{ credentialId: string }, ErrorResponse>(['claimVc', data.credentialOfferRequestToken], async () => {
+    const accessToken = getItem('accessToken')
+    if (!accessToken) throw new Error('Access token is not present')
+
     const { data: { credentialId } } = await axios<{ credentialId: string }>(
       `${hostUrl}/api/holder/claim-vc`,
       {
@@ -72,14 +91,16 @@ export const useClaimVcQuery = (data: { credentialOfferRequestToken: string }) =
     )
   
     return { credentialId }
-  }, { enabled: Boolean(data.credentialOfferRequestToken && accessToken) })
+  }, { enabled: Boolean(data.credentialOfferRequestToken) })
 }
 
 export const useShareVcQuery = (data: { credentialId: string }) => {
   const { getItem } = useSessionStorage()
-  const accessToken = getItem('accessToken')!
-
+  
   return useQuery<{ vc: VerifiableCredential; qrCode: string }, ErrorResponse>(['shareVc', data.credentialId], async () => {
+    const accessToken = getItem('accessToken')
+    if (!accessToken) throw new Error('Access token is not present')
+
     const { data: { vc, qrCode } } = await axios<{ vc: VerifiableCredential; qrCode: string }>(
       `${hostUrl}/api/holder/share-vc`,
       {
@@ -92,5 +113,5 @@ export const useShareVcQuery = (data: { credentialId: string }) => {
     )
   
     return { vc, qrCode }
-  }, { enabled: Boolean(data.credentialId && accessToken) })
+  }, { enabled: Boolean(data.credentialId) })
 }

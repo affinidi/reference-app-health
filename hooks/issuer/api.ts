@@ -13,12 +13,29 @@ export const useCheckCredentialsMutation = () => {
   })
 }
 
+export const useCheckIssuerAuthMutation = () => {
+  const { getItem } = useSessionStorage()
+  
+  return useMutation<void, ErrorResponse, void, () => void>(async () => {
+    const login = getItem('issuerLogin')
+    const password = getItem('issuerPassword')
+    if (!login || !password) throw new Error('Issuer credentials are not present')
+
+    await axios<void>(
+      `${hostUrl}/api/issuer/check-credentials`,
+      { method: 'POST', headers: generateAuthHeaders({ login, password }) }
+    )
+  })
+}
+
 export const useSendVcOfferMutation = () => {
   const { getItem } = useSessionStorage()
-  const login = getItem('issuerLogin')!
-  const password = getItem('issuerPassword')!
-
+  
   return useMutation<void, ErrorResponse, { targetEmail: string; credentialSubject: any }, () => void>(async (data) => {
+    const login = getItem('issuerLogin')
+    const password = getItem('issuerPassword')
+    if (!login || !password) throw new Error('Issuer credentials are not present')
+
     await axios<void>(
       `${hostUrl}/api/issuer/send-vc-offer`,
       { method: 'POST', data, headers: generateAuthHeaders({ login, password }) }

@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction, useState } from 'react'
 
 import { useRouter } from 'next/router'
-import { useSessionStorage } from './useSessionStorage'
+import { useCheckIssuerAuthMutation } from './issuer/api'
+import { useCheckHolderAuthMutation } from './holder/api'
 
 export type ErrorResponse = {
   name: string
@@ -37,9 +38,10 @@ const BASIC_STATE: UserState = {
 }
 
 export const useAuthentication = () => {
-  const [authState, setAuthState] = useState<UserState>(BASIC_STATE)
-  const { getItem } = useSessionStorage()
   const router = useRouter()
+  const [authState, setAuthState] = useState<UserState>(BASIC_STATE)
+  const { mutateAsync: mutateIssuerAuthCheck } = useCheckIssuerAuthMutation()
+  const { mutateAsync: mutateHolderAuthCheck } = useCheckHolderAuthMutation()
 
   const updatePartiallyState =
     <T>(updateFunction: Dispatch<SetStateAction<T>>) =>
@@ -50,12 +52,24 @@ export const useAuthentication = () => {
 
   const authenticate = async () => {
     if (router.pathname.includes('/issuer')) {
-      updateAuthState({ loading: false, authorizedAsIssuer: Boolean(getItem('issuerLogin') && getItem('issuerPassword')) })
+      try {
+        await mutateIssuerAuthCheck()
+        updateAuthState({ loading: false, authorizedAsIssuer: true })
+      } catch (error) {
+        updateAuthState({ loading: false, authorizedAsIssuer: false })
+      }
+
       return
     }
 
     if (router.pathname.includes('/holder')) {
-      updateAuthState({ loading: false, authorizedAsHolder: Boolean(getItem('accessToken')) })
+      try {
+        await mutateHolderAuthCheck()
+        updateAuthState({ loading: false, authorizedAsHolder: true })
+      } catch (error) {
+        updateAuthState({ loading: false, authorizedAsHolder: false })
+      }
+
       return
     }
 
