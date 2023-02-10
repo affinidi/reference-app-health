@@ -42,13 +42,10 @@ const PrescriptionCard: FC<PrescriptionCardProps> = ({ credential, isValid }) =>
         gap={4}
       >
         <Box>
-          <Typography variant="c1">Start Date</Typography>
-          <Typography variant="p4">{credential.date}</Typography>
+          <Typography variant="c1">Prescription Record 1</Typography>
+          <Typography variant="p4">{credential.medicationName}</Typography>
         </Box>
-        <Box>
-          <Typography variant="c1">Start Time</Typography>
-          <Typography variant="p4">{credential.time}</Typography>
-        </Box>
+       
       </Box>
     </S.Prescription>
   )

@@ -5,72 +5,68 @@ import { Box, Typography } from 'components'
 import * as S from './PrescriptionDetails.styled'
 
 export type PrescriptionDetailsProps = {
-  eventName: string
-  startDate: string
-  endDate: string
-  startTime: string
-  endTime: string
+  patientName: string
+  medicationName: string
+  date: string
+  dosage: string
+  frequency: string
+  practitionerName: string
   qrCode: string
-  location: string
 }
 
 export const PrescriptionDetails: FC<PrescriptionDetailsProps> = ({
-  eventName,
-  startDate,
-  startTime,
-  endDate,
-  endTime,
-  location,
+  patientName,
+  medicationName,
+  date,
+  dosage,
+  frequency,
+  practitionerName,
   qrCode,
 }) => (
-  <S.PrescriptionDetailsCard>
-    <S.DataCard>
-      <Box
-        justifyContent="space-between"
-        gap={24}
-      >
-        <div className="grid grid-cols-2 lg:grid-cols-3 lg:gap-16">
-          <Box>
-            <Typography variant="c1">Start Date</Typography>
-            <Typography variant="p4">{startDate} </Typography>
+  <S.PrescriptionDetailsCard justifyContent='space-between'>
+    <Box>
+      <S.DataCardInnerContainer justifyContent='space-between'>
+          <Box gap={8}>
+            <Typography variant='h4'>{patientName}</Typography>
+            <Typography variant='s1'>Prescription Record</Typography>
           </Box>
-          <Box>
-            <Typography variant="c1">End Date</Typography>
-            <Typography variant="p4">{endDate} </Typography>
-          </Box>
-        </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 lg:gap-16">
-          <Box alignItems="start">
-            <Typography variant="c1">Start Time</Typography>
-            <Typography variant="p4">{startTime} </Typography>
-          </Box>
-          <Box>
-            <Typography variant="c1">End Time</Typography>
-            <Typography variant="p4">{endTime} </Typography>
-          </Box>
-        </div>
+        <S.MedicationDetailsContainer>
+            <Box gap={2}>
+              <Typography variant='p3'>Medication</Typography>
+              <Typography variant='p4'>{medicationName}</Typography>
+            </Box>
 
-        <div className="grid">
-          <Typography variant="c1">Location</Typography>
-          <Typography variant="p4">{location} </Typography>
-        </div>
+          <div className='grid gap-8 lg:grid-cols-4'>
+            <div className='grid lg:col-span-2 grid-cols-2 gap-8'>
+              <Box gap={2}>
+                <Typography variant='p3'>Dosage</Typography>
+                <Typography variant='p4'>{dosage} </Typography>
+              </Box>
+              <Box gap={2}>
+                <Typography variant='p3'>Frequency</Typography>
+                <Typography variant='p4'>{frequency} </Typography>
+              </Box>
+            </div>
 
-        <Box>
-          <Typography variant="p1">
-            This is your event prescription for {eventName}. This prescription will be scanned upon entry. This
-            QR code can only be used one time.
-          </Typography>
-        </Box>
-      </Box>
-    </S.DataCard>
+            <Box gap={2}>
+              <Typography variant='p3'>Date</Typography>
+              <Typography variant='p4'>{date} </Typography>
+            </Box>
+
+            <Box gap={2}>
+              <Typography variant='p3'>Practitioner</Typography>
+              <Typography variant='p4'>{practitionerName} </Typography>
+            </Box>
+          </div>
+        </S.MedicationDetailsContainer>
+      </S.DataCardInnerContainer>
+    </Box>
 
     <S.QrCodeCard>
-      <img
-        src={qrCode}
-        alt="QR Code"
-      />
+      <img src={qrCode} alt='QR Code' />
     </S.QrCodeCard>
+    {/* </div> */}
   </S.PrescriptionDetailsCard>
 )
 

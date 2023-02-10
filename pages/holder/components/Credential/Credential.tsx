@@ -39,7 +39,9 @@ const getDetails = ({
     return (
       <S.Div nested={nested}>
         {detailsObject.map((value, index) => (
-          <S.Div key={index}>{getDetails({ detailsObject: value, nested: true })}</S.Div>
+          <S.Div key={index}>
+            {getDetails({ detailsObject: value, nested: true })}
+          </S.Div>
         ))}
       </S.Div>
     )
@@ -49,12 +51,12 @@ const getDetails = ({
     return (
       qrCode && (
         <PrescriptionDetails
-          eventName={detailsObject.eventName}
-          startDate={format(new Date(detailsObject.startDate), 'dd.MM.yyy')}
-          endDate={format(new Date(detailsObject.endDate), 'dd.MM.yyy')}
-          startTime={format(new Date(detailsObject.startDate), 'HH.mm')}
-          endTime={format(new Date(detailsObject.endDate), 'HH.mm')}
-          location={detailsObject.place}
+          medicationName={detailsObject.medicationName}
+          patientName={detailsObject.patient.name}
+          date={format(new Date(detailsObject.prescribedAt), 'dd.MM.yyy')}
+          dosage={`${detailsObject.dosage.amount} ${detailsObject.dosage.unit}`}
+          frequency={`${detailsObject.frequency.amount} per ${detailsObject.frequency.interval.unit}`}
+          practitionerName={detailsObject.practitioner.name}
           qrCode={qrCode}
         />
       )
@@ -64,6 +66,9 @@ const getDetails = ({
   return <S.Div>{renderLiteral(detailsObject)}</S.Div>
 }
 
-export const Credential: FC<CredentialProps> = ({ credentialSubject, qrCode }) => {
+export const Credential: FC<CredentialProps> = ({
+  credentialSubject,
+  qrCode,
+}) => {
   return <>{getDetails({ detailsObject: credentialSubject, qrCode })}</>
 }

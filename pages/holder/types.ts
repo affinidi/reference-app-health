@@ -1,6 +1,4 @@
 export interface Credential {
-  title: string
-  date: string
-  time: string
+  medicationName: string
   credentialId: string
 }
