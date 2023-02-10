@@ -5,13 +5,12 @@ import { ROUTES } from 'utils'
 import { Container, Header, Spinner } from 'components'
 
 import { Credential } from '../../components/Credential/Credential'
-import { useHolderApi } from '../../../../hooks/holder/useHolderApi'
+import { useShareVcQuery } from 'hooks/holder/api'
 
 const CredentialView: FC = () => {
   const router = useRouter()
   const credentialId = router.query.credentialId as string
 
-  const { useShareVcQuery } = useHolderApi()
   const { data, error } = useShareVcQuery({ credentialId })
 
   useEffect(() => {

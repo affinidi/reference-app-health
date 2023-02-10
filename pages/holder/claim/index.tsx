@@ -4,17 +4,14 @@ import { useRouter } from 'next/router'
 
 import { ROUTES } from 'utils'
 import { Container, Header, Spinner } from 'components'
-import { useHolderApi } from 'hooks/holder/useHolderApi'
+import { useClaimVcQuery } from 'hooks/holder/api'
 import { useAuthContext } from 'hooks/useAuthContext'
 
 const ClaimVc: FC = () => {
   const { push } = useRouter()
   const { authState, updateAuthState } = useAuthContext()
-
   const searchParams = useSearchParams()
   const credentialOfferRequestToken = searchParams.get('credentialOfferRequestToken') || authState.vcOfferToken
-
-  const { useClaimVcQuery } = useHolderApi()
   const { data, error } = useClaimVcQuery({ credentialOfferRequestToken })
 
   useEffect(() => {

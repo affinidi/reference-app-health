@@ -8,12 +8,11 @@ import { Container, Header, Spinner, Typography } from 'components'
 import { Credential } from './types'
 import PrescriptionCard from './components/PrescriptionCard/PrescriptionCard'
 import * as S from './index.styled'
-import { VerifiableCredential } from '../../types/vc'
-import { useHolderApi } from '../../hooks/holder/useHolderApi'
+import { VerifiableCredential } from 'types/vc'
+import { useGetVcsQuery } from 'hooks/holder/api'
 
 const Home: FC = () => {
   const { authState } = useAuthContext()
-  const { useGetVcsQuery } = useHolderApi()
   const { data, error } = useGetVcsQuery() 
 
   if (!authState.authorizedAsHolder) {

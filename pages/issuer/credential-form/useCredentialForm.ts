@@ -3,8 +3,8 @@ import { useCallback, useEffect } from 'react'
 import * as EmailValidator from 'email-validator'
 import { useRouter } from 'next/router'
 
+import { useSendVcOfferMutation } from 'hooks/issuer/api'
 import { ROUTES } from 'utils'
-import { useIssuerApi } from '../../../hooks/issuer/useIssuerApi'
 
 export const adjustForUTCOffset = (date: Date) => {
   return new Date(
@@ -39,7 +39,7 @@ export const initialValues: EventSubjectData = {
 
 export const useCredentialForm = () => {
   const router = useRouter()
-  const { sendVcOfferMutation: { mutate, isSuccess, isLoading } } = useIssuerApi()
+  const { mutate, isSuccess, isLoading } = useSendVcOfferMutation()
 
   const handleSubmit = (values: EventSubjectData) => {
     mutate({

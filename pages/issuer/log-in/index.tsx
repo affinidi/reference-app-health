@@ -3,17 +3,17 @@ import { useRouter } from 'next/router'
 import { Container, ContainerForm, Header, Input } from 'components'
 import { useSessionStorage } from 'hooks/useSessionStorage'
 import { useAuthentication } from 'hooks/useAuthentication'
+import { useCheckCredentialsMutation } from 'hooks/issuer/api'
 import { ROUTES } from 'utils'
 
 import * as S from './index.styled'
-import { useIssuerApi } from '../../../hooks/issuer/useIssuerApi'
 
 const IssuerLogIn: FC = () => {
   const router = useRouter()
   const { setItem } = useSessionStorage()
   const { updateAuthState } = useAuthentication()
 
-  const { checkCredentialsMutation: { mutate, isSuccess, isError, isLoading, reset } } = useIssuerApi()
+  const { mutate, isSuccess, isError, isLoading, reset } = useCheckCredentialsMutation()
 
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')

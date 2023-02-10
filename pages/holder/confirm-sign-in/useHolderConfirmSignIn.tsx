@@ -4,37 +4,38 @@ import { useRouter } from 'next/router'
 import { useSessionStorage } from 'hooks/useSessionStorage'
 import { useConfirmSignIn } from 'pages/components/ConfirmSignInForm/useConfirmSignIn'
 import { useAuthContext } from 'hooks/useAuthContext'
+import { useSignInMutation, useConfirmSignInMutation } from 'hooks/holder/api'
 
 import { ROUTES } from 'utils'
-import { useHolderApi } from '../../../hooks/holder/useHolderApi'
 
 export const useHolderConfirmSignIn = () => {
   const storage = useSessionStorage()
   const router = useRouter()
   const { authState, updateAuthState } = useAuthContext()
-  const { signInMutation, confirmSignInMutation } = useHolderApi()
-  const { computedCode, inputs, isButtonDisabled } = useConfirmSignIn(confirmSignInMutation.error?.message)
+  const { data, error, mutateAsync, isLoading } = useConfirmSignInMutation()
+  const { data: signInData, mutateAsync: signInMutateAsync } = useSignInMutation()
+  const { computedCode, inputs, isButtonDisabled } = useConfirmSignIn(error?.message)
 
   const handleResendCode = async () => {
     if (!authState.username) {
       router.push(ROUTES.holder.signIn)
       return
     }
-    signInMutation.mutate({ username: authState.username })
+    await signInMutateAsync({ username: authState.username })
   }
 
-  const onSubmit = (e?: SyntheticEvent) => {
+  const onSubmit = async (e?: SyntheticEvent) => {
     e?.preventDefault()
 
-    confirmSignInMutation.mutate({
-      token: storage.getItem('signUpToken')!,
+    await mutateAsync({
+      token: storage.getItem('signUpToken') || '',
       confirmationCode: computedCode,
     })
   }
 
   useEffect(() => {
-    if (confirmSignInMutation.data && !authState.authorizedAsHolder) {
-      storage.setItem('accessToken', confirmSignInMutation.data.accessToken)
+    if (data && !authState.authorizedAsHolder) {
+      storage.setItem('accessToken', data.accessToken)
       updateAuthState({
         loading: false,
         authorizedAsHolder: true,
@@ -48,20 +49,13 @@ export const useHolderConfirmSignIn = () => {
     if (authState.username === '') {
       router.push(ROUTES.holder.signIn)
     }
-  }, [authState.authorizedAsHolder, authState.vcOfferToken, authState.username, confirmSignInMutation.data, router, storage, updateAuthState])
+  }, [authState, data, error, router, storage, updateAuthState])
 
   useEffect(() => {
-    if (signInMutation.data) {
-      storage.setItem('signUpToken', signInMutation.data.token)
+    if (signInData) {
+      storage.setItem('signUpToken', signInData.token)
     }
-  }, [signInMutation.data, storage])
+  }, [signInData, storage])
 
-  return {
-    error: confirmSignInMutation.error,
-    isLoading: confirmSignInMutation.isLoading,
-    onSubmit,
-    inputs,
-    isButtonDisabled,
-    handleResendCode,
-  }
+  return { error, onSubmit, inputs, isButtonDisabled, handleResendCode, isLoading }
 }

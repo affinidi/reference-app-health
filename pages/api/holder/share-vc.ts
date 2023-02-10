@@ -15,7 +15,7 @@ type HandlerResponse = {
 
 const requestSchema = z
   .object({
-    id: z.string(),
+    credentialId: z.string(),
   })
   .strict()
 
@@ -25,7 +25,7 @@ export async function handler(
 ) {
   const accessToken = authenticateCloudWallet(req)
 
-  const { id } = requestSchema.parse(req.body)
+  const { credentialId: id } = requestSchema.parse(req.body)
 
   const { vc } = await cloudWalletClient.getCredentialById({ id }, { accessToken })
   const { qrCode, sharingUrl } = await cloudWalletClient.shareCredential({ id }, { accessToken })

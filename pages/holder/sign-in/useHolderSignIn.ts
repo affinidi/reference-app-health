@@ -3,9 +3,9 @@ import { useRouter } from 'next/router'
 
 import { useSessionStorage } from 'hooks/useSessionStorage'
 import { useAuthContext } from 'hooks/useAuthContext'
+import { useSignInMutation } from 'hooks/holder/api'
 
 import { ROUTES } from 'utils'
-import { useHolderApi } from '../../../hooks/holder/useHolderApi'
 
 export const useHolderSignIn = () => {
   const [username, setUsername] = useState('')
@@ -14,7 +14,7 @@ export const useHolderSignIn = () => {
   const storage = useSessionStorage()
   const { updateAuthState } = useAuthContext()
 
-  const { signInMutation: { mutate, data, error, isLoading } } = useHolderApi()
+  const { mutate, data, error, isLoading } = useSignInMutation()
 
   const validateEmail = (email: string) =>
     email.match(
