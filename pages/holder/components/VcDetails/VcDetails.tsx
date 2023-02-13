@@ -43,18 +43,18 @@ export const VcDetails: FC<VcDetailsProps> = ({
             </Box>
             <Box gap={2}>
               <Typography variant='p3'>Frequency</Typography>
-              <Typography variant='p4'>{frequency} </Typography>
+              <Typography variant='p4'>{frequency}</Typography>
             </Box>
           </div>
 
           <Box gap={2}>
             <Typography variant='p3'>Date</Typography>
-            <Typography variant='p4'>{date} </Typography>
+            <Typography variant='p4'>{date}</Typography>
           </Box>
 
           <Box gap={2}>
             <Typography variant='p3'>Practitioner</Typography>
-            <Typography variant='p4'>{practitionerName} </Typography>
+            <Typography variant='p4'>{practitionerName}</Typography>
           </Box>
         </div>
       </S.MedicationDetailsContainer>

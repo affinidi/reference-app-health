@@ -6,6 +6,13 @@ import { Box } from 'components'
 export const QrCodeCard = styled(Box)`
   img {
     border-radius: 16px;
+
+    @media (min-width: 1024px) {
+      padding-left: ${pxToRem(30)};
+
+      height: ${pxToRem(248)};
+      max-width: none;
+    }
   }
 
   @media (max-width: 1024px) {
@@ -13,14 +20,6 @@ export const QrCodeCard = styled(Box)`
 
     img {
       height: ${pxToRem(292)};
-      width: ${pxToRem(292)};
-    }
-  }
-
-  @media (min-width: 1024px) {
-    img {
-      height: ${pxToRem(248)};
-      width: ${pxToRem(248)};
     }
   }
 `
@@ -44,6 +43,11 @@ export const VcDetailsContainer = styled(Box)`
 
 export const VcDetailsCard = styled(Box)`
   gap: ${pxToRem(48)};
+  width: 100%;
+
+  span {
+    word-wrap: break-word;
+  }
 
   @media (max-width: 1024px) {
     gap: ${pxToRem(36)};
