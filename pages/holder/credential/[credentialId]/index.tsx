@@ -12,7 +12,7 @@ import { useAuthContext } from 'hooks/useAuthContext'
 
 import { Credential } from '../../components/Credential/Credential'
 
-import * as S from './credential.syled'
+import * as S from './credentialId.styled'
 
 const CredentialView: FC = () => {
   const { authState } = useAuthContext()
@@ -46,12 +46,12 @@ const CredentialView: FC = () => {
         hasBackIcon
       />
 
-      <S.ContainerWrapper>
+      <S.Container>
         <Credential
           credentialSubject={credential.credentialSubject}
           qrCode={shareCredentialData?.qrCode}
         />
-      </S.ContainerWrapper>
+      </S.Container>
     </>
   )
 }
