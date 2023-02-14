@@ -27,9 +27,9 @@ export const Home: FC = () => {
             onClick={() => router.push(ROUTES.holder.home)}
           >
             <Box gap={16}>
-              <Typography variant="h6">Collect medical records</Typography>
+              <Typography variant="h6">Collect prescriptions</Typography>
               <Typography variant="p1">
-                Collect your medical records or view them stored in your wallet
+                Collect your prescriptions or view them stored in your wallet
               </Typography>
             </Box>
             <S.Icon>
@@ -48,9 +48,9 @@ export const Home: FC = () => {
             onClick={() => router.push(ROUTES.verifier.welcome)}
           >
             <Box gap={16}>
-              <Typography variant="h6">Verify medical records</Typography>
+              <Typography variant="h6">Verify prescriptions</Typography>
               <Typography variant="p1">
-                Verify medical records with a QR code scanner
+                Verify prescriptions with a QR code scanner
               </Typography>
             </Box>
             <S.Icon>
@@ -69,9 +69,9 @@ export const Home: FC = () => {
             onClick={() => router.push(ROUTES.issuer.credentialForm)}
           >
             <Box gap={16}>
-              <Typography variant="h6">Issue medical records</Typography>
+              <Typography variant="h6">Issue prescriptions</Typography>
               <Typography variant="p1">
-                Issue medical records to your patients easily
+                Issue prescriptions to your patients easily
               </Typography>
             </Box>
             <S.Icon>

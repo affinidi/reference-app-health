@@ -2,10 +2,13 @@ import { FC, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 import { StoredW3CCredential } from 'services/cloud-wallet/cloud-wallet.api'
-import { useGetCredentialQuery, useShareCredentialMutation } from 'hooks/holder/useCredentials'
-import { useAuthContext } from 'hooks/useAuthContext'
+import {
+  useGetCredentialQuery,
+  useShareCredentialMutation,
+} from 'hooks/holder/useCredentials'
 import { ROUTES } from 'utils'
 import { Header, Spinner } from 'components'
+import { useAuthContext } from 'hooks/useAuthContext'
 
 import { Credential } from '../../components/Credential/Credential'
 
@@ -16,7 +19,8 @@ const CredentialView: FC = () => {
   const router = useRouter()
   const { credentialId } = router.query
   const { data, isLoading } = useGetCredentialQuery(credentialId || '')
-  const { data: shareCredentialData, mutateAsync } = useShareCredentialMutation()
+  const { data: shareCredentialData, mutateAsync } =
+    useShareCredentialMutation()
 
   useEffect(() => {
     if (credentialId) {
@@ -37,7 +41,7 @@ const CredentialView: FC = () => {
   return (
     <>
       <Header
-        title={credential.credentialSubject.eventName || ''}
+        title={`${credential?.credentialSubject.patient.name} ${credential?.credentialSubject.prescribedAt}`}
         path={ROUTES.holder.home}
         hasBackIcon
       />
