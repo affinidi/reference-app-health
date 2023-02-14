@@ -29,3 +29,4 @@ export const Title = styled(Typography)`
     padding-bottom: ${pxToRem(24)};
   }
 `
+

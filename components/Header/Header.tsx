@@ -26,10 +26,9 @@ const Header: FC<HeaderProps> = ({ title, hasBackIcon, path }) => {
               path ? navigate.push(path) : hasBackIcon ? navigate.back() : null
             }
           >
-            <Image src={BackIcon} alt="Go back" />
+            <Image src={BackIcon} alt='Go back' />
           </S.IconWrapper>
         )}
-
         <S.Title variant='h4'>{title}</S.Title>
       </S.Container>
     </Container>
