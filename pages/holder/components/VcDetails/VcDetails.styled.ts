@@ -25,7 +25,6 @@ export const QrCodeCard = styled(Box)`
 `
 
 export const VcDetailsContainer = styled(Box)`
-  flex-direction: row;
   padding: ${pxToRem(40)};
   background-color: ${(props) => props.theme.colors.brand.secondary['50']};
 
@@ -42,7 +41,6 @@ export const VcDetailsContainer = styled(Box)`
 `
 
 export const VcDetailsCard = styled(Box)`
-  gap: ${pxToRem(48)};
   width: 100%;
 
   span {
@@ -55,8 +53,6 @@ export const VcDetailsCard = styled(Box)`
 `
 
 export const MedicationDetailsContainer = styled(Box)`
-  gap: ${pxToRem(42)};
-
   @media (max-width: 1024px) {
     gap: ${pxToRem(26)};
   }

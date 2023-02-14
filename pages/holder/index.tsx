@@ -76,10 +76,8 @@ const Home: FC = () => {
     return Date.parse(credentialSubject?.prescribedAt) >= Date.now()
   })
 
-  const getVcCards = ({ vcs }: { vcs: StoredW3CCredential[] }) => {
-    let vcNumber = 1
-
-    return vcs.map((credentialItem: StoredW3CCredential) => {
+  const getVcCards = ({ vcs }: { vcs: StoredW3CCredential[] }) =>
+    vcs.map((credentialItem: StoredW3CCredential) => {
       const credential: Credential = {
         title: `${credentialItem?.credentialSubject.patient.name} ${credentialItem?.credentialSubject.prescribedAt}`,
         medicationName: credentialItem?.credentialSubject.medicationName,
@@ -88,7 +86,6 @@ const Home: FC = () => {
 
       return <VcCard key={credentialItem.id} credential={credential} />
     })
-  }
 
   return (
     <>

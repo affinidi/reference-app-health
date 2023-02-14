@@ -23,13 +23,13 @@ export const VcDetails: FC<VcDetailsProps> = ({
   practitionerName,
   qrCode,
 }) => (
-  <S.VcDetailsContainer justifyContent='space-between'>
-    <S.VcDetailsCard justifyContent='space-between'>
+  <S.VcDetailsContainer justifyContent='space-between' direction="row">
+    <S.VcDetailsCard justifyContent='space-between' gap={48}>
       <Box gap={8}>
         <Typography variant='h4'>{patientName}</Typography>
       </Box>
 
-      <S.MedicationDetailsContainer>
+      <S.MedicationDetailsContainer gap={42}>
         <Box gap={2}>
           <Typography variant='p3'>Medication</Typography>
           <Typography variant='p4'>{medicationName}</Typography>
