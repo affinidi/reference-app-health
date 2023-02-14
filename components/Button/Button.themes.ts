@@ -232,16 +232,16 @@ const quaternary: Partial<ButtonConfig> = {
   outlined: {
     default: {
       borderColor: theme.colors.neutral.primary['15'],
-      color: theme.colors.brand.secondary['100'],
+      color: theme.colors.brand.primary['100'],
     },
     disabled: {
       borderColor: theme.colors.neutral.primary['15'],
-      color: theme.colors.neutral.secondary['100'],
+      color: theme.colors.neutral.primary['15'],
     },
     hover: {
       backgroundColor: theme.colors.brand.primary['15'],
       borderColor: theme.colors.neutral.primary['30'],
-      color: theme.colors.brand.secondary['100'],
+      color: theme.colors.brand.primary['100'],
     },
     active: {
       backgroundColor: theme.colors.brand.primary['30'],
@@ -251,7 +251,7 @@ const quaternary: Partial<ButtonConfig> = {
     loading: {
       backgroundColor: theme.colors.brand.primary['15'],
       borderColor: theme.colors.neutral.primary['30'],
-      color: theme.colors.brand.secondary['100'],
+      color: theme.colors.brand.primary['100'],
     },
   },
 }
