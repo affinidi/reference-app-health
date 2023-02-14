@@ -59,14 +59,14 @@ export const Result: FC<ResultProps> = ({ isLoading = false, isValid, error = nu
                 : 'Your prescription has been issued.'}
             </S.ResultPara>
 
-            <Button
+            <S.IssueButton
               fullWidth
               color="quaternary"
               variant="outlined"
               onClick={() => router.push(pathTo)}
             >
               {isVerifier ? 'Scan next qr code' : 'Issue next prescription'}
-            </Button>
+            </S.IssueButton>
           </Box>
         </div>
       </Container>
