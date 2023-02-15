@@ -1,4 +1,4 @@
-import UrlPattern from "url-pattern";
+import UrlPattern from 'url-pattern'
 
 export const pxToRem = (px: number) => `${px / 8}rem`;
 
@@ -15,8 +15,8 @@ export const extractHashAndKeyFromVSShareUrl = (
   );
 
   const key = url.split("?").pop()?.slice(4) || "";
+  const hash = parser.match(urlWithPathParam)?.hash;
 
-  const hash = parser.match(urlWithPathParam).hash;
   return { hash, key };
 };
 

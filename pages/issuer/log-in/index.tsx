@@ -1,8 +1,9 @@
-import { FC, useEffect, useState } from 'react'
-import { Container, ContainerForm, Header, Input } from 'components'
+import { FC, FormEvent, useEffect, useState } from 'react'
+
 import { useSessionStorage } from 'hooks/useSessionStorage'
 import { useCheckCredentialsMutation } from 'hooks/issuer/api'
 import { useAuthContext } from 'hooks/useAuthContext'
+import { Box, Container, ContainerForm, Header, Input } from 'components'
 
 import * as S from './index.styled'
 
@@ -14,7 +15,7 @@ const IssuerLogIn: FC = () => {
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleLogIn = (event: SubmitEvent) => {
+  const handleLogIn = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     mutate({ login, password })
   }
@@ -33,31 +34,32 @@ const IssuerLogIn: FC = () => {
 
   return (
     <>
-      <Header title="Sign in as issuer" />
+      <Header title="Admin login" />
 
       <Container>
         <div className="grid lg:grid-cols-3 lg:gap-16">
           <ContainerForm className="lg:col-start-2" onSubmit={handleLogIn}>
-            <S.Title variant="p1">Please enter login and password.</S.Title>
+            <S.Title variant="p1">Please enter your email address and password to log in.</S.Title>
 
-            <Input
-              id="login"
-              type="text"
-              label="Login"
-              placeholder="Enter your login"
-              onChange={(value) => setLogin(value)}
-              hasError={isError}
-            />
+            <Box gap={24}>
+              <Input
+                id="email"
+                type="email"
+                label="Email address"
+                placeholder="Enter your email address"
+                onChange={setLogin}
+                hasError={isError}
+              />
 
-            <br/>
-
-            <Input
-              id="password"
-              type="password"
-              label="Password"
-              onChange={(value) => setPassword(value)}
-              hasError={isError}
-            />
+              <Input
+                id="password"
+                type="password"
+                label="Password"
+                placeholder="Enter your password"
+                onChange={setPassword}
+                hasError={isError}
+              />
+            </Box>
 
             <S.ButtonWrapper fullWidth disabled={isLoading} loading={isLoading} type="submit">
               log in

@@ -24,15 +24,11 @@ export const ButtonContainer = styled.div`
 `
 
 export const Logo = styled.div`
-  svg {
-    width: ${pxToRem(100)};
-    height: ${pxToRem(24)};
-  }
+  img {
+    cursor: pointer;
 
-  @media (max-width: 1024px) {
-    svg {
-      width: ${pxToRem(139)};
-      height: ${pxToRem(32)};
+    @media (max-width: 1024px) {
+      width: ${pxToRem(88)};
     }
   }
 `
@@ -40,8 +36,14 @@ export const Logo = styled.div`
 export const IconWrapper = styled.div`
   cursor: pointer;
 
-  path {
-    fill: ${(props) => props.theme.colors.brand.primary['100']};
+  img {
+    width: ${pxToRem(32)};
+    height: ${pxToRem(32)};
+
+    @media (max-width: 1024px) {
+      width: ${pxToRem(24)};
+      height: ${pxToRem(24)};
+    }
   }
 `
 
